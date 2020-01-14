@@ -7,6 +7,6 @@ public class Main {
         System.out.println("Hola mundo");
         LlamadasBD llamadasBD = new LlamadasBD();
 
-        llamadasBD.CrearBasesDeDatos();
+        llamadasBD.ReiniciarBasesDeDatos();
     }
 }

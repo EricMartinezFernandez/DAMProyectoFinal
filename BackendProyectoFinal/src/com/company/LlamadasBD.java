@@ -6,6 +6,14 @@ import java.sql.PreparedStatement;
 
 public class LlamadasBD {
 
+    public void ReiniciarBasesDeDatos(){
+        Connection con = Conexion();
+
+        BorrarBasesDeDatos(con);
+        CrearBasesDeDatos(con);
+
+    }
+
     private static Connection Conexion(){
         Connection con = null;
 
@@ -20,8 +28,91 @@ public class LlamadasBD {
         return con;
     }
 
-    public void CrearBasesDeDatos(){
-/*
+    public void BorrarBasesDeDatos(Connection con){
+
+        PreparedStatement preparedStatement = null;
+
+        String borrarTRABAJADORES =  "DROP TABLE IF EXISTS TRABAJADORES";
+        String borrarMAQUINAS =  "DROP TABLE IF EXISTS MAQUINAS";
+        String borrarMANTENIMIENTOS =  "DROP TABLE IF EXISTS MANTENIMIENTOS";
+        String borrarTAREAS =  "DROP TABLE IF EXISTS TAREAS";
+        String borrarTRABAJOTAREAS =  "DROP TABLE IF EXISTS TRABAJOTAREAS";
+        String borrarTRABAJOMANTENIMIENTO =  "DROP TABLE IF EXISTS TRABAJOMANTENIMIENTO";
+
+        try{
+            preparedStatement = con.prepareStatement(borrarTRABAJOMANTENIMIENTO);
+            preparedStatement.executeUpdate();
+
+            System.out.println("Tabla TRABAJOMANTENIMIENT eliminada correctamente.");
+
+        }catch (Exception e) {
+            System.err.println("Error al eliminar la tabla TRABAJOMANTENIMIENT.");
+            e.getMessage();
+        }
+
+        try{
+            preparedStatement = con.prepareStatement(borrarTRABAJOTAREAS);
+            preparedStatement.executeUpdate();
+
+            System.out.println("Tabla TRABAJOTAREAS eliminada correctamente.");
+
+        }catch (Exception e) {
+            System.err.println("Error al eliminar la tabla TRABAJOTAREAS.");
+            e.getMessage();
+        }
+
+        try{
+            preparedStatement = con.prepareStatement(borrarTAREAS);
+            preparedStatement.executeUpdate();
+
+            System.out.println("Tabla TAREAS eliminada correctamente.");
+
+        }catch (Exception e) {
+            System.err.println("Error al eliminar la tabla TAREAS.");
+            e.getMessage();
+        }
+
+
+        try{
+            preparedStatement = con.prepareStatement(borrarMANTENIMIENTOS);
+            preparedStatement.executeUpdate();
+
+            System.out.println("Tabla MANTENIMIENTOS eliminada correctamente.");
+
+        }catch (Exception e) {
+            System.err.println("Error al eliminar la tabla MANTENIMIENTOS.");
+            e.getMessage();
+        }
+
+
+        try{
+            preparedStatement = con.prepareStatement(borrarMAQUINAS);
+            preparedStatement.executeUpdate();
+
+            System.out.println("Tabla MAQUINAS eliminada correctamente.");
+
+        }catch (Exception e) {
+            System.err.println("Error al eliminar la tabla MAQUINAS.");
+            e.getMessage();
+        }
+
+
+        try{
+            preparedStatement = con.prepareStatement(borrarTRABAJADORES);
+            preparedStatement.executeUpdate();
+
+            System.out.println("Tabla TRABAJADORES eliminada correctamente.");
+
+        }catch (Exception e) {
+            System.err.println("Error al eliminar la tabla TRABAJADORES.");
+            e.getMessage();
+        }
+
+
+    }
+
+    public void CrearBasesDeDatos(Connection con){
+        /*
     ORIGINAL
     • Trabajador: DNI, nombre, primer apellido, segundo apellidos y foto.
     • Mantenimiento: código y descripción.
@@ -58,27 +149,25 @@ public class LlamadasBD {
 
         String createTareas = "CREATE TABLE TAREAS(" +
                 "CODIGO VARCHAR(255) PRIMARY KEY NOT NULL," +
-                "DESCRIPCION VARCHAR(255)" +
+                "DESCRIPCION VARCHAR(255)," +
                 "CODIGOMAQUINA VARCHAR(255)," +
                 "FOREIGN KEY (CODIGOMAQUINA) REFERENCES MAQUINAS(CODIGO) ON DELETE CASCADE);";
 
         String createTrabajoTareas = "CREATE TABLE TRABAJOTAREAS(" +
                 "CODIGO INTEGER PRIMARY KEY NOT NULL AUTO_INCREMENT," +
                 "TIEMPO INTEGER NOT NULL," +
-                "DNITRABAJADOR NOT NULL," +
-                "CODIGOTAREA NOT NULL," +
-                "FOREIGN KEY (DNITRABAJDOR) REFERENCES TRABAJADORES(DNI) ON DELETE CASCADE," +
+                "DNITRABAJADOR VARCHAR(9) NOT NULL," +
+                "CODIGOTAREA VARCHAR(255) NOT NULL," +
+                "FOREIGN KEY (DNITRABAJADOR) REFERENCES TRABAJADORES(DNI) ON DELETE CASCADE," +
                 "FOREIGN KEY (CODIGOTAREA) REFERENCES TAREAS(CODIGO) ON DELETE CASCADE);";
 
-        String createTrabajoMantenimientos = "CREATE TABLE TRABAJOTAREAS(" +
+        String createTrabajoMantenimientos = "CREATE TABLE TRABAJOMANTENIMIENTO(" +
                 "CODIGO INTEGER PRIMARY KEY NOT NULL AUTO_INCREMENT," +
                 "TIEMPO INTEGER NOT NULL," +
-                "DNITRABAJADOR NOT NULL," +
-                "CODIGOMANTENIMIENTO NOT NULL," +
-                "FOREIGN KEY (DNITRABAJDOR) REFERENCES TRABAJADORES(DNI) ON DELETE CASCADE," +
+                "DNITRABAJADOR VARCHAR(9) NOT NULL," +
+                "CODIGOMANTENIMIENTO VARCHAR(255) NOT NULL," +
+                "FOREIGN KEY (DNITRABAJADOR) REFERENCES TRABAJADORES(DNI) ON DELETE CASCADE," +
                 "FOREIGN KEY (CODIGOMANTENIMIENTO) REFERENCES MANTENIMIENTOS(CODIGO) ON DELETE CASCADE);";
-
-        Connection con = Conexion();
 
         //TABLA TRABAJADORES
         try{
@@ -96,7 +185,7 @@ public class LlamadasBD {
             preparedStatement = con.prepareStatement(createMaquinas);
             preparedStatement.executeUpdate();
 
-            System.out.println("Tabla MÁQUINAS creada correctamente.");
+            System.out.println("Tabla MAQUINAS creada correctamente.");
 
         }catch (Exception e) {
             System.err.println("No se han podido crear la tabla MÁQUINAS.\n"+e.getMessage());
