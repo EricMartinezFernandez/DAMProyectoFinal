@@ -319,6 +319,41 @@ public class LlamadasBD {
         return trabajadores;
     }
 
+    public Trabajador LeerTrabajadorConcreto(String dniPK) {
+
+        Trabajador trabajador = new Trabajador();
+
+        try {
+            Connection con = Conexion();
+
+            String query = "SELECT * FROM TRABAJADORES WHERE DNI = '" + dniPK + "'";
+
+            Statement statement = con.createStatement();
+            ResultSet resultSet = statement.executeQuery(query);
+
+
+            while (resultSet.next()) {
+                String dni = resultSet.getString("DNI");
+                String nombre = resultSet.getString("NOMBRE");
+                String apellido1 = resultSet.getString("APELLIDO1");
+                String apellido2 = resultSet.getString("APELLIDO2");
+                String foto = resultSet.getString("FOTO");
+
+
+                trabajador = new Trabajador(dni, nombre, apellido1, apellido2, foto);
+            }
+
+            resultSet.close();
+            statement.close();
+
+        } catch (Exception e) {
+            System.err.println("A ocurrido un ERROR.");
+            System.out.println(e);
+        }
+
+        return trabajador;
+    }
+
 
     //MÁQUINAS
     public void InsertarMaquina(Maquina nuevaMaquina) {
@@ -377,6 +412,39 @@ public class LlamadasBD {
         }
 
         return maquinas;
+    }
+
+    public Maquina LeerMaquinaConcreta(String codigoPK) {
+
+        Maquina maquina = new Maquina();
+
+        try {
+            Connection con = Conexion();
+
+
+            String query = "SELECT * FROM MAQUINAS WHERE CODIGO = '" + codigoPK + "'";
+
+            Statement statement = con.createStatement();
+            ResultSet resultSet = statement.executeQuery(query);
+
+
+            while (resultSet.next()) {
+                String codigo = resultSet.getString("CODIGO");
+                String descripcion = resultSet.getString("DESCRIPCION");
+
+
+                maquina = new Maquina(codigo, descripcion);
+            }
+
+            resultSet.close();
+            statement.close();
+
+        } catch (Exception e) {
+            System.err.println("A ocurrido un ERROR.");
+            System.out.println(e);
+        }
+
+        return maquina;
     }
 
 
@@ -439,6 +507,39 @@ public class LlamadasBD {
         return mantenimientos;
     }
 
+    public Mantenimiento LeerMantenimientoConcreto(String codigoPK) {
+
+        Mantenimiento mantenimiento = new Mantenimiento();
+
+        try {
+            Connection con = Conexion();
+
+
+            String query = "SELECT * FROM MANTENIMIENTOS WHERE CODIGO = '" + codigoPK + "'";
+
+            Statement statement = con.createStatement();
+            ResultSet resultSet = statement.executeQuery(query);
+
+
+            while (resultSet.next()) {
+                String codigo = resultSet.getString("CODIGO");
+                String descripcion = resultSet.getString("DESCRIPCION");
+                String codigoMaquina = resultSet.getString("CODIGOMAQUINA");
+
+                mantenimiento = new Mantenimiento(codigo, descripcion, codigoMaquina);
+            }
+
+            resultSet.close();
+            statement.close();
+
+        } catch (Exception e) {
+            System.err.println("A ocurrido un ERROR.");
+            System.out.println(e);
+        }
+
+        return mantenimiento;
+    }
+
 
     //TAREAS
     public void InsertarTarea(Tarea nuevaTarea) {
@@ -497,6 +598,39 @@ public class LlamadasBD {
         }
 
         return tareas;
+    }
+
+    public Tarea LeerTareaConcreta(String codigoPK) {
+
+        Tarea tarea = new Tarea();
+
+        try {
+            Connection con = Conexion();
+
+
+            String query = "SELECT * FROM TAREAS WHERE CODIGO = '" + codigoPK + "'";
+
+            Statement statement = con.createStatement();
+            ResultSet resultSet = statement.executeQuery(query);
+
+
+            while (resultSet.next()) {
+                String codigo = resultSet.getString("CODIGO");
+                String descripcion = resultSet.getString("DESCRIPCION");
+                String codigoMaquina = resultSet.getString("CODIGOMAQUINA");
+
+                tarea = new Tarea(codigo, descripcion, codigoMaquina);
+            }
+
+            resultSet.close();
+            statement.close();
+
+        } catch (Exception e) {
+            System.err.println("A ocurrido un ERROR.");
+            System.out.println(e);
+        }
+
+        return tarea;
     }
 
 
@@ -563,6 +697,41 @@ public class LlamadasBD {
         return trabajoTareas;
     }
 
+    public TrabajoTarea LeerTrabajoTareaConcreta(String codigoPK) {
+
+        TrabajoTarea trabajoTarea = new TrabajoTarea();
+
+        try {
+            Connection con = Conexion();
+
+
+            String query = "SELECT * FROM TRABAJOTAREAS WHERE CODIGO = '" + codigoPK + "'";
+
+            Statement statement = con.createStatement();
+            ResultSet resultSet = statement.executeQuery(query);
+
+
+            while (resultSet.next()) {
+                String duracion = resultSet.getString("DURACION");
+                String fechaRealizacion = resultSet.getString("FECHAREALIZACION");
+                String dniTrabajador = resultSet.getString("DNITRABAJADOR");
+                String codigoTarea = resultSet.getString("CODIGOTAREA");
+
+                trabajoTarea = new TrabajoTarea(Integer.parseInt(duracion), Integer.parseInt(fechaRealizacion), dniTrabajador, codigoTarea);
+
+            }
+
+            resultSet.close();
+            statement.close();
+
+        } catch (Exception e) {
+            System.err.println("A ocurrido un ERROR.");
+            System.out.println(e);
+        }
+
+        return trabajoTarea;
+    }
+
 
 
     //TRABAJOMANTENIMIENTO
@@ -626,6 +795,42 @@ public class LlamadasBD {
 
         return trabajoMantenimientos;
     }
+
+    public TrabajoMantenimiento LeerTrabajoMantenimientoConcreto(String codigoPK) {
+
+        TrabajoMantenimiento trabajoMantenimiento = new TrabajoMantenimiento();
+
+        try {
+            Connection con = Conexion();
+
+
+            String query = "SELECT * FROM TRABAJOMANTENIMIENTOS WHERE CODIGO = '" + codigoPK + "'";
+
+            Statement statement = con.createStatement();
+            ResultSet resultSet = statement.executeQuery(query);
+
+
+            while (resultSet.next()) {
+                String duracion = resultSet.getString("DURACION");
+                String fechaRealizacion = resultSet.getString("FECHAREALIZACION");
+                String dniTrabajador = resultSet.getString("DNITRABAJADOR");
+                String codigoMantenimiento = resultSet.getString("CODIGOMANTENIMIENTO");
+
+                trabajoMantenimiento = new TrabajoMantenimiento(Integer.parseInt(duracion), Integer.parseInt(fechaRealizacion), dniTrabajador, codigoMantenimiento);
+
+            }
+
+            resultSet.close();
+            statement.close();
+
+        } catch (Exception e) {
+            System.err.println("A ocurrido un ERROR.");
+            System.out.println(e);
+        }
+
+        return trabajoMantenimiento;
+    }
+
 
 
 
