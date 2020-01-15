@@ -2,35 +2,35 @@ package com.company.Clases;
 
 public class Trabajador {
 
-    private int dni;
+    private String dni;
     private String nombre;
     private String apellido1;
     private String apellido2;
-    private String foto;
+    private String rutaFoto;
 
     public Trabajador() {
     }
 
-    public Trabajador(int dni, String nombre, String apellido1, String apellido2, String foto) {
+    public Trabajador(String dni, String nombre, String apellido1, String apellido2, String rutaFoto) {
         this.dni = dni;
         this.nombre = nombre;
         this.apellido1 = apellido1;
         this.apellido2 = apellido2;
-        this.foto = foto;
+        this.rutaFoto = rutaFoto;
     }
 
-    public Trabajador(int dni, String nombre, String apellido1, String apellido2) {
+    public Trabajador(String dni, String nombre, String apellido1, String apellido2) {
         this.dni = dni;
         this.nombre = nombre;
         this.apellido1 = apellido1;
         this.apellido2 = apellido2;
     }
 
-    public int getDni() {
+    public String getDni() {
         return dni;
     }
 
-    public void setDni(int dni) {
+    public void setDni(String dni) {
         this.dni = dni;
     }
 
@@ -58,11 +58,11 @@ public class Trabajador {
         this.apellido2 = apellido2;
     }
 
-    public String getFoto() {
-        return foto;
+    public String getRutaFoto() {
+        return rutaFoto;
     }
 
-    public void setFoto(String foto) {
-        this.foto = foto;
+    public void setRutaFoto(String rutaFoto) {
+        this.rutaFoto = rutaFoto;
     }
 }

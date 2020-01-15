@@ -1,8 +1,11 @@
 package com.company;
 
+import com.company.Clases.*;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.SQLException;
 
 public class LlamadasBD {
 
@@ -108,6 +111,11 @@ public class LlamadasBD {
             e.getMessage();
         }
 
+        try {
+            preparedStatement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
     }
 
@@ -240,11 +248,178 @@ public class LlamadasBD {
         }
 
 
-
-
+        try {
+            preparedStatement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
     }
 
+
+
+    //TRABAJADORES
+    public void InsertarTrabajador(Trabajador nuevoTrabajador){
+        PreparedStatement preparedStatement;
+        Connection con = Conexion();
+
+        try{
+
+            String query = " INSERT INTO TRABAJADORES (DNI, NOMBRE, APELLIDO1, APELLIDO2, FOTO)"
+                    + " VALUES (?, ?, ?, ?, ?)";
+
+            preparedStatement = con.prepareStatement(query);
+
+            preparedStatement.setString(1, nuevoTrabajador.getDni());
+            preparedStatement.setString(2, nuevoTrabajador.getNombre());
+            preparedStatement.setString(3, nuevoTrabajador.getApellido1());
+            preparedStatement.setString(4, nuevoTrabajador.getApellido2());
+            preparedStatement.setString(5,nuevoTrabajador.getRutaFoto());
+            preparedStatement.execute();
+
+            System.out.println("Operación existosa");
+
+        }catch (Exception e){
+            System.out.println("A ocurrido un ERROR");
+            System.out.println(e);
+        }
+    }
+
+
+    //MÁQUINAS
+    public void InsertarMaquina(Maquina nuevaMaquina){
+        PreparedStatement preparedStatement;
+        Connection con = Conexion();
+
+        try{
+
+            String query = " INSERT INTO MAQUINAS (CODIGO, DESCRIPCION)"
+                    + " VALUES (?, ?)";
+
+            preparedStatement = con.prepareStatement(query);
+
+            preparedStatement.setString(1, nuevaMaquina.getCodigo());
+            preparedStatement.setString(2, nuevaMaquina.getDescripcion());
+
+            preparedStatement.execute();
+
+            System.out.println("Operación existosa");
+
+        }catch (Exception e){
+            System.out.println("A ocurrido un ERROR");
+            System.out.println(e);
+        }
+    }
+
+
+
+    //MANTENIMIENTOS
+    public void InsertarMantenimiento(Mantenimiento nuevoMantenimiento){
+        PreparedStatement preparedStatement;
+        Connection con = Conexion();
+
+        try{
+
+            String query = " INSERT INTO MANTENIMIENTOS (CODIGO, DESCRIPCION, CODIGOMAQUINA)"
+                    + " VALUES (?, ?, ?)";
+
+            preparedStatement = con.prepareStatement(query);
+
+            preparedStatement.setString(1, nuevoMantenimiento.getCodigo());
+            preparedStatement.setString(2, nuevoMantenimiento.getDescripcion());
+            preparedStatement.setString(3, nuevoMantenimiento.getCodigoMaquina());
+            preparedStatement.execute();
+
+            System.out.println("Operación existosa");
+
+        }catch (Exception e){
+            System.out.println("A ocurrido un ERROR");
+            System.out.println(e);
+        }
+    }
+
+
+
+    //TAREAS
+    public void InsertarTarea(Tarea nuevaTarea){
+        PreparedStatement preparedStatement;
+        Connection con = Conexion();
+
+        try{
+
+            String query = " INSERT INTO TAREAS (CODIGO, DESCRIPCION, CODIGOMAQUINA)"
+                    + " VALUES (?, ?, ?)";
+
+            preparedStatement = con.prepareStatement(query);
+
+            preparedStatement.setString(1, nuevaTarea.getCodigo());
+            preparedStatement.setString(2, nuevaTarea.getDescripcion());
+            preparedStatement.setString(3, nuevaTarea.getCodigoMaquina());
+            preparedStatement.execute();
+
+            System.out.println("Operación existosa");
+
+        }catch (Exception e){
+            System.out.println("A ocurrido un ERROR");
+            System.out.println(e);
+        }
+    }
+
+
+
+    //TRABAJOTAREA
+    public void InsertarTrabajoTarea(TrabajoTarea nuevoTrabajoTarea){
+        PreparedStatement preparedStatement;
+        Connection con = Conexion();
+
+        try{
+
+            String query = " INSERT INTO TRABAJOTAREAS (DURACION, FECHAREALIZACION, DNITRABAJADOR, CODIGOTAREA)"
+                    + " VALUES (?, ?, ?, ?)";
+
+            preparedStatement = con.prepareStatement(query);
+
+            preparedStatement.setInt(1, nuevoTrabajoTarea.getDuracion());
+            preparedStatement.setInt(2, nuevoTrabajoTarea.getFechaRealizacion());
+            preparedStatement.setString(3, nuevoTrabajoTarea.getDniTrabajador());
+            preparedStatement.setString(4, nuevoTrabajoTarea.getCodigoTarea());
+            preparedStatement.execute();
+
+            System.out.println("Operación existosa");
+
+        }catch (Exception e){
+            System.out.println("A ocurrido un ERROR");
+            System.out.println(e);
+        }
+    }
+
+
+
+    //TRABAJOMANTENIMIENTO
+    public void InsertarTrabajoMantenimiento(TrabajoMantenimiento nuevoTrabajoMantenimiento){
+        PreparedStatement preparedStatement;
+        Connection con = Conexion();
+
+        try{
+
+            String query = " INSERT INTO TRABAJOMANTENIMIENTO (DURACION, FECHAREALIZACION, DNITRABAJADOR, CODIGOTAREA)"
+                    + " VALUES (?, ?, ?, ?)";
+
+            preparedStatement = con.prepareStatement(query);
+
+            preparedStatement.setInt(1, nuevoTrabajoMantenimiento.getDuracion());
+            preparedStatement.setInt(2, nuevoTrabajoMantenimiento.getFechaRealizacion());
+            preparedStatement.setString(3, nuevoTrabajoMantenimiento.getDniTrabajador());
+            preparedStatement.setString(4, nuevoTrabajoMantenimiento.getCodigoMantenimiento());
+            preparedStatement.execute();
+
+            System.out.println("Operación existosa");
+
+        }catch (Exception e){
+            System.out.println("A ocurrido un ERROR");
+            System.out.println(e);
+        }
+    }
 
 
 }
