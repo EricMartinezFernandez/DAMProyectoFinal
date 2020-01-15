@@ -155,7 +155,8 @@ public class LlamadasBD {
 
         String createTrabajoTareas = "CREATE TABLE TRABAJOTAREAS(" +
                 "CODIGO INTEGER PRIMARY KEY NOT NULL AUTO_INCREMENT," +
-                "TIEMPO INTEGER NOT NULL," +
+                "DURACION INTEGER NOT NULL," +
+                "FECHAREALIZACION INTEGER NOT NULL," +
                 "DNITRABAJADOR VARCHAR(9) NOT NULL," +
                 "CODIGOTAREA VARCHAR(255) NOT NULL," +
                 "FOREIGN KEY (DNITRABAJADOR) REFERENCES TRABAJADORES(DNI) ON DELETE CASCADE," +
@@ -163,7 +164,8 @@ public class LlamadasBD {
 
         String createTrabajoMantenimientos = "CREATE TABLE TRABAJOMANTENIMIENTO(" +
                 "CODIGO INTEGER PRIMARY KEY NOT NULL AUTO_INCREMENT," +
-                "TIEMPO INTEGER NOT NULL," +
+                "DURACION INTEGER NOT NULL," +
+                "FECHAREALIZACION INTEGER NOT NULL," +
                 "DNITRABAJADOR VARCHAR(9) NOT NULL," +
                 "CODIGOMANTENIMIENTO VARCHAR(255) NOT NULL," +
                 "FOREIGN KEY (DNITRABAJADOR) REFERENCES TRABAJADORES(DNI) ON DELETE CASCADE," +
@@ -242,5 +244,7 @@ public class LlamadasBD {
 
 
     }
+
+
 
 }
