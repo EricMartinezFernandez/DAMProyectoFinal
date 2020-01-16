@@ -354,6 +354,28 @@ public class LlamadasBD {
         return trabajador;
     }
 
+    public void EliminarTrabajador(String dniPK){
+        Connection con = Conexion();
+        PreparedStatement preparedStatement;
+
+        try {
+
+            String query =  "DELETE FROM TRABAJADORES WHERE DNI = '" + dniPK + "'";
+
+            preparedStatement = con.prepareStatement(query);
+
+            preparedStatement.execute();
+            preparedStatement.close();
+
+
+        } catch (SQLException e) {
+
+            System.out.println("A ocurrido un ERROR");
+            System.out.println(e);
+        }
+
+    }
+
 
     //MÁQUINAS
     public void InsertarMaquina(Maquina nuevaMaquina) {
@@ -445,6 +467,28 @@ public class LlamadasBD {
         }
 
         return maquina;
+    }
+
+    public void EliminarMaquina(String codigoPK){
+        Connection con = Conexion();
+        PreparedStatement preparedStatement;
+
+        try {
+
+            String query =  "DELETE FROM MAQUINAS WHERE CODIGO = '" + codigoPK + "'";
+
+            preparedStatement = con.prepareStatement(query);
+
+            preparedStatement.execute();
+            preparedStatement.close();
+
+
+        } catch (SQLException e) {
+
+            System.out.println("A ocurrido un ERROR");
+            System.out.println(e);
+        }
+
     }
 
 
@@ -540,6 +584,28 @@ public class LlamadasBD {
         return mantenimiento;
     }
 
+    public void EliminarMantenimiento(String codigoPK){
+        Connection con = Conexion();
+        PreparedStatement preparedStatement;
+
+        try {
+
+            String query =  "DELETE FROM MANTENIMIENTOS WHERE CODIGO = '" + codigoPK + "'";
+
+            preparedStatement = con.prepareStatement(query);
+
+            preparedStatement.execute();
+            preparedStatement.close();
+
+
+        } catch (SQLException e) {
+
+            System.out.println("A ocurrido un ERROR");
+            System.out.println(e);
+        }
+
+    }
+
 
     //TAREAS
     public void InsertarTarea(Tarea nuevaTarea) {
@@ -631,6 +697,28 @@ public class LlamadasBD {
         }
 
         return tarea;
+    }
+
+    public void EliminarTarea(String codigoPK){
+        Connection con = Conexion();
+        PreparedStatement preparedStatement;
+
+        try {
+
+            String query =  "DELETE FROM TAREAS WHERE CODIGO = '" + codigoPK + "'";
+
+            preparedStatement = con.prepareStatement(query);
+
+            preparedStatement.execute();
+            preparedStatement.close();
+
+
+        } catch (SQLException e) {
+
+            System.out.println("A ocurrido un ERROR");
+            System.out.println(e);
+        }
+
     }
 
 
@@ -732,6 +820,29 @@ public class LlamadasBD {
         return trabajoTarea;
     }
 
+    public void EliminarTrabajoTarea(String codigoPK){
+        Connection con = Conexion();
+        PreparedStatement preparedStatement;
+
+        try {
+
+            String query =  "DELETE FROM TRABAJOTAREAS WHERE CODIGO = '" + codigoPK + "'";
+
+            preparedStatement = con.prepareStatement(query);
+
+            preparedStatement.execute();
+            preparedStatement.close();
+
+
+        } catch (SQLException e) {
+
+            System.out.println("A ocurrido un ERROR");
+            System.out.println(e);
+        }
+
+    }
+
+
 
 
     //TRABAJOMANTENIMIENTO
@@ -830,6 +941,29 @@ public class LlamadasBD {
 
         return trabajoMantenimiento;
     }
+
+    public void EliminarTrabajoMantenimiento(String codigoPK){
+        Connection con = Conexion();
+        PreparedStatement preparedStatement;
+
+        try {
+
+            String query =  "DELETE FROM TRABAJOMANTENIMIENTOS WHERE CODIGO = '" + codigoPK + "'";
+
+            preparedStatement = con.prepareStatement(query);
+
+            preparedStatement.execute();
+            preparedStatement.close();
+
+
+        } catch (SQLException e) {
+
+            System.out.println("A ocurrido un ERROR");
+            System.out.println(e);
+        }
+
+    }
+
 
 
 

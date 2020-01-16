@@ -11,7 +11,7 @@ public class Main {
         System.out.println("Hola mundo");
         LlamadasBD llamadasBD = new LlamadasBD();
 
-        llamadasBD.ReiniciarBasesDeDatos();
+        //llamadasBD.ReiniciarBasesDeDatos();
 
     }
 }
