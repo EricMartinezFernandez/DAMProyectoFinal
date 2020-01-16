@@ -376,6 +376,31 @@ public class LlamadasBD {
 
     }
 
+    public void ModificarTrabajador(Trabajador trabajador){
+        Connection con = Conexion();
+        PreparedStatement preparedStatement;
+
+        try{
+            String query = "UPDATE TRABAJADORES" +
+                    " set DNI = '"+ trabajador.getDni()+"'"+
+                    ",NOMBRE = '" +trabajador.getNombre()+"'"+
+                    ",APELLIDO1 = '"+ trabajador.getApellido1()+"'"+
+                    ",APELLIDO2 = '"+ trabajador.getApellido2()+"'"+
+                    ",FOTO = '"+ trabajador.getRutaFoto()+"'"+
+                    " where DNI = '" + trabajador.getDni() + "'";
+
+            preparedStatement = con.prepareStatement(query);
+
+            preparedStatement.executeUpdate();
+            preparedStatement.close();
+
+
+        }catch (Exception e) {
+            System.err.println("A ocurrido un ERROR.");
+            e.getMessage();
+        }
+    }
+
 
     //MÁQUINAS
     public void InsertarMaquina(Maquina nuevaMaquina) {
@@ -490,6 +515,29 @@ public class LlamadasBD {
         }
 
     }
+
+    public void ModificarMaquina(Maquina maquina){
+        Connection con = Conexion();
+        PreparedStatement preparedStatement;
+
+        try{
+            String query = "UPDATE TRABAJADORES" +
+                    " set CODIGO = '"+ maquina.getCodigo()+"'"+
+                    ",DESCRIPCION = '" +maquina.getDescripcion()+"'"+
+                    " where CODIGO = '" + maquina.getCodigo() + "'";
+
+            preparedStatement = con.prepareStatement(query);
+
+            preparedStatement.executeUpdate();
+            preparedStatement.close();
+
+
+        }catch (Exception e) {
+            System.err.println("A ocurrido un ERROR.");
+            e.getMessage();
+        }
+    }
+
 
 
     //MANTENIMIENTOS
@@ -606,6 +654,30 @@ public class LlamadasBD {
 
     }
 
+    public void ModificarMantenimiento(Mantenimiento mantenimiento){
+        Connection con = Conexion();
+        PreparedStatement preparedStatement;
+
+        try{
+            String query = "UPDATE MANTENIMIENTOS" +
+                    " set CODIGO = '"+ mantenimiento.getCodigo()+"'"+
+                    ",DESCRIPCION = '" +mantenimiento.getDescripcion()+"'"+
+                    ",CODIGOMAQUINA = '" +mantenimiento.getCodigoMaquina()+"'"+
+                    " where CODIGO = '" + mantenimiento.getCodigo() + "'";
+
+            preparedStatement = con.prepareStatement(query);
+
+            preparedStatement.executeUpdate();
+            preparedStatement.close();
+
+
+        }catch (Exception e) {
+            System.err.println("A ocurrido un ERROR.");
+            e.getMessage();
+        }
+    }
+
+
 
     //TAREAS
     public void InsertarTarea(Tarea nuevaTarea) {
@@ -720,6 +792,30 @@ public class LlamadasBD {
         }
 
     }
+
+    public void ModificarTarea(Tarea tarea){
+        Connection con = Conexion();
+        PreparedStatement preparedStatement;
+
+        try{
+            String query = "UPDATE TAREAS" +
+                    " set CODIGO = '"+ tarea.getCodigo()+"'"+
+                    ",DESCRIPCION = '" +tarea.getDescripcion()+"'"+
+                    ",CODIGOMAQUINA = '" +tarea.getCodigoMaquina()+"'"+
+                    " where CODIGO = '" + tarea.getCodigo() + "'";
+
+            preparedStatement = con.prepareStatement(query);
+
+            preparedStatement.executeUpdate();
+            preparedStatement.close();
+
+
+        }catch (Exception e) {
+            System.err.println("A ocurrido un ERROR.");
+            e.getMessage();
+        }
+    }
+
 
 
 
@@ -842,6 +938,29 @@ public class LlamadasBD {
 
     }
 
+    public void ModificarTrabajoTarea(TrabajoTarea trabajoTarea){
+        Connection con = Conexion();
+        PreparedStatement preparedStatement;
+
+        try{
+            String query = "UPDATE TRABAJOTAREAS" +
+                    " set DURACION = '"+ trabajoTarea.getDuracion()+"'"+
+                    ",FECHAREALIZACION = '" +trabajoTarea.getFechaRealizacion()+"'"+
+                    ",DNITRABAJADOR = '"+ trabajoTarea.getDniTrabajador()+"'"+
+                    ",CODIGOTAREA = '"+ trabajoTarea.getCodigoTarea()+"'"+
+                    " where CODIGO = '" + trabajoTarea.getCodigo() + "'";
+
+            preparedStatement = con.prepareStatement(query);
+
+            preparedStatement.executeUpdate();
+            preparedStatement.close();
+
+
+        }catch (Exception e) {
+            System.err.println("A ocurrido un ERROR.");
+            e.getMessage();
+        }
+    }
 
 
 
@@ -962,6 +1081,30 @@ public class LlamadasBD {
             System.out.println(e);
         }
 
+    }
+
+    public void ModificarTrabajoMantenimiento(TrabajoMantenimiento trabajoMantenimiento){
+        Connection con = Conexion();
+        PreparedStatement preparedStatement;
+
+        try{
+            String query = "UPDATE TRABAJOMANTENIMIENTOS" +
+                    " set DURACION = '"+ trabajoMantenimiento.getDuracion()+"'"+
+                    ",FECHAREALIZACION = '" +trabajoMantenimiento.getFechaRealizacion()+"'"+
+                    ",DNITRABAJADOR = '"+ trabajoMantenimiento.getDniTrabajador()+"'"+
+                    ",CODIGOTAREA = '"+ trabajoMantenimiento.getCodigoMantenimiento()+"'"+
+                    " where CODIGO = '" + trabajoMantenimiento.getCodigo() + "'";
+
+            preparedStatement = con.prepareStatement(query);
+
+            preparedStatement.executeUpdate();
+            preparedStatement.close();
+
+
+        }catch (Exception e) {
+            System.err.println("A ocurrido un ERROR.");
+            e.getMessage();
+        }
     }
 
 

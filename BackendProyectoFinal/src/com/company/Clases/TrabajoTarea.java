@@ -1,6 +1,7 @@
 package com.company.Clases;
 
 public class TrabajoTarea {
+    private int codigo;
     private int duracion;
     private int fechaRealizacion;
     private String dniTrabajador;
@@ -51,5 +52,13 @@ public class TrabajoTarea {
 
     public void setCodigoTarea(String codigoTarea) {
         this.codigoTarea = codigoTarea;
+    }
+
+    public int getCodigo() {
+        return codigo;
+    }
+
+    public void setCodigo(int codigo) {
+        this.codigo = codigo;
     }
 }

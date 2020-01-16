@@ -1,6 +1,8 @@
 package com.company.Clases;
 
 public class TrabajoMantenimiento {
+
+    private int codigo;
     private int duracion;
     private int fechaRealizacion;
     private String dniTrabajador;
@@ -51,5 +53,13 @@ public class TrabajoMantenimiento {
 
     public void setCodigoMantenimiento(String codigoMantenimiento) {
         this.codigoMantenimiento = codigoMantenimiento;
+    }
+
+    public int getCodigo() {
+        return codigo;
+    }
+
+    public void setCodigo(int codigo) {
+        this.codigo = codigo;
     }
 }
