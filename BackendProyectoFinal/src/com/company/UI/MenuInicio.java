@@ -13,6 +13,20 @@ public class MenuInicio {
     private static JFrame frame;
 
     public MenuInicio() {
+        frame = new JFrame("Menu principal");
+        frame.setSize(1280, 720);
+        frame.setContentPane(panelMenuInicio);
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        //frame.setResizable(false);
+        frame.setLocationRelativeTo(null);
+        frame.pack();
+        frame.setVisible(true);
+
+
+
+
+
+
         DatosButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -30,17 +44,6 @@ public class MenuInicio {
 
             }
         });
-    }
-
-    public static void main(String[] args) {
-        frame = new JFrame("Menu principal");
-        frame.setSize(1280, 720);
-        frame.setContentPane(new MenuInicio().panelMenuInicio);
-        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        //frame.setResizable(false);
-        frame.setLocationRelativeTo(null);
-        frame.pack();
-        frame.setVisible(true);
     }
 
 

@@ -1,6 +1,8 @@
 package com.company.UI;
 
 import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class MenuSeleccionDeTabla {
     private JButton TareasButton;
@@ -20,5 +22,22 @@ public class MenuSeleccionDeTabla {
         frame.pack();
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
+
+
+
+        VolverButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                MenuInicio menuInicio = new MenuInicio();
+                frame.dispose();
+            }
+        });
+
+
+
+
+
+
+
     }
 }
