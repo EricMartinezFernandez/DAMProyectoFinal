@@ -34,7 +34,40 @@ public class MenuSeleccionDeTabla {
         });
 
 
+        TrabajadoresButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                TablaDeSeleccion tablaDeSeleccion = new TablaDeSeleccion(0);
+                frame.dispose();
+            }
+        });
 
+
+        TareasButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                TablaDeSeleccion tablaDeSeleccion = new TablaDeSeleccion(1);
+                frame.dispose();
+            }
+        });
+
+
+        MaquinasButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                TablaDeSeleccion tablaDeSeleccion = new TablaDeSeleccion(2);
+                frame.dispose();
+            }
+        });
+
+
+        MantenimientosButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                TablaDeSeleccion tablaDeSeleccion = new TablaDeSeleccion(3);
+                frame.dispose();
+            }
+        });
 
 
 
