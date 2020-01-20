@@ -3,6 +3,7 @@ package com.company.UI;
 import com.company.Clases.Mantenimiento;
 import com.company.Clases.Maquina;
 import com.company.Clases.Tarea;
+import com.company.Clases.Trabajador;
 import com.company.LlamadasBD;
 
 import javax.swing.*;
@@ -10,6 +11,7 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.jar.Attributes;
 
 public class TablaDeSeleccion {
     private JButton VolverButton;
@@ -42,12 +44,26 @@ public class TablaDeSeleccion {
 
             case 0:
                 //Trabajadores (Requiere de un modelo personalizado para poder visualizar las imágenes de los empleados.)
+                model = new DefaultTableModel() {
+                    String[] columnas = {"DNI", "Nombre", "Apellido 1", "Apellido 2", "Foto"};
+
+                    @Override
+                    public int getColumnCount() {
+                        return columnas.length;
+                    }
+
+                    @Override
+                    public String getColumnName(int index) {
+                        return columnas[index];
+                    }
+
+                };
 
                 break;
 
             case 1:
                 //Tareas
-                    model  = new DefaultTableModel(){
+                model = new DefaultTableModel() {
                     String[] columnas = {"Codigo", "Descripción", "Código máquina"};
 
                     @Override
@@ -67,7 +83,7 @@ public class TablaDeSeleccion {
 
             case 2:
                 //Máquinas
-                model  = new DefaultTableModel(){
+                model = new DefaultTableModel() {
                     String[] columnas = {"Codigo", "Descripción"};
 
                     @Override
@@ -86,7 +102,7 @@ public class TablaDeSeleccion {
 
             case 3:
                 //Mantenimiento
-                model  = new DefaultTableModel(){
+                model = new DefaultTableModel() {
                     String[] columnas = {"Codigo", "Descripción", "Código máquina"};
 
                     @Override
@@ -112,6 +128,12 @@ public class TablaDeSeleccion {
             case 0:
                 //Trabajadores (Requiere de un modelo personalizado para poder visualizar las imágenes de los empleados.)
 
+                ArrayList<Trabajador> trabajadores = new ArrayList<>();
+                trabajadores = llamadasBD.LeerTrabajadores();
+
+                for (int i = 0; i < trabajadores.size(); i++) {
+                    model.addRow(new Object[]{trabajadores.get(i).getDni(), trabajadores.get(i).getNombre(), trabajadores.get(i).getApellido1(), trabajadores.get(i).getApellido2(), trabajadores.get(i).getRutaFoto()});
+                }
                 break;
 
             case 1:
@@ -167,18 +189,30 @@ public class TablaDeSeleccion {
 
                 String columna = String.valueOf(table1.getValueAt(table1.getSelectedRow(), table1.getSelectedColumn()));
 
-                switch (IDTabla){
+                switch (IDTabla) {
 
                     case 0:
+                        //Trabajadores
+                        Trabajador trabajador;
+
+                        //Recojo la PK del la fila que a seleccionado el usuario, por ello se bloquea el campo en 0, que es la ubicación común de PK en la tabla.
+                        trabajador = llamadasBD.LeerTrabajadorConcreto(String.valueOf(table1.getValueAt(table1.getSelectedRow(), 0)));
+
                         break;
 
                     case 1:
+                        //Tareas
+
                         break;
 
                     case 2:
+                        //Máquinas
+
                         break;
 
                     case 3:
+                        //Mantenimientos
+
                         break;
 
 
