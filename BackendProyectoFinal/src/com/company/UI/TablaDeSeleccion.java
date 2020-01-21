@@ -5,6 +5,7 @@ import com.company.Clases.Maquina;
 import com.company.Clases.Tarea;
 import com.company.Clases.Trabajador;
 import com.company.LlamadasBD;
+import com.company.UI.MenusEdicion.TareaEdicion;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -202,6 +203,12 @@ public class TablaDeSeleccion {
 
                     case 1:
                         //Tareas
+                        Tarea tarea;
+
+                        tarea = llamadasBD.LeerTareaConcreta(String.valueOf(table1.getValueAt(table1.getSelectedRow(), 0)));
+
+                        TareaEdicion tareaEdicion = new TareaEdicion(true, tarea);
+                        frame.dispose();
 
                         break;
 
