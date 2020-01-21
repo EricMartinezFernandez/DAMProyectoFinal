@@ -2,6 +2,7 @@ package com.company;
 
 import com.company.Clases.*;
 
+import javax.swing.*;
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -275,6 +276,8 @@ public class LlamadasBD {
             preparedStatement.execute();
 
             System.out.println("Operación existosa");
+            JOptionPane.showMessageDialog(null, "Trabajador creado correctamente.");
+
 
         } catch (Exception e) {
             System.out.println("A ocurrido un ERROR");
@@ -354,6 +357,41 @@ public class LlamadasBD {
         return trabajador;
     }
 
+    public ArrayList<Trabajador> LeerTrabajadorFiltrado(String dniPK) {
+
+        ArrayList<Trabajador> trabajadores = new ArrayList<>();
+
+        try {
+            Connection con = Conexion();
+
+            String query = "SELECT * FROM TRABAJADORES WHERE DNI LIKE '" + dniPK + "%'";
+
+            Statement statement = con.createStatement();
+            ResultSet resultSet = statement.executeQuery(query);
+
+
+            while (resultSet.next()) {
+                String dni = resultSet.getString("DNI");
+                String nombre = resultSet.getString("NOMBRE");
+                String apellido1 = resultSet.getString("APELLIDO1");
+                String apellido2 = resultSet.getString("APELLIDO2");
+                String foto = resultSet.getString("FOTO");
+
+
+                trabajadores.add(new Trabajador(dni, nombre, apellido1, apellido2, foto));
+        }
+
+            resultSet.close();
+            statement.close();
+
+        } catch (Exception e) {
+            System.err.println("A ocurrido un ERROR.");
+            System.out.println(e);
+        }
+
+        return trabajadores;
+    }
+
     public void EliminarTrabajador(String dniPK){
         Connection con = Conexion();
         PreparedStatement preparedStatement;
@@ -420,6 +458,8 @@ public class LlamadasBD {
             preparedStatement.execute();
 
             System.out.println("Operación existosa");
+            JOptionPane.showMessageDialog(null, "Máquina creada correctamente.");
+
 
         } catch (Exception e) {
             System.out.println("A ocurrido un ERROR");
@@ -494,6 +534,39 @@ public class LlamadasBD {
         return maquina;
     }
 
+    public ArrayList<Maquina> LeerMaquinaFiltrada(String codigoPK) {
+
+        ArrayList<Maquina> maquinas = new ArrayList<>();
+
+        try {
+            Connection con = Conexion();
+
+
+            String query = "SELECT * FROM MAQUINAS WHERE CODIGO LIKE '" + codigoPK + "%'";
+
+            Statement statement = con.createStatement();
+            ResultSet resultSet = statement.executeQuery(query);
+
+
+            while (resultSet.next()) {
+                String codigo = resultSet.getString("CODIGO");
+                String descripcion = resultSet.getString("DESCRIPCION");
+
+
+                maquinas.add(new Maquina(codigo, descripcion));
+            }
+
+            resultSet.close();
+            statement.close();
+
+        } catch (Exception e) {
+            System.err.println("A ocurrido un ERROR.");
+            System.out.println(e);
+        }
+
+        return maquinas;
+    }
+
     public void EliminarMaquina(String codigoPK){
         Connection con = Conexion();
         PreparedStatement preparedStatement;
@@ -558,6 +631,8 @@ public class LlamadasBD {
             preparedStatement.execute();
 
             System.out.println("Operación existosa");
+            JOptionPane.showMessageDialog(null, "Mantenimiento creado correctamente.");
+
 
         } catch (Exception e) {
             System.out.println("A ocurrido un ERROR");
@@ -632,6 +707,39 @@ public class LlamadasBD {
         return mantenimiento;
     }
 
+    public ArrayList<Mantenimiento> LeerMantenimientoFiltrado(String codigoPK) {
+
+        ArrayList<Mantenimiento> mantenimientos = new ArrayList<>();
+
+        try {
+            Connection con = Conexion();
+
+
+            String query = "SELECT * FROM MANTENIMIENTOS WHERE CODIGO LIKE '" + codigoPK + "%'";
+
+            Statement statement = con.createStatement();
+            ResultSet resultSet = statement.executeQuery(query);
+
+
+            while (resultSet.next()) {
+                String codigo = resultSet.getString("CODIGO");
+                String descripcion = resultSet.getString("DESCRIPCION");
+                String codigoMaquina = resultSet.getString("CODIGOMAQUINA");
+
+                mantenimientos.add(new Mantenimiento(codigo, descripcion, codigoMaquina));
+            }
+
+            resultSet.close();
+            statement.close();
+
+        } catch (Exception e) {
+            System.err.println("A ocurrido un ERROR.");
+            System.out.println(e);
+        }
+
+        return mantenimientos;
+    }
+
     public void EliminarMantenimiento(String codigoPK){
         Connection con = Conexion();
         PreparedStatement preparedStatement;
@@ -697,6 +805,7 @@ public class LlamadasBD {
             preparedStatement.execute();
 
             System.out.println("Operación existosa");
+            JOptionPane.showMessageDialog(null, "Tarea creada correctamente.");
 
         } catch (Exception e) {
             System.out.println("A ocurrido un ERROR");
@@ -771,13 +880,46 @@ public class LlamadasBD {
         return tarea;
     }
 
+    public ArrayList<Tarea> LeerTareaFiltrada(String codigoPK) {
+
+        ArrayList<Tarea> tareas = new ArrayList<>();
+
+        try {
+            Connection con = Conexion();
+
+
+            String query = "SELECT * FROM TAREAS WHERE CODIGO = '" + codigoPK + "'";
+
+            Statement statement = con.createStatement();
+            ResultSet resultSet = statement.executeQuery(query);
+
+
+            while (resultSet.next()) {
+                String codigo = resultSet.getString("CODIGO");
+                String descripcion = resultSet.getString("DESCRIPCION");
+                String codigoMaquina = resultSet.getString("CODIGOMAQUINA");
+
+                tareas.add(new Tarea(codigo, descripcion, codigoMaquina));
+            }
+
+            resultSet.close();
+            statement.close();
+
+        } catch (Exception e) {
+            System.err.println("A ocurrido un ERROR.");
+            System.out.println(e);
+        }
+
+        return tareas;
+    }
+
     public void EliminarTarea(String codigoPK){
         Connection con = Conexion();
         PreparedStatement preparedStatement;
 
         try {
 
-            String query =  "DELETE FROM TAREAS WHERE CODIGO = '" + codigoPK + "'";
+            String query =  "DELETE FROM TAREAS WHERE CODIGO LIKE '" + codigoPK + "%'";
 
             preparedStatement = con.prepareStatement(query);
 
@@ -1106,8 +1248,6 @@ public class LlamadasBD {
             e.getMessage();
         }
     }
-
-
 
 
 

@@ -8,6 +8,7 @@ import com.company.LlamadasBD;
 import com.company.UI.MenusEdicion.TareaEdicion;
 
 import javax.swing.*;
+import javax.swing.plaf.basic.BasicTreeUI;
 import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -19,10 +20,11 @@ public class TablaDeSeleccion {
     private JPanel PanelTablaDeSeleccion;
     private JLabel TituloText;
     private JTable table1;
-    private JComboBox comboBox1;
-    private JTextField textField1;
+    private JTextField TextUserPK;
     private JButton EditarButton;
     private JButton CrearButton;
+    private JButton BuscarButton;
+    private JLabel TextPK;
     JFrame frame;
 
 
@@ -45,6 +47,8 @@ public class TablaDeSeleccion {
 
             case 0:
                 //Trabajadores (Requiere de un modelo personalizado para poder visualizar las imágenes de los empleados.)
+                TextPK.setText("DNI: ");
+
                 model = new DefaultTableModel() {
                     String[] columnas = {"DNI", "Nombre", "Apellido 1", "Apellido 2", "Foto"};
 
@@ -64,6 +68,8 @@ public class TablaDeSeleccion {
 
             case 1:
                 //Tareas
+                TextPK.setText("Código: ");
+
                 model = new DefaultTableModel() {
                     String[] columnas = {"Codigo", "Descripción", "Código máquina"};
 
@@ -84,6 +90,8 @@ public class TablaDeSeleccion {
 
             case 2:
                 //Máquinas
+                TextPK.setText("Código: ");
+
                 model = new DefaultTableModel() {
                     String[] columnas = {"Codigo", "Descripción"};
 
@@ -103,6 +111,8 @@ public class TablaDeSeleccion {
 
             case 3:
                 //Mantenimiento
+                TextPK.setText("Código: ");
+
                 model = new DefaultTableModel() {
                     String[] columnas = {"Codigo", "Descripción", "Código máquina"};
 
@@ -227,5 +237,87 @@ public class TablaDeSeleccion {
 
             }
         });
+
+
+        CrearButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                switch (IDTabla) {
+                    case 0:
+                        //Trabajadores
+
+                        break;
+
+                    case 1:
+                        //Tareas
+                        Tarea tarea = new Tarea();
+                        TareaEdicion tareaEdicion = new TareaEdicion(false, tarea);
+                        frame.dispose();
+                        break;
+
+                    case 2:
+                        //Máquinas
+
+                        break;
+
+                    case 3:
+                        //Mantenimientos
+
+                        break;
+                }
+
+
+            }
+        });
+
+        //Éste botón filtra las filas de la lista en base a lo introducido en la búsqueda.
+        DefaultTableModel finalModel = model;
+        BuscarButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+
+                switch (IDTabla) {
+                    case 0:
+                        //Trabajadores
+                        ArrayList<Trabajador> trabajadores = new ArrayList<>();
+                        trabajadores = llamadasBD.LeerTrabajadorFiltrado(TextUserPK.getText());
+
+                        //Éste pequeño código sirve para limiar los datos de la tabla.
+                        int filas = finalModel.getRowCount();
+
+                        //Elimino una a una las filas de la tabla.
+                        for (int i = filas - 1; i >= 0; i--) {
+                            finalModel.removeRow(i);
+                        }
+
+                        for (int i = 0; i < trabajadores.size(); i++) {
+                            finalModel.addRow(new Object[]{trabajadores.get(i).getDni(), trabajadores.get(i).getNombre(), trabajadores.get(i).getApellido1(), trabajadores.get(i).getApellido2(), trabajadores.get(i).getRutaFoto()});
+                        }
+                        break;
+
+                    case 1:
+                        //Tareas
+                        ArrayList<Tarea> tareas = new ArrayList<>();
+
+                        break;
+
+                    case 2:
+                        //Máquinas
+
+                        break;
+
+                    case 3:
+                        //Mantenimientos
+
+                        break;
+                }
+
+
+            }
+        });
+
+
     }
 }
