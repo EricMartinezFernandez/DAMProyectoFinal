@@ -816,7 +816,7 @@ public class LlamadasBD {
 
 
     //TAREAS
-    public void InsertarTarea(Tarea nuevaTarea) {
+    public void InsertarTarea(Tarea nuevaTarea, boolean aviso) {
         PreparedStatement preparedStatement;
         Connection con = Conexion();
 
@@ -833,7 +833,12 @@ public class LlamadasBD {
             preparedStatement.execute();
 
             System.out.println("Operación existosa");
-            JOptionPane.showMessageDialog(null, "Tarea creada correctamente.");
+
+            if (aviso == true){
+                JOptionPane.showMessageDialog(null, "Tarea creada correctamente.");
+            }else{
+                JOptionPane.showMessageDialog(null, "Tarea modificada correctamente.");
+            }
 
         } catch (Exception e) {
             System.out.println("A ocurrido un ERROR");
@@ -942,7 +947,7 @@ public class LlamadasBD {
         return tareas;
     }
 
-    public void EliminarTarea(String codigoPK){
+    public void EliminarTarea(String codigoPK, boolean aviso){
         Connection con = Conexion();
         PreparedStatement preparedStatement;
 
@@ -955,7 +960,9 @@ public class LlamadasBD {
             preparedStatement.execute();
             preparedStatement.close();
 
-            JOptionPane.showMessageDialog(null, "Tarea eliminada correctamente.");
+            if (aviso == true){
+                JOptionPane.showMessageDialog(null, "Tarea eliminada correctamente.");
+            }
 
 
         } catch (SQLException e) {

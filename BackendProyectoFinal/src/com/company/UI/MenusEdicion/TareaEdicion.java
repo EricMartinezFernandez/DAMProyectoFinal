@@ -37,7 +37,7 @@ public class TareaEdicion {
         if (conObjeto == false) {
             EditarButton.setEnabled(false);
             BorrarButton.setEnabled(false);
-            ComboCodMaquina.addItem("");
+            ComboCodMaquina.addItem("Sin máquina");
 
 
             ArrayList<Maquina> maquinas = new ArrayList<>();
@@ -55,8 +55,14 @@ public class TareaEdicion {
             TextCodigo.setEnabled(false);
             TextCodigo.setText(tarea.getCodigo());
             TextDescripcion.setText(tarea.getDescripcion());
-            ComboCodMaquina.addItem("");
-            ComboCodMaquina.addItem(tarea.getCodigoMaquina());
+            ComboCodMaquina.addItem("Sin máquina");
+
+            if(tarea.getCodigoMaquina() != null){
+                ComboCodMaquina.addItem(tarea.getCodigoMaquina());
+                ComboCodMaquina.setSelectedIndex(1);
+            }else{
+                ComboCodMaquina.setSelectedIndex(0);
+            }
 
 
             ArrayList<Maquina> maquinas = new ArrayList<>();
@@ -69,7 +75,6 @@ public class TareaEdicion {
                 }
             }
 
-            ComboCodMaquina.setSelectedIndex(1);
         }
 
 
@@ -94,7 +99,7 @@ public class TareaEdicion {
                     nuevaTarea.setCodigoMaquina(ComboCodMaquina.getSelectedItem().toString());
                 }
 
-                llamadasBD.InsertarTarea(nuevaTarea);
+                llamadasBD.InsertarTarea(nuevaTarea, true);
 
                 //Una vez insertado, vacio los campos para evitar confusiones.
                 TextCodigo.setText("");
@@ -108,7 +113,7 @@ public class TareaEdicion {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                llamadasBD.EliminarTarea(tarea.getCodigo());
+                llamadasBD.EliminarTarea(tarea.getCodigo(), true);
 
 
                 //Una vez eliminado, vacio los campos para evitar confusiones.
@@ -129,11 +134,13 @@ public class TareaEdicion {
                 //Éste if detecta si hay una máquina seleccionada o el espacio está vacío. De ésta manera el objeto deja la referencia en null y no copia el texto "".
                 if (ComboCodMaquina.getSelectedIndex() != 0) {
                     nuevaTarea.setCodigoMaquina(ComboCodMaquina.getSelectedItem().toString());
+                    llamadasBD.ModificarTarea(nuevaTarea);
                 }else{
-                    nuevaTarea.setCodigoMaquina(null);
+                    //En el caso de que se anule la referencia creo de nuevo el objeto para evitar errores con la base de datos.
+                    llamadasBD.EliminarTarea(TextCodigo.getText(), false);
+                    llamadasBD.InsertarTarea(nuevaTarea, false);
                 }
 
-                llamadasBD.ModificarTarea(nuevaTarea);
             }
         });
     }

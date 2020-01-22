@@ -11,9 +11,9 @@ public class Main {
 	    // write your code here
         LlamadasBD llamadasBD = new LlamadasBD();
 
-        llamadasBD.ReiniciarBasesDeDatos();
+        //llamadasBD.ReiniciarBasesDeDatos();
 
-        //MenuInicio menuInicio = new MenuInicio();
+        MenuInicio menuInicio = new MenuInicio();
 
     }
 }
