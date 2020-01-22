@@ -5,15 +5,14 @@ import com.company.Clases.Maquina;
 import com.company.Clases.Tarea;
 import com.company.Clases.Trabajador;
 import com.company.LlamadasBD;
+import com.company.UI.MenusEdicion.MaquinaEdicion;
 import com.company.UI.MenusEdicion.TareaEdicion;
 
 import javax.swing.*;
-import javax.swing.plaf.basic.BasicTreeUI;
 import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.jar.Attributes;
 
 public class TablaDeSeleccion {
     private JButton VolverButton;
@@ -224,6 +223,11 @@ public class TablaDeSeleccion {
 
                     case 2:
                         //Máquinas
+                        Maquina maquina;
+
+                        maquina = llamadasBD.LeerMaquinaConcreta(String.valueOf(table1.getValueAt(table1.getSelectedRow(), 0)));
+                        MaquinaEdicion maquinaEdicion = new MaquinaEdicion(true, maquina);
+                        frame.dispose();
 
                         break;
 
@@ -258,7 +262,9 @@ public class TablaDeSeleccion {
 
                     case 2:
                         //Máquinas
-
+                        Maquina maquina = new Maquina();
+                        MaquinaEdicion maquinaEdicion = new MaquinaEdicion(false, maquina);
+                        frame.dispose();
                         break;
 
                     case 3:
@@ -276,7 +282,7 @@ public class TablaDeSeleccion {
         BuscarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                int filas;
 
                 switch (IDTabla) {
                     case 0:
@@ -285,7 +291,7 @@ public class TablaDeSeleccion {
                         trabajadores = llamadasBD.LeerTrabajadorFiltrado(TextUserPK.getText());
 
                         //Éste pequeño código sirve para limiar los datos de la tabla.
-                        int filas = finalModel.getRowCount();
+                        filas = finalModel.getRowCount();
 
                         //Elimino una a una las filas de la tabla.
                         for (int i = filas - 1; i >= 0; i--) {
@@ -300,12 +306,37 @@ public class TablaDeSeleccion {
                     case 1:
                         //Tareas
                         ArrayList<Tarea> tareas = new ArrayList<>();
+                        tareas = llamadasBD.LeerTareaFiltrada(TextUserPK.getText());
 
+                        //Éste pequeño código sirve para limiar los datos de la tabla.
+                        filas = finalModel.getRowCount();
+
+                        //Elimino una a una las filas de la tabla.
+                        for (int i = filas - 1; i >= 0; i--) {
+                            finalModel.removeRow(i);
+                        }
+
+                        for (int i = 0; i < tareas.size(); i++) {
+                            finalModel.addRow(new Object[]{tareas.get(i).getCodigo(), tareas.get(i).getDescripcion(), tareas.get(i).getCodigoMaquina()});
+                        }
                         break;
 
                     case 2:
                         //Máquinas
+                        ArrayList<Maquina> maquinas = new ArrayList<>();
+                        maquinas = llamadasBD.LeerMaquinaFiltrada(TextUserPK.getText());
 
+                        //Éste pequeño código sirve para limiar los datos de la tabla.
+                        filas = finalModel.getRowCount();
+
+                        //Elimino una a una las filas de la tabla.
+                        for (int i = filas - 1; i >= 0; i--) {
+                            finalModel.removeRow(i);
+                        }
+
+                        for (int i = 0; i < maquinas.size(); i++) {
+                            finalModel.addRow(new Object[]{maquinas.get(i).getCodigo(), maquinas.get(i).getDescripcion()});
+                        }
                         break;
 
                     case 3:

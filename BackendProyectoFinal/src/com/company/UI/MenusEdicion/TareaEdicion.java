@@ -33,12 +33,26 @@ public class TareaEdicion {
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
 
-        if(conObjeto == false){
+        //En base a si está editando o creando un objeto bloqueo ciertos botones.
+        if (conObjeto == false) {
             EditarButton.setEnabled(false);
             BorrarButton.setEnabled(false);
             ComboCodMaquina.addItem("");
-        }else{
+
+
+            ArrayList<Maquina> maquinas = new ArrayList<>();
+            maquinas = llamadasBD.LeerMaquinas();
+
+            for (int i = 0; i < maquinas.size(); i++) {
+                ComboCodMaquina.addItem(maquinas.get(i).getCodigo());
+            }
+
+            ComboCodMaquina.setSelectedIndex(0);
+
+
+        } else {
             CrearButton.setEnabled(false);
+            TextCodigo.setEnabled(false);
             TextCodigo.setText(tarea.getCodigo());
             TextDescripcion.setText(tarea.getDescripcion());
             ComboCodMaquina.addItem("");
@@ -50,14 +64,13 @@ public class TareaEdicion {
 
             for (int i = 0; i < maquinas.size(); i++) {
 
-                if(!maquinas.get(i).getCodigo().equals(tarea.getCodigoMaquina())){
+                if (!maquinas.get(i).getCodigo().equals(tarea.getCodigoMaquina())) {
                     ComboCodMaquina.addItem(maquinas.get(i).getCodigo());
                 }
             }
 
             ComboCodMaquina.setSelectedIndex(1);
         }
-
 
 
         VolverButton.addActionListener(new ActionListener() {
@@ -76,11 +89,14 @@ public class TareaEdicion {
                 nuevaTarea.setCodigo(TextCodigo.getText());
                 nuevaTarea.setDescripcion(TextDescripcion.getText());
 
-                nuevaTarea.setCodigoMaquina(ComboCodMaquina.getSelectedItem().toString());
+                //Éste if detecta si hay una máquina seleccionada o el espacio está vacío. De ésta manera el objeto deja la referencia en null y no copia el texto "".
+                if (ComboCodMaquina.getSelectedIndex() != 0) {
+                    nuevaTarea.setCodigoMaquina(ComboCodMaquina.getSelectedItem().toString());
+                }
 
                 llamadasBD.InsertarTarea(nuevaTarea);
 
-                //Una vez insertado vacio los campos para evitar confuciones.
+                //Una vez insertado, vacio los campos para evitar confusiones.
                 TextCodigo.setText("");
                 TextDescripcion.setText("");
                 ComboCodMaquina.setSelectedIndex(0);
@@ -88,6 +104,38 @@ public class TareaEdicion {
         });
 
 
+        BorrarButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                llamadasBD.EliminarTarea(tarea.getCodigo());
+
+
+                //Una vez eliminado, vacio los campos para evitar confusiones.
+                TextCodigo.setText("");
+                TextDescripcion.setText("");
+                ComboCodMaquina.setSelectedIndex(0);
+            }
+        });
+
+
+        EditarButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Tarea nuevaTarea = new Tarea();
+                nuevaTarea.setCodigo(TextCodigo.getText());
+                nuevaTarea.setDescripcion(TextDescripcion.getText());
+
+                //Éste if detecta si hay una máquina seleccionada o el espacio está vacío. De ésta manera el objeto deja la referencia en null y no copia el texto "".
+                if (ComboCodMaquina.getSelectedIndex() != 0) {
+                    nuevaTarea.setCodigoMaquina(ComboCodMaquina.getSelectedItem().toString());
+                }else{
+                    nuevaTarea.setCodigoMaquina(null);
+                }
+
+                llamadasBD.ModificarTarea(nuevaTarea);
+            }
+        });
     }
 
 

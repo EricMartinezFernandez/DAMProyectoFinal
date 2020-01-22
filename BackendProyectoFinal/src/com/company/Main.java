@@ -8,13 +8,12 @@ import java.util.ArrayList;
 public class Main {
 
     public static void main(String[] args) {
-	// write your code here
-        System.out.println("Hola mundo");
+	    // write your code here
         LlamadasBD llamadasBD = new LlamadasBD();
 
-        //llamadasBD.ReiniciarBasesDeDatos();
+        llamadasBD.ReiniciarBasesDeDatos();
 
-        MenuInicio menuInicio = new MenuInicio();
+        //MenuInicio menuInicio = new MenuInicio();
 
     }
 }

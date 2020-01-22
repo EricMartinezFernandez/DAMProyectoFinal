@@ -39,16 +39,17 @@ public class LlamadasBD {
         String borrarMANTENIMIENTOS = "DROP TABLE IF EXISTS MANTENIMIENTOS";
         String borrarTAREAS = "DROP TABLE IF EXISTS TAREAS";
         String borrarTRABAJOTAREAS = "DROP TABLE IF EXISTS TRABAJOTAREAS";
-        String borrarTRABAJOMANTENIMIENTO = "DROP TABLE IF EXISTS TRABAJOMANTENIMIENTO";
+        String borrarTRABAJOMANTENIMIENTO = "DROP TABLE IF EXISTS TRABAJOMANTENIMIENTOS";
 
         try {
             preparedStatement = con.prepareStatement(borrarTRABAJOMANTENIMIENTO);
             preparedStatement.executeUpdate();
 
-            System.out.println("Tabla TRABAJOMANTENIMIENT eliminada correctamente.");
+            System.out.println("Tabla TRABAJOMANTENIMIENTO eliminada correctamente.");
 
         } catch (Exception e) {
-            System.err.println("Error al eliminar la tabla TRABAJOMANTENIMIENT.");
+            System.err.println("Error al eliminar la tabla TRABAJOMANTENIMIENTO.");
+            System.out.println(e);
             e.getMessage();
         }
 
@@ -61,6 +62,30 @@ public class LlamadasBD {
         } catch (Exception e) {
             System.err.println("Error al eliminar la tabla TRABAJOTAREAS.");
             e.getMessage();
+            System.out.println(e);
+        }
+
+        try {
+            preparedStatement = con.prepareStatement(borrarTRABAJADORES);
+            preparedStatement.executeUpdate();
+
+            System.out.println("Tabla TRABAJADORES eliminada correctamente.");
+
+        } catch (Exception e) {
+            System.err.println("Error al eliminar la tabla TRABAJADORES.");
+            System.out.println(e);
+        }
+
+        try {
+            preparedStatement = con.prepareStatement(borrarMANTENIMIENTOS);
+            preparedStatement.executeUpdate();
+
+            System.out.println("Tabla MANTENIMIENTOS eliminada correctamente.");
+
+        } catch (Exception e) {
+            System.err.println("Error al eliminar la tabla MANTENIMIENTOS.");
+            e.getMessage();
+            System.out.println(e);
         }
 
         try {
@@ -72,18 +97,7 @@ public class LlamadasBD {
         } catch (Exception e) {
             System.err.println("Error al eliminar la tabla TAREAS.");
             e.getMessage();
-        }
-
-
-        try {
-            preparedStatement = con.prepareStatement(borrarMANTENIMIENTOS);
-            preparedStatement.executeUpdate();
-
-            System.out.println("Tabla MANTENIMIENTOS eliminada correctamente.");
-
-        } catch (Exception e) {
-            System.err.println("Error al eliminar la tabla MANTENIMIENTOS.");
-            e.getMessage();
+            System.out.println(e);
         }
 
 
@@ -96,24 +110,19 @@ public class LlamadasBD {
         } catch (Exception e) {
             System.err.println("Error al eliminar la tabla MAQUINAS.");
             e.getMessage();
+            System.out.println(e);
         }
 
 
-        try {
-            preparedStatement = con.prepareStatement(borrarTRABAJADORES);
-            preparedStatement.executeUpdate();
 
-            System.out.println("Tabla TRABAJADORES eliminada correctamente.");
 
-        } catch (Exception e) {
-            System.err.println("Error al eliminar la tabla TRABAJADORES.");
-            e.getMessage();
-        }
+
 
         try {
             preparedStatement.close();
         } catch (SQLException e) {
             e.printStackTrace();
+            System.out.println(e);
         }
 
     }
@@ -187,6 +196,7 @@ public class LlamadasBD {
 
         } catch (Exception e) {
             System.err.println("No se han podido crear la tabla TRABAJADORES.\n" + e.getMessage());
+            System.out.println(e);
         }
 
         //TABLA MAQUINAS
@@ -281,6 +291,7 @@ public class LlamadasBD {
 
         } catch (Exception e) {
             System.out.println("A ocurrido un ERROR");
+            JOptionPane.showMessageDialog(null, "A ocurrido un ERROR");
             System.out.println(e);
         }
     }
@@ -405,10 +416,13 @@ public class LlamadasBD {
             preparedStatement.execute();
             preparedStatement.close();
 
+            JOptionPane.showMessageDialog(null, "Trabajador eliminado correctamente.");
+
 
         } catch (SQLException e) {
 
             System.out.println("A ocurrido un ERROR");
+            JOptionPane.showMessageDialog(null, "A ocurrido un ERROR");
             System.out.println(e);
         }
 
@@ -432,9 +446,12 @@ public class LlamadasBD {
             preparedStatement.executeUpdate();
             preparedStatement.close();
 
+            JOptionPane.showMessageDialog(null, "Trabajador modificado correctamente.");
+
 
         }catch (Exception e) {
             System.err.println("A ocurrido un ERROR.");
+            JOptionPane.showMessageDialog(null, "A ocurrido un ERROR");
             e.getMessage();
         }
     }
@@ -463,6 +480,7 @@ public class LlamadasBD {
 
         } catch (Exception e) {
             System.out.println("A ocurrido un ERROR");
+            JOptionPane.showMessageDialog(null, "A ocurrido un ERROR");
             System.out.println(e);
         }
     }
@@ -580,10 +598,13 @@ public class LlamadasBD {
             preparedStatement.execute();
             preparedStatement.close();
 
+            JOptionPane.showMessageDialog(null, "Máquina eliminada correctamente.");
+
 
         } catch (SQLException e) {
 
             System.out.println("A ocurrido un ERROR");
+            JOptionPane.showMessageDialog(null, "A ocurrido un ERROR");
             System.out.println(e);
         }
 
@@ -594,7 +615,7 @@ public class LlamadasBD {
         PreparedStatement preparedStatement;
 
         try{
-            String query = "UPDATE TRABAJADORES" +
+            String query = "UPDATE MAQUINAS" +
                     " set CODIGO = '"+ maquina.getCodigo()+"'"+
                     ",DESCRIPCION = '" +maquina.getDescripcion()+"'"+
                     " where CODIGO = '" + maquina.getCodigo() + "'";
@@ -604,10 +625,12 @@ public class LlamadasBD {
             preparedStatement.executeUpdate();
             preparedStatement.close();
 
+            JOptionPane.showMessageDialog(null, "Máquina modificada correctamente.");
 
         }catch (Exception e) {
             System.err.println("A ocurrido un ERROR.");
-            e.getMessage();
+            JOptionPane.showMessageDialog(null, "A ocurrido un ERROR");
+            System.out.println(e);
         }
     }
 
@@ -636,6 +659,7 @@ public class LlamadasBD {
 
         } catch (Exception e) {
             System.out.println("A ocurrido un ERROR");
+            JOptionPane.showMessageDialog(null, "A ocurrido un ERROR");
             System.out.println(e);
         }
     }
@@ -753,10 +777,12 @@ public class LlamadasBD {
             preparedStatement.execute();
             preparedStatement.close();
 
+            JOptionPane.showMessageDialog(null, "Mantenimiento eliminado correctamente.");
 
         } catch (SQLException e) {
 
             System.out.println("A ocurrido un ERROR");
+            JOptionPane.showMessageDialog(null, "A ocurrido un ERROR");
             System.out.println(e);
         }
 
@@ -778,9 +804,11 @@ public class LlamadasBD {
             preparedStatement.executeUpdate();
             preparedStatement.close();
 
+            JOptionPane.showMessageDialog(null, "Mantenimiento modificado correctamente.");
 
         }catch (Exception e) {
             System.err.println("A ocurrido un ERROR.");
+            JOptionPane.showMessageDialog(null, "A ocurrido un ERROR");
             e.getMessage();
         }
     }
@@ -809,6 +837,7 @@ public class LlamadasBD {
 
         } catch (Exception e) {
             System.out.println("A ocurrido un ERROR");
+            JOptionPane.showMessageDialog(null, "A ocurrido un ERROR");
             System.out.println(e);
         }
     }
@@ -888,7 +917,7 @@ public class LlamadasBD {
             Connection con = Conexion();
 
 
-            String query = "SELECT * FROM TAREAS WHERE CODIGO = '" + codigoPK + "'";
+            String query = "SELECT * FROM TAREAS WHERE CODIGO LIKE '" + codigoPK + "%'";
 
             Statement statement = con.createStatement();
             ResultSet resultSet = statement.executeQuery(query);
@@ -926,10 +955,13 @@ public class LlamadasBD {
             preparedStatement.execute();
             preparedStatement.close();
 
+            JOptionPane.showMessageDialog(null, "Tarea eliminada correctamente.");
+
 
         } catch (SQLException e) {
 
             System.out.println("A ocurrido un ERROR");
+            JOptionPane.showMessageDialog(null, "A ocurrido un ERROR");
             System.out.println(e);
         }
 
@@ -951,10 +983,12 @@ public class LlamadasBD {
             preparedStatement.executeUpdate();
             preparedStatement.close();
 
+            JOptionPane.showMessageDialog(null, "Tarea modificada correctamente.");
 
         }catch (Exception e) {
             System.err.println("A ocurrido un ERROR.");
-            e.getMessage();
+            JOptionPane.showMessageDialog(null, "A ocurrido un ERROR");
+            System.out.println(e);
         }
     }
 
@@ -983,6 +1017,7 @@ public class LlamadasBD {
 
         } catch (Exception e) {
             System.out.println("A ocurrido un ERROR");
+            JOptionPane.showMessageDialog(null, "A ocurrido un ERROR");
             System.out.println(e);
         }
     }
@@ -1075,6 +1110,7 @@ public class LlamadasBD {
         } catch (SQLException e) {
 
             System.out.println("A ocurrido un ERROR");
+            JOptionPane.showMessageDialog(null, "A ocurrido un ERROR");
             System.out.println(e);
         }
 
@@ -1100,6 +1136,7 @@ public class LlamadasBD {
 
         }catch (Exception e) {
             System.err.println("A ocurrido un ERROR.");
+            JOptionPane.showMessageDialog(null, "A ocurrido un ERROR");
             e.getMessage();
         }
     }
@@ -1128,6 +1165,7 @@ public class LlamadasBD {
 
         } catch (Exception e) {
             System.out.println("A ocurrido un ERROR");
+            JOptionPane.showMessageDialog(null, "A ocurrido un ERROR");
             System.out.println(e);
         }
     }
@@ -1220,6 +1258,7 @@ public class LlamadasBD {
         } catch (SQLException e) {
 
             System.out.println("A ocurrido un ERROR");
+            JOptionPane.showMessageDialog(null, "A ocurrido un ERROR");
             System.out.println(e);
         }
 
@@ -1245,6 +1284,7 @@ public class LlamadasBD {
 
         }catch (Exception e) {
             System.err.println("A ocurrido un ERROR.");
+            JOptionPane.showMessageDialog(null, "A ocurrido un ERROR");
             e.getMessage();
         }
     }
