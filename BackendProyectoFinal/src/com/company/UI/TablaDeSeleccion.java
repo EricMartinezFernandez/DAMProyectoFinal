@@ -5,6 +5,7 @@ import com.company.Clases.Maquina;
 import com.company.Clases.Tarea;
 import com.company.Clases.Trabajador;
 import com.company.LlamadasBD;
+import com.company.UI.MenusEdicion.MantenimientoEdicion;
 import com.company.UI.MenusEdicion.MaquinaEdicion;
 import com.company.UI.MenusEdicion.TareaEdicion;
 
@@ -41,7 +42,7 @@ public class TablaDeSeleccion {
         frame.setResizable(false);
         frame.pack();
 
-        //Éste switch define el modelo que utilizará la tabla.
+        //Éste switch define el modelo que utilizará cada tabla en base a los objetos tenga que mostrar.
         switch (IDTabla) {
 
             case 0:
@@ -233,7 +234,11 @@ public class TablaDeSeleccion {
 
                     case 3:
                         //Mantenimientos
+                        Mantenimiento mantenimiento;
 
+                        mantenimiento = llamadasBD.LeerMantenimientoConcreto(String.valueOf(table1.getValueAt(table1.getSelectedRow(), 0)));
+                        MantenimientoEdicion mantenimientoEdicion = new MantenimientoEdicion(true, mantenimiento);
+                        frame.dispose();
                         break;
 
 
@@ -269,7 +274,9 @@ public class TablaDeSeleccion {
 
                     case 3:
                         //Mantenimientos
-
+                        Mantenimiento mantenimiento = new Mantenimiento();
+                        MantenimientoEdicion mantenimientoEdicion = new MantenimientoEdicion(false, mantenimiento);
+                        frame.dispose();
                         break;
                 }
 
@@ -292,12 +299,12 @@ public class TablaDeSeleccion {
 
                         //Éste pequeño código sirve para limiar los datos de la tabla.
                         filas = finalModel.getRowCount();
-
                         //Elimino una a una las filas de la tabla.
                         for (int i = filas - 1; i >= 0; i--) {
                             finalModel.removeRow(i);
                         }
 
+                        //Añado las nuevas líneas, ya filtradas.
                         for (int i = 0; i < trabajadores.size(); i++) {
                             finalModel.addRow(new Object[]{trabajadores.get(i).getDni(), trabajadores.get(i).getNombre(), trabajadores.get(i).getApellido1(), trabajadores.get(i).getApellido2(), trabajadores.get(i).getRutaFoto()});
                         }
@@ -310,12 +317,12 @@ public class TablaDeSeleccion {
 
                         //Éste pequeño código sirve para limiar los datos de la tabla.
                         filas = finalModel.getRowCount();
-
                         //Elimino una a una las filas de la tabla.
                         for (int i = filas - 1; i >= 0; i--) {
                             finalModel.removeRow(i);
                         }
 
+                        //Añado las nuevas líneas, ya filtradas.
                         for (int i = 0; i < tareas.size(); i++) {
                             finalModel.addRow(new Object[]{tareas.get(i).getCodigo(), tareas.get(i).getDescripcion(), tareas.get(i).getCodigoMaquina()});
                         }
@@ -328,12 +335,11 @@ public class TablaDeSeleccion {
 
                         //Éste pequeño código sirve para limiar los datos de la tabla.
                         filas = finalModel.getRowCount();
-
                         //Elimino una a una las filas de la tabla.
                         for (int i = filas - 1; i >= 0; i--) {
                             finalModel.removeRow(i);
                         }
-
+                        //Añado las nuevas líneas, ya filtradas.
                         for (int i = 0; i < maquinas.size(); i++) {
                             finalModel.addRow(new Object[]{maquinas.get(i).getCodigo(), maquinas.get(i).getDescripcion()});
                         }
@@ -341,14 +347,25 @@ public class TablaDeSeleccion {
 
                     case 3:
                         //Mantenimientos
+                        ArrayList<Mantenimiento> mantenimientos = new ArrayList<>();
+                        mantenimientos = llamadasBD.LeerMantenimientoFiltrado(TextUserPK.getText());
 
-                        break;
+                        //Éste pequeño código sirve para limiar los datos de la tabla.
+                        filas = finalModel.getRowCount();
+                        //Elimino una a una las filas de la tabla.
+                        for (int i = filas - 1; i >= 0; i--) {
+                            finalModel.removeRow(i);
+                        }
+                        //Añado las nuevas líneas, ya filtradas.
+                        for (int i = 0; i < mantenimientos.size(); i++) {
+                            finalModel.addRow(new Object[]{mantenimientos.get(i).getCodigo(), mantenimientos.get(i).getDescripcion(), mantenimientos.get(i).getCodigoMaquina()});
+                            break;
+                        }
+
+
                 }
-
-
             }
         });
-
 
     }
 }
