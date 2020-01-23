@@ -8,11 +8,16 @@ import com.company.LlamadasBD;
 import com.company.UI.MenusEdicion.MantenimientoEdicion;
 import com.company.UI.MenusEdicion.MaquinaEdicion;
 import com.company.UI.MenusEdicion.TareaEdicion;
+import com.company.UI.MenusEdicion.TrabajadorEdicion;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 
 public class TablaDeSeleccion {
@@ -49,7 +54,23 @@ public class TablaDeSeleccion {
                 //Trabajadores (Requiere de un modelo personalizado para poder visualizar las imágenes de los empleados.)
                 TextPK.setText("DNI: ");
 
-                model = new DefaultTableModel() {
+                String[] columnas = {"DNI", "Nombre", "Apellido 1", "Apellido 2", "Foto"};
+
+                model = new DefaultTableModel(columnas, 0) {
+                    @Override
+                    public Class<?> getColumnClass(int column) {
+                        if (getRowCount() > 0) {
+                            Object value = getValueAt(0, column);
+                            if (value != null) {
+                                return getValueAt(0, column).getClass();
+                            }
+                        }
+
+                        return super.getColumnClass(column);
+                    }
+                };
+
+                /*model = new DefaultTableModel() {
                     String[] columnas = {"DNI", "Nombre", "Apellido 1", "Apellido 2", "Foto"};
 
                     @Override
@@ -63,6 +84,8 @@ public class TablaDeSeleccion {
                     }
 
                 };
+
+                 */
 
                 break;
 
@@ -142,8 +165,19 @@ public class TablaDeSeleccion {
                 ArrayList<Trabajador> trabajadores = new ArrayList<>();
                 trabajadores = llamadasBD.LeerTrabajadores();
 
+
                 for (int i = 0; i < trabajadores.size(); i++) {
-                    model.addRow(new Object[]{trabajadores.get(i).getDni(), trabajadores.get(i).getNombre(), trabajadores.get(i).getApellido1(), trabajadores.get(i).getApellido2(), trabajadores.get(i).getRutaFoto()});
+
+                    ImageIcon icon = new ImageIcon();
+                    try {
+                        URL url = new URL(trabajadores.get(i).getRutaFoto());
+                        icon = new ImageIcon(url);
+                    } catch (MalformedURLException e) {
+                        e.printStackTrace();
+                    }
+
+
+                    model.addRow(new Object[]{trabajadores.get(i).getDni(), trabajadores.get(i).getNombre(), trabajadores.get(i).getApellido1(), trabajadores.get(i).getApellido2(), icon});
                 }
                 break;
 
@@ -255,7 +289,9 @@ public class TablaDeSeleccion {
                 switch (IDTabla) {
                     case 0:
                         //Trabajadores
-
+                        Trabajador trabajador = new Trabajador();
+                        TrabajadorEdicion trabajadorEdicion = new TrabajadorEdicion(false, trabajador);
+                        frame.dispose();
                         break;
 
                     case 1:
