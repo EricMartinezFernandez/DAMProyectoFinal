@@ -40,6 +40,8 @@ public class LlamadasBD {
         String borrarTAREAS = "DROP TABLE IF EXISTS TAREAS";
         String borrarTRABAJOTAREAS = "DROP TABLE IF EXISTS TRABAJOTAREAS";
         String borrarTRABAJOMANTENIMIENTO = "DROP TABLE IF EXISTS TRABAJOMANTENIMIENTOS";
+        String borrarREGISTROS = "DROP TABLE IF EXISTS REGISTROS";
+        String borrarUSUARIOS = "DROP TABLE IF EXISTS USUARIOS";
 
         try {
             preparedStatement = con.prepareStatement(borrarTRABAJOMANTENIMIENTO);
@@ -113,6 +115,30 @@ public class LlamadasBD {
             System.out.println(e);
         }
 
+        try {
+            preparedStatement = con.prepareStatement(borrarREGISTROS);
+            preparedStatement.executeUpdate();
+
+            System.out.println("Tabla REGISTROS eliminada correctamente.");
+
+        } catch (Exception e) {
+            System.err.println("Error al eliminar la tabla REGISTROS.");
+            e.getMessage();
+            System.out.println(e);
+        }
+
+
+        try {
+            preparedStatement = con.prepareStatement(borrarUSUARIOS);
+            preparedStatement.executeUpdate();
+
+            System.out.println("Tabla USUARIOS eliminada correctamente.");
+
+        } catch (Exception e) {
+            System.err.println("Error al eliminar la tabla USUARIOS.");
+            e.getMessage();
+            System.out.println(e);
+        }
 
         try {
             preparedStatement.close();
@@ -184,6 +210,18 @@ public class LlamadasBD {
                 "FOREIGN KEY (DNITRABAJADOR) REFERENCES TRABAJADORES(DNI) ON DELETE CASCADE," +
                 "FOREIGN KEY (CODIGOMANTENIMIENTO) REFERENCES MANTENIMIENTOS(CODIGO) ON DELETE CASCADE);";
 
+        String createUsuarios = "CREATE TABLE USUARIOS(" +
+                "USERNAME VARCHAR(255) PRIMARY KEY NOT NULL," +
+                "PASSWORD VARCHAR(255) NOT NULL," +
+                "TIPOCUENTA INTEGER NOT NULL);";
+
+        String createRegistros = "CREATE TABLE REGISTROS(" +
+                "CODIGO INTEGER PRIMARY KEY NOT NULL AUTO_INCREMENT," +
+                "HORA VARCHAR(255) NOT NULL," +
+                "ACCION VARCHAR(255) NOT NULL," +
+                "USUARIO VARCHAR(255) NOT NULL," +
+                "FOREIGN KEY (USUARIO) REFERENCES USUARIOS(USERNAME) ON DELETE NO ACTION);";
+
         //TABLA TRABAJADORES
         try {
             preparedStatement = con.prepareStatement(createTrabajadores);
@@ -253,6 +291,27 @@ public class LlamadasBD {
             System.err.println("No se han podido crear la tabla TRABAJOMANTENIMIENTOS.\n" + e.getMessage());
         }
 
+        //TABLA USUARIOS
+        try {
+            preparedStatement = con.prepareStatement(createUsuarios);
+            preparedStatement.executeUpdate();
+
+            System.out.println("Tabla USUARIOS creada correctamente.");
+
+        } catch (Exception e) {
+            System.err.println("No se han podido crear la tabla USUARIOS.\n" + e.getMessage());
+        }
+
+        //TABLA REGISTROS
+        try {
+            preparedStatement = con.prepareStatement(createRegistros);
+            preparedStatement.executeUpdate();
+
+            System.out.println("Tabla REGISTROS creada correctamente.");
+
+        } catch (Exception e) {
+            System.err.println("No se han podido crear la tabla REGISTROS.\n" + e.getMessage());
+        }
 
         try {
             preparedStatement.close();
@@ -365,7 +424,7 @@ public class LlamadasBD {
         return trabajador;
     }
 
-    public ArrayList<Trabajador> LeerTrabajadorFiltrado(String dniPK) {
+    public ArrayList<Trabajador> LeerTrabajadorFiltradoDNI(String dniPK) {
 
         ArrayList<Trabajador> trabajadores = new ArrayList<>();
 
@@ -373,6 +432,111 @@ public class LlamadasBD {
             Connection con = Conexion();
 
             String query = "SELECT * FROM TRABAJADORES WHERE DNI LIKE '" + dniPK + "%'";
+
+            Statement statement = con.createStatement();
+            ResultSet resultSet = statement.executeQuery(query);
+
+
+            while (resultSet.next()) {
+                String dni = resultSet.getString("DNI");
+                String nombre = resultSet.getString("NOMBRE");
+                String apellido1 = resultSet.getString("APELLIDO1");
+                String apellido2 = resultSet.getString("APELLIDO2");
+                String foto = resultSet.getString("FOTO");
+
+
+                trabajadores.add(new Trabajador(dni, nombre, apellido1, apellido2, foto));
+            }
+
+            resultSet.close();
+            statement.close();
+
+        } catch (Exception e) {
+            System.err.println("A ocurrido un ERROR.");
+            System.out.println(e);
+        }
+
+        return trabajadores;
+    }
+
+    public ArrayList<Trabajador> LeerTrabajadorFiltradoNombre(String nombrePK) {
+
+        ArrayList<Trabajador> trabajadores = new ArrayList<>();
+
+        try {
+            Connection con = Conexion();
+
+            String query = "SELECT * FROM TRABAJADORES WHERE NOMBRE LIKE '" + nombrePK + "%'";
+
+            Statement statement = con.createStatement();
+            ResultSet resultSet = statement.executeQuery(query);
+
+
+            while (resultSet.next()) {
+                String dni = resultSet.getString("DNI");
+                String nombre = resultSet.getString("NOMBRE");
+                String apellido1 = resultSet.getString("APELLIDO1");
+                String apellido2 = resultSet.getString("APELLIDO2");
+                String foto = resultSet.getString("FOTO");
+
+
+                trabajadores.add(new Trabajador(dni, nombre, apellido1, apellido2, foto));
+            }
+
+            resultSet.close();
+            statement.close();
+
+        } catch (Exception e) {
+            System.err.println("A ocurrido un ERROR.");
+            System.out.println(e);
+        }
+
+        return trabajadores;
+    }
+
+    public ArrayList<Trabajador> LeerTrabajadorFiltradoApellido1(String apellido1PK) {
+
+        ArrayList<Trabajador> trabajadores = new ArrayList<>();
+
+        try {
+            Connection con = Conexion();
+
+            String query = "SELECT * FROM TRABAJADORES WHERE APELLIDO1 LIKE '" + apellido1PK + "%'";
+
+            Statement statement = con.createStatement();
+            ResultSet resultSet = statement.executeQuery(query);
+
+
+            while (resultSet.next()) {
+                String dni = resultSet.getString("DNI");
+                String nombre = resultSet.getString("NOMBRE");
+                String apellido1 = resultSet.getString("APELLIDO1");
+                String apellido2 = resultSet.getString("APELLIDO2");
+                String foto = resultSet.getString("FOTO");
+
+
+                trabajadores.add(new Trabajador(dni, nombre, apellido1, apellido2, foto));
+            }
+
+            resultSet.close();
+            statement.close();
+
+        } catch (Exception e) {
+            System.err.println("A ocurrido un ERROR.");
+            System.out.println(e);
+        }
+
+        return trabajadores;
+    }
+
+    public ArrayList<Trabajador> LeerTrabajadorFiltradoApellido2(String apellido2PK) {
+
+        ArrayList<Trabajador> trabajadores = new ArrayList<>();
+
+        try {
+            Connection con = Conexion();
+
+            String query = "SELECT * FROM TRABAJADORES WHERE APELLIDO2 LIKE '" + apellido2PK + "%'";
 
             Statement statement = con.createStatement();
             ResultSet resultSet = statement.executeQuery(query);
@@ -550,7 +714,7 @@ public class LlamadasBD {
         return maquina;
     }
 
-    public ArrayList<Maquina> LeerMaquinaFiltrada(String codigoPK) {
+    public ArrayList<Maquina> LeerMaquinaFiltradaCodigo(String codigoPK) {
 
         ArrayList<Maquina> maquinas = new ArrayList<>();
 
@@ -559,6 +723,39 @@ public class LlamadasBD {
 
 
             String query = "SELECT * FROM MAQUINAS WHERE CODIGO LIKE '" + codigoPK + "%'";
+
+            Statement statement = con.createStatement();
+            ResultSet resultSet = statement.executeQuery(query);
+
+
+            while (resultSet.next()) {
+                String codigo = resultSet.getString("CODIGO");
+                String descripcion = resultSet.getString("DESCRIPCION");
+
+
+                maquinas.add(new Maquina(codigo, descripcion));
+            }
+
+            resultSet.close();
+            statement.close();
+
+        } catch (Exception e) {
+            System.err.println("A ocurrido un ERROR.");
+            System.out.println(e);
+        }
+
+        return maquinas;
+    }
+
+    public ArrayList<Maquina> LeerMaquinaFiltradaDescripcion(String descripcionPK) {
+
+        ArrayList<Maquina> maquinas = new ArrayList<>();
+
+        try {
+            Connection con = Conexion();
+
+
+            String query = "SELECT * FROM MAQUINAS WHERE DESCRIPCION LIKE '%" + descripcionPK + "%'";
 
             Statement statement = con.createStatement();
             ResultSet resultSet = statement.executeQuery(query);
@@ -728,7 +925,7 @@ public class LlamadasBD {
         return mantenimiento;
     }
 
-    public ArrayList<Mantenimiento> LeerMantenimientoFiltrado(String codigoPK) {
+    public ArrayList<Mantenimiento> LeerMantenimientoFiltradoCodigo(String codigoPK) {
 
         ArrayList<Mantenimiento> mantenimientos = new ArrayList<>();
 
@@ -737,6 +934,72 @@ public class LlamadasBD {
 
 
             String query = "SELECT * FROM MANTENIMIENTOS WHERE CODIGO LIKE '" + codigoPK + "%'";
+
+            Statement statement = con.createStatement();
+            ResultSet resultSet = statement.executeQuery(query);
+
+
+            while (resultSet.next()) {
+                String codigo = resultSet.getString("CODIGO");
+                String descripcion = resultSet.getString("DESCRIPCION");
+                String codigoMaquina = resultSet.getString("CODIGOMAQUINA");
+
+                mantenimientos.add(new Mantenimiento(codigo, descripcion, codigoMaquina));
+            }
+
+            resultSet.close();
+            statement.close();
+
+        } catch (Exception e) {
+            System.err.println("A ocurrido un ERROR.");
+            System.out.println(e);
+        }
+
+        return mantenimientos;
+    }
+
+    public ArrayList<Mantenimiento> LeerMantenimientoFiltradoDescripcion(String descripcionPK) {
+
+        ArrayList<Mantenimiento> mantenimientos = new ArrayList<>();
+
+        try {
+            Connection con = Conexion();
+
+
+            String query = "SELECT * FROM MANTENIMIENTOS WHERE DESCRIPCION LIKE '%" + descripcionPK + "%'";
+
+            Statement statement = con.createStatement();
+            ResultSet resultSet = statement.executeQuery(query);
+
+
+            while (resultSet.next()) {
+                String codigo = resultSet.getString("CODIGO");
+                String descripcion = resultSet.getString("DESCRIPCION");
+                String codigoMaquina = resultSet.getString("CODIGOMAQUINA");
+
+                mantenimientos.add(new Mantenimiento(codigo, descripcion, codigoMaquina));
+            }
+
+            resultSet.close();
+            statement.close();
+
+        } catch (Exception e) {
+            System.err.println("A ocurrido un ERROR.");
+            System.out.println(e);
+        }
+
+        return mantenimientos;
+    }
+
+    public ArrayList<Mantenimiento> LeerMantenimientoFiltradoCodMaquina(String codMaquina) {
+
+        ArrayList<Mantenimiento> mantenimientos = new ArrayList<>();
+
+        try {
+            Connection con = Conexion();
+
+
+            String query = "SELECT * FROM MANTENIMIENTOS WHERE CODIGOMAQUINA LIKE '" + codMaquina + "%'";
 
             Statement statement = con.createStatement();
             ResultSet resultSet = statement.executeQuery(query);
@@ -928,7 +1191,7 @@ public class LlamadasBD {
         return tarea;
     }
 
-    public ArrayList<Tarea> LeerTareaFiltrada(String codigoPK) {
+    public ArrayList<Tarea> LeerTareaFiltradaCodigo(String codigoPK) {
 
         ArrayList<Tarea> tareas = new ArrayList<>();
 
@@ -937,6 +1200,47 @@ public class LlamadasBD {
 
 
             String query = "SELECT * FROM TAREAS WHERE CODIGO LIKE '" + codigoPK + "%'";
+
+            Statement statement = con.createStatement();
+            ResultSet resultSet = statement.executeQuery(query);
+
+
+            while (resultSet.next()) {
+                String codigo = resultSet.getString("CODIGO");
+                String descripcion = resultSet.getString("DESCRIPCION");
+                String maquina = resultSet.getString("MAQUINA");
+
+                Tarea tarea;
+
+                if (Integer.parseInt(maquina) == 1) {
+                    tarea = new Tarea(codigo, descripcion, true);
+                } else {
+                    tarea = new Tarea(codigo, descripcion, false);
+                }
+
+                tareas.add(tarea);
+            }
+
+            resultSet.close();
+            statement.close();
+
+        } catch (Exception e) {
+            System.err.println("A ocurrido un ERROR.");
+            System.out.println(e);
+        }
+
+        return tareas;
+    }
+
+    public ArrayList<Tarea> LeerTareaFiltradaDescripcion(String descripcionPK) {
+
+        ArrayList<Tarea> tareas = new ArrayList<>();
+
+        try {
+            Connection con = Conexion();
+
+
+            String query = "SELECT * FROM TAREAS WHERE DESCRIPCION LIKE '%" + descripcionPK + "%'";
 
             Statement statement = con.createStatement();
             ResultSet resultSet = statement.executeQuery(query);

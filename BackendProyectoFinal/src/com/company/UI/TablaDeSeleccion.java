@@ -32,6 +32,7 @@ public class TablaDeSeleccion {
     private JButton CrearButton;
     private JButton BuscarButton;
     private JLabel TextPK;
+    private JComboBox ComboColumnas;
     JFrame frame;
 
 
@@ -54,7 +55,11 @@ public class TablaDeSeleccion {
 
             case 0:
                 //Trabajadores (Requiere de un modelo personalizado para poder visualizar las imágenes de los empleados.)
-                TextPK.setText("DNI: ");
+
+                ComboColumnas.addItem("DNI");
+                ComboColumnas.addItem("Nombre");
+                ComboColumnas.addItem("Apellido 1");
+                ComboColumnas.addItem("Apellido 2");
 
                 String[] columnas = {"DNI", "Nombre", "Apellido 1", "Apellido 2", "Foto"};
 
@@ -93,7 +98,9 @@ public class TablaDeSeleccion {
 
             case 1:
                 //Tareas
-                TextPK.setText("Código: ");
+
+                ComboColumnas.addItem("Codigo");
+                ComboColumnas.addItem("Descripción");
 
                 model = new DefaultTableModel() {
                     String[] columnas = {"Codigo", "Descripción", "Tiene máquina"};
@@ -115,7 +122,9 @@ public class TablaDeSeleccion {
 
             case 2:
                 //Máquinas
-                TextPK.setText("Código: ");
+
+                ComboColumnas.addItem("Codigo");
+                ComboColumnas.addItem("Descripción");
 
                 model = new DefaultTableModel() {
                     String[] columnas = {"Codigo", "Descripción"};
@@ -136,7 +145,10 @@ public class TablaDeSeleccion {
 
             case 3:
                 //Mantenimiento
-                TextPK.setText("Código: ");
+                ComboColumnas.addItem("Codigo");
+                ComboColumnas.addItem("Descripción");
+                ComboColumnas.addItem("Código máquina");
+
 
                 model = new DefaultTableModel() {
                     String[] columnas = {"Codigo", "Descripción", "Código máquina"};
@@ -196,9 +208,9 @@ public class TablaDeSeleccion {
 
                 for (int i = 0; i < tareas.size(); i++) {
 
-                    if(tareas.get(i).isMaquina() == true){
+                    if (tareas.get(i).isMaquina() == true) {
                         maquina = "SI";
-                    }else{
+                    } else {
                         maquina = "NO";
                     }
 
@@ -348,7 +360,24 @@ public class TablaDeSeleccion {
                     case 0:
                         //Trabajadores
                         ArrayList<Trabajador> trabajadores = new ArrayList<>();
-                        trabajadores = llamadasBD.LeerTrabajadorFiltrado(TextUserPK.getText());
+
+                        switch (ComboColumnas.getSelectedIndex()) {
+                            case 0:
+                                trabajadores = llamadasBD.LeerTrabajadorFiltradoDNI(TextUserPK.getText());
+                                break;
+
+                            case 1:
+                                trabajadores = llamadasBD.LeerTrabajadorFiltradoNombre(TextUserPK.getText());
+                                break;
+
+                            case 2:
+                                trabajadores = llamadasBD.LeerTrabajadorFiltradoApellido1(TextUserPK.getText());
+                                break;
+
+                            case 3:
+                                trabajadores = llamadasBD.LeerTrabajadorFiltradoApellido2(TextUserPK.getText());
+                                break;
+                        }
 
                         //Éste pequeño código sirve para limiar los datos de la tabla.
                         filas = finalModel.getRowCount();
@@ -381,7 +410,19 @@ public class TablaDeSeleccion {
                     case 1:
                         //Tareas
                         ArrayList<Tarea> tareas = new ArrayList<>();
-                        tareas = llamadasBD.LeerTareaFiltrada(TextUserPK.getText());
+
+                        switch (ComboColumnas.getSelectedIndex()) {
+                            case 0:
+                                tareas = llamadasBD.LeerTareaFiltradaCodigo(TextUserPK.getText());
+                                break;
+
+                            case 1:
+                                tareas = llamadasBD.LeerTareaFiltradaDescripcion(TextUserPK.getText());
+                                break;
+                        }
+
+
+
 
                         //Éste pequeño código sirve para limiar los datos de la tabla.
                         filas = finalModel.getRowCount();
@@ -396,9 +437,9 @@ public class TablaDeSeleccion {
                         for (int i = 0; i < tareas.size(); i++) {
 
 
-                            if(tareas.get(i).isMaquina() == true){
+                            if (tareas.get(i).isMaquina() == true) {
                                 maquina = "SI";
-                            }else{
+                            } else {
                                 maquina = "NO";
                             }
 
@@ -409,7 +450,17 @@ public class TablaDeSeleccion {
                     case 2:
                         //Máquinas
                         ArrayList<Maquina> maquinas = new ArrayList<>();
-                        maquinas = llamadasBD.LeerMaquinaFiltrada(TextUserPK.getText());
+
+
+                        switch (ComboColumnas.getSelectedIndex()) {
+                            case 0:
+                                maquinas = llamadasBD.LeerMaquinaFiltradaCodigo(TextUserPK.getText());
+                                break;
+
+                            case 1:
+                                maquinas = llamadasBD.LeerMaquinaFiltradaDescripcion(TextUserPK.getText());
+                                break;
+                        }
 
                         //Éste pequeño código sirve para limiar los datos de la tabla.
                         filas = finalModel.getRowCount();
@@ -426,7 +477,23 @@ public class TablaDeSeleccion {
                     case 3:
                         //Mantenimientos
                         ArrayList<Mantenimiento> mantenimientos = new ArrayList<>();
-                        mantenimientos = llamadasBD.LeerMantenimientoFiltrado(TextUserPK.getText());
+
+
+                        switch (ComboColumnas.getSelectedIndex()) {
+                            case 0:
+                                mantenimientos = llamadasBD.LeerMantenimientoFiltradoCodigo(TextUserPK.getText());
+                                break;
+
+                            case 1:
+                                mantenimientos = llamadasBD.LeerMantenimientoFiltradoDescripcion(TextUserPK.getText());
+                                break;
+
+                            case 2:
+                                mantenimientos = llamadasBD.LeerMantenimientoFiltradoCodMaquina(TextUserPK.getText());
+                                break;
+                        }
+
+
 
                         //Éste pequeño código sirve para limiar los datos de la tabla.
                         filas = finalModel.getRowCount();
@@ -437,7 +504,6 @@ public class TablaDeSeleccion {
                         //Añado las nuevas líneas, ya filtradas.
                         for (int i = 0; i < mantenimientos.size(); i++) {
                             finalModel.addRow(new Object[]{mantenimientos.get(i).getCodigo(), mantenimientos.get(i).getDescripcion(), mantenimientos.get(i).getCodigoMaquina()});
-                            break;
                         }
 
 
