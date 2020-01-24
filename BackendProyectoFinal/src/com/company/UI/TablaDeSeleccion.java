@@ -249,6 +249,8 @@ public class TablaDeSeleccion {
 
                         //Recojo la PK del la fila que a seleccionado el usuario, por ello se bloquea el campo en 0, que es la ubicación común de PK en la tabla.
                         trabajador = llamadasBD.LeerTrabajadorConcreto(String.valueOf(table1.getValueAt(table1.getSelectedRow(), 0)));
+                        TrabajadorEdicion trabajadorEdicion = new TrabajadorEdicion(true, trabajador);
+                        frame.dispose();
 
                         break;
 
@@ -349,7 +351,22 @@ public class TablaDeSeleccion {
 
                         //Añado las nuevas líneas, ya filtradas.
                         for (int i = 0; i < trabajadores.size(); i++) {
-                            finalModel.addRow(new Object[]{trabajadores.get(i).getDni(), trabajadores.get(i).getNombre(), trabajadores.get(i).getApellido1(), trabajadores.get(i).getApellido2(), trabajadores.get(i).getRutaFoto()});
+
+
+                            ImageIcon icon = new ImageIcon();
+                            try {
+
+                                //Selecciono la imagen del empleado y convierto su ruta en URL para poderla usar en el tipo Icon.
+                                URL url = new URL(new File(trabajadores.get(i).getRutaFoto()).toURI().toURL().toString());
+                                //Aquí cambio el tamaño de la imágen para que se vea correctamente.
+                                icon = new ImageIcon(new ImageIcon(url).getImage().getScaledInstance(110, 140, Image.SCALE_DEFAULT));
+
+                            } catch (MalformedURLException e1) {
+                                e1.printStackTrace();
+                            }
+
+
+                            finalModel.addRow(new Object[]{trabajadores.get(i).getDni(), trabajadores.get(i).getNombre(), trabajadores.get(i).getApellido1(), trabajadores.get(i).getApellido2(), icon});
                         }
                         break;
 

@@ -50,6 +50,15 @@ public class TrabajadorEdicion {
         } else {
             CrearButton.setEnabled(false);
             TextDNI.setEnabled(false);
+
+            //Rellenamos los campos con los datos el objeto a editar.
+            TextDNI.setText(trabajador.getDni());
+            TextNombre.setText(trabajador.getNombre());
+            TextApellido1.setText(trabajador.getApellido1());
+            TextApellido2.setText(trabajador.getApellido2());
+
+            ImageIcon imageIcon = new ImageIcon(new ImageIcon(trabajador.getRutaFoto()).getImage().getScaledInstance(150, 200, Image.SCALE_DEFAULT));
+            MostarImagen.setIcon(imageIcon);
         }
 
 
@@ -126,30 +135,91 @@ public class TrabajadorEdicion {
         });
 
 
-
         CrearButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                if(TextDNI.equals("") || TextDNI.equals(null)){
-                    JOptionPane.showMessageDialog(null, "Faltan campos obligatorios.");
+                //Verifico que no haya campos vacíos
+                if (TextDNI.getText().equals("") || TextDNI.getText().equals(null)) {
+                    JOptionPane.showMessageDialog(null, "Faltan campos obligatorios. (*)");
+                } else {
 
-                }else{
-                    Trabajador nuevoTrabajador = new Trabajador();
-                    nuevoTrabajador.setDni(TextDNI.getText());
-                    nuevoTrabajador.setNombre(TextNombre.getText());
-                    nuevoTrabajador.setApellido1(TextApellido1.getText());
-                    nuevoTrabajador.setApellido2(TextApellido2.getText());
-                    nuevoTrabajador.setRutaFoto(rutaFinal[0]);
+                    //Verifico que el DNI tenga el número de carácteres correcto.
+                    if (TextDNI.getText().length() == 9) {
+                        Trabajador nuevoTrabajador = new Trabajador();
+                        nuevoTrabajador.setDni(TextDNI.getText());
+                        nuevoTrabajador.setNombre(TextNombre.getText());
+                        nuevoTrabajador.setApellido1(TextApellido1.getText());
+                        nuevoTrabajador.setApellido2(TextApellido2.getText());
+                        nuevoTrabajador.setRutaFoto(rutaFinal[0]);
 
-                    llamadasBD.InsertarTrabajador(nuevoTrabajador);
+                        llamadasBD.InsertarTrabajador(nuevoTrabajador);
+
+
+                        TextDNI.setText("");
+                        TextNombre.setText("");
+                        TextApellido1.setText("");
+                        TextApellido2.setText("");
+                        ImageIcon imageIcon = new ImageIcon(new ImageIcon("").getImage().getScaledInstance(150, 200, Image.SCALE_DEFAULT));
+                        MostarImagen.setIcon(imageIcon);
+                    } else {
+                        JOptionPane.showMessageDialog(null, "DNI Incorrecto.");
+
+                    }
                 }
 
             }
         });
 
 
+        BorrarButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                llamadasBD.EliminarTrabajador(trabajador.getDni());
 
+                //Tras borrar los datos de la BD, ahora toca borrar la imágen de la memoria.
+                File file = new File(trabajador.getRutaFoto());
+                file.delete();
+
+                //Vacío los campos para evitar confusiones.
+                TextDNI.setText("");
+                TextNombre.setText("");
+                TextApellido1.setText("");
+                TextApellido2.setText("");
+
+                //Vaciar los campos incluye adjuntar una ruta falsa al ImageIcon.
+                ImageIcon imageIcon = new ImageIcon(new ImageIcon("").getImage().getScaledInstance(150, 200, Image.SCALE_DEFAULT));
+                MostarImagen.setIcon(imageIcon);
+
+                TextDNI.setEnabled(true);
+
+                //Dejo los botones listo por si se quiere crear otro objeto.
+                EditarButton.setEnabled(false);
+                BorrarButton.setEnabled(false);
+                CrearButton.setEnabled(true);
+            }
+        });
+
+
+        EditarButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                Trabajador nuevoTrabajador = new Trabajador();
+                nuevoTrabajador.setDni(trabajador.getDni());
+                nuevoTrabajador.setNombre(TextNombre.getText());
+                nuevoTrabajador.setApellido1(TextApellido1.getText());
+                nuevoTrabajador.setApellido2(TextApellido2.getText());
+
+
+                if (rutaFinal[0].equals("") || rutaFinal[0].equals(null)) {
+                    nuevoTrabajador.setRutaFoto(trabajador.getRutaFoto().replace("\\", "/"));
+                } else {
+                    nuevoTrabajador.setRutaFoto(rutaFinal[0].replace("\\", "/"));
+                }
+                llamadasBD.ModificarTrabajador(nuevoTrabajador);
+            }
+        });
     }
 
     private void createUIComponents() {
@@ -158,7 +228,6 @@ public class TrabajadorEdicion {
         //MostarImagen = new JLabel(new ImageIcon(new ImageIcon("C:\\Users\\erica\\Desktop\\Imagenes\\Foto1.jpg").getImage().getScaledInstance(150, 200, Image.SCALE_DEFAULT)));
         MostarImagen = new JLabel(new ImageIcon(new ImageIcon(rutaFinal[0]).getImage().getScaledInstance(150, 200, Image.SCALE_DEFAULT)));
     }
-
 
 
 }

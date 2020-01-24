@@ -56,13 +56,19 @@ public class MaquinaEdicion {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                Maquina nuevaMaquina = new Maquina();
-                nuevaMaquina.setCodigo(TextCodigo.getText());
-                nuevaMaquina.setDescripcion(TextDescripcion.getText());
-                llamadasBD.InsertarMaquina(nuevaMaquina);
-                //Una vez insertado, vacio los campos para evitar confusiones.
-                TextCodigo.setText("");
-                TextDescripcion.setText("");
+                if (TextCodigo.getText().equals("") || TextCodigo.getText().equals(null)) {
+                    JOptionPane.showMessageDialog(null, "Faltan campos obligatorios. (*)");
+                }else{
+                    Maquina nuevaMaquina = new Maquina();
+                    nuevaMaquina.setCodigo(TextCodigo.getText());
+                    nuevaMaquina.setDescripcion(TextDescripcion.getText());
+                    llamadasBD.InsertarMaquina(nuevaMaquina);
+                    //Una vez insertado, vacio los campos para evitar confusiones.
+                    TextCodigo.setText("");
+                    TextDescripcion.setText("");
+                }
+
+
             }
         });
 
@@ -75,6 +81,13 @@ public class MaquinaEdicion {
                 //Una vez eliminado, vacio los campos para evitar confusiones.
                 TextCodigo.setText("");
                 TextDescripcion.setText("");
+
+                TextCodigo.setEnabled(true);
+
+                //Dejo los botones listo por si se quiere crear otro objeto.
+                EditarButton.setEnabled(false);
+                BorrarButton.setEnabled(false);
+                CrearButton.setEnabled(true);
             }
         });
 

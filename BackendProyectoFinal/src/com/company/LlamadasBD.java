@@ -432,6 +432,8 @@ public class LlamadasBD {
         Connection con = Conexion();
         PreparedStatement preparedStatement;
 
+
+
         try{
             String query = "UPDATE TRABAJADORES" +
                     " set DNI = '"+ trabajador.getDni()+"'"+

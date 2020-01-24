@@ -92,21 +92,26 @@ public class TareaEdicion {
         CrearButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Tarea nuevaTarea = new Tarea();
-                nuevaTarea.setCodigo(TextCodigo.getText());
-                nuevaTarea.setDescripcion(TextDescripcion.getText());
 
-                //Éste if detecta si hay una máquina seleccionada o el espacio está vacío. De ésta manera el objeto deja la referencia en null y no copia el texto "".
-                if (ComboCodMaquina.getSelectedIndex() != 0) {
-                    nuevaTarea.setCodigoMaquina(ComboCodMaquina.getSelectedItem().toString());
+                if (TextCodigo.getText().equals("") || TextCodigo.getText().equals(null)) {
+                    JOptionPane.showMessageDialog(null, "Faltan campos obligatorios. (*)");
+                }else{
+                    Tarea nuevaTarea = new Tarea();
+                    nuevaTarea.setCodigo(TextCodigo.getText());
+                    nuevaTarea.setDescripcion(TextDescripcion.getText());
+
+                    //Éste if detecta si hay una máquina seleccionada o el espacio está vacío. De ésta manera el objeto deja la referencia en null y no copia el texto "".
+                    if (ComboCodMaquina.getSelectedIndex() != 0) {
+                        nuevaTarea.setCodigoMaquina(ComboCodMaquina.getSelectedItem().toString());
+                    }
+
+                    llamadasBD.InsertarTarea(nuevaTarea, true);
+
+                    //Una vez insertado, vacio los campos para evitar confusiones.
+                    TextCodigo.setText("");
+                    TextDescripcion.setText("");
+                    ComboCodMaquina.setSelectedIndex(0);
                 }
-
-                llamadasBD.InsertarTarea(nuevaTarea, true);
-
-                //Una vez insertado, vacio los campos para evitar confusiones.
-                TextCodigo.setText("");
-                TextDescripcion.setText("");
-                ComboCodMaquina.setSelectedIndex(0);
             }
         });
 
@@ -122,6 +127,13 @@ public class TareaEdicion {
                 TextCodigo.setText("");
                 TextDescripcion.setText("");
                 ComboCodMaquina.setSelectedIndex(0);
+
+                TextCodigo.setEnabled(true);
+
+                //Dejo los botones listo por si se quiere crear otro objeto.
+                EditarButton.setEnabled(false);
+                BorrarButton.setEnabled(false);
+                CrearButton.setEnabled(true);
             }
         });
 

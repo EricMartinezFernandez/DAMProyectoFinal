@@ -6,6 +6,7 @@ import com.company.Clases.Tarea;
 import com.company.LlamadasBD;
 import com.company.UI.TablaDeSeleccion;
 
+import javax.security.auth.login.CredentialException;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -90,18 +91,22 @@ public class MantenimientoEdicion {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                Mantenimiento nuevoMantenimiento = new Mantenimiento();
-                nuevoMantenimiento.setCodigo(TextCodigo.getText());
-                nuevoMantenimiento.setDescripcion(TextDescripcion.getText());
-                nuevoMantenimiento.setCodigoMaquina(ComboCodMaquina.getSelectedItem().toString());
+                if (TextCodigo.getText().equals("") || TextCodigo.getText().equals(null)) {
+                    JOptionPane.showMessageDialog(null, "Faltan campos obligatorios. (*)");
+                }else{
+                    Mantenimiento nuevoMantenimiento = new Mantenimiento();
+                    nuevoMantenimiento.setCodigo(TextCodigo.getText());
+                    nuevoMantenimiento.setDescripcion(TextDescripcion.getText());
+                    nuevoMantenimiento.setCodigoMaquina(ComboCodMaquina.getSelectedItem().toString());
 
 
-                llamadasBD.InsertarMantenimiento(nuevoMantenimiento);
+                    llamadasBD.InsertarMantenimiento(nuevoMantenimiento);
 
-                //Una vez insertado, vacio los campos para evitar confusiones.
-                TextCodigo.setText("");
-                TextDescripcion.setText("");
-                ComboCodMaquina.setSelectedIndex(0);
+                    //Una vez insertado, vacio los campos para evitar confusiones.
+                    TextCodigo.setText("");
+                    TextDescripcion.setText("");
+                    ComboCodMaquina.setSelectedIndex(0);
+                }
             }
         });
 
@@ -117,6 +122,13 @@ public class MantenimientoEdicion {
                 TextCodigo.setText("");
                 TextDescripcion.setText("");
                 ComboCodMaquina.setSelectedIndex(0);
+
+                TextCodigo.setEnabled(true);
+
+                //Dejo los botones listo por si se quiere crear otro objeto.
+                EditarButton.setEnabled(false);
+                BorrarButton.setEnabled(false);
+                CrearButton.setEnabled(true);
             }
         });
 

@@ -72,7 +72,7 @@
                         </constraints>
                         <properties>
                           <font size="16" style="1"/>
-                          <text value="*Descripción: "/>
+                          <text value="Descripción: "/>
                         </properties>
                       </component>
                       <hspacer id="548fb">
