@@ -13,9 +13,11 @@ import com.company.UI.MenusEdicion.TrabajadorEdicion;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -155,12 +157,14 @@ public class TablaDeSeleccion {
         }
 
         table1.setModel(model);
-
         //Éste switch rellena la tabla con la información.
         switch (IDTabla) {
 
             case 0:
-                //Trabajadores (Requiere de un modelo personalizado para poder visualizar las imágenes de los empleados.)
+                //Trabajadores
+
+                //Primero establezco la altura de las filas para poder insertar las imágenes.
+                table1.setRowHeight(150);
 
                 ArrayList<Trabajador> trabajadores = new ArrayList<>();
                 trabajadores = llamadasBD.LeerTrabajadores();
@@ -170,8 +174,11 @@ public class TablaDeSeleccion {
 
                     ImageIcon icon = new ImageIcon();
                     try {
-                        URL url = new URL(trabajadores.get(i).getRutaFoto());
-                        icon = new ImageIcon(url);
+                        //Selecciono la imagen del empleado y convierto su ruta en URL para poderla usar en el tipo Icon.
+                        URL url = new URL(new File(trabajadores.get(i).getRutaFoto()).toURI().toURL().toString());
+
+                        //Aquí cambio el tamaño de la imágen para que se vea correctamente.
+                        icon = new ImageIcon(new ImageIcon(url).getImage().getScaledInstance(110, 140, Image.SCALE_DEFAULT));
                     } catch (MalformedURLException e) {
                         e.printStackTrace();
                     }

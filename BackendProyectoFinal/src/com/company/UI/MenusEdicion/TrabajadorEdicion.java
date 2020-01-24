@@ -29,9 +29,10 @@ public class TrabajadorEdicion {
     private JPanel PanelDeImagen;
     private JLabel MostarImagen;
     JFrame frame;
+    final String[] rutaFinal = {""};
 
     public TrabajadorEdicion(Boolean conObjeto, Trabajador trabajador) {
-        final LlamadasBD[] llamadasBD = {new LlamadasBD()};
+        LlamadasBD llamadasBD = new LlamadasBD();
         JFileChooser fc = new JFileChooser();
         frame = new JFrame("Edición de trabajador");
         frame.setSize(1280, 720);
@@ -42,7 +43,6 @@ public class TrabajadorEdicion {
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
 
-        final String[] rutaFinal = {""};
 
         if (conObjeto == false) {
             EditarButton.setEnabled(false);
@@ -119,26 +119,44 @@ public class TrabajadorEdicion {
                 }
 
                 //Ahora a dibujar la imágen en su sitio
-
-                /*BufferedImage myPicture = null;
-                MostarImagen = new JLabel("");
-                MostarImagen.setIcon(new ImageIcon(TrabajadorEdicion.class.getResource(rutaFinal[0])));
-                MostarImagen.setBounds(10, 11, 321, 227);
-                PanelDeImagen.add(MostarImagen);
-                 */
-                System.out.println(rutaFinal[0]);
-                MostarImagen = new JLabel(new ImageIcon(rutaFinal[0]));
+                ImageIcon imageIcon = new ImageIcon(new ImageIcon(rutaFinal[0]).getImage().getScaledInstance(150, 200, Image.SCALE_DEFAULT));
+                MostarImagen.setIcon(imageIcon);
 
             }
         });
+
+
+
+        CrearButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                if(TextDNI.equals("") || TextDNI.equals(null)){
+                    JOptionPane.showMessageDialog(null, "Faltan campos obligatorios.");
+
+                }else{
+                    Trabajador nuevoTrabajador = new Trabajador();
+                    nuevoTrabajador.setDni(TextDNI.getText());
+                    nuevoTrabajador.setNombre(TextNombre.getText());
+                    nuevoTrabajador.setApellido1(TextApellido1.getText());
+                    nuevoTrabajador.setApellido2(TextApellido2.getText());
+                    nuevoTrabajador.setRutaFoto(rutaFinal[0]);
+
+                    llamadasBD.InsertarTrabajador(nuevoTrabajador);
+                }
+
+            }
+        });
+
+
 
     }
 
     private void createUIComponents() {
         // TODO: place custom component creation code here
         //MostarImagen = new JLabel(new ImageIcon("C:\\Users\\erica\\Desktop\\Imagenes\\Foto1.jpg"));
-        MostarImagen = new JLabel(new ImageIcon(new ImageIcon("C:\\Users\\erica\\Desktop\\Imagenes\\Foto1.jpg").getImage().getScaledInstance(150, 200, Image.SCALE_DEFAULT)));
-        //MostarImagen.setIcon(new ImageIcon(new ImageIcon("icon.png").getImage().getScaledInstance(20, 20, Image.SCALE_DEFAULT)));
+        //MostarImagen = new JLabel(new ImageIcon(new ImageIcon("C:\\Users\\erica\\Desktop\\Imagenes\\Foto1.jpg").getImage().getScaledInstance(150, 200, Image.SCALE_DEFAULT)));
+        MostarImagen = new JLabel(new ImageIcon(new ImageIcon(rutaFinal[0]).getImage().getScaledInstance(150, 200, Image.SCALE_DEFAULT)));
     }
 
 
