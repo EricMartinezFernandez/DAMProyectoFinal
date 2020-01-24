@@ -30,7 +30,6 @@ public class MenuInicio {
                 TextRuta.setText(line);
             }
 
-
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -91,7 +90,7 @@ public class MenuInicio {
                         while ((line = reader.readLine()) != null) {
                             TextRuta.setText(line);
                         }
-                        
+
                         JOptionPane.showMessageDialog(null, "Ruta asignada correctamente.");
 
 
