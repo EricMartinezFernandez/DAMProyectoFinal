@@ -1626,4 +1626,313 @@ public class LlamadasBD {
     }
 
 
+    //USUARIOS
+    public void InsertarUsuario(Usuario usuario) {
+        PreparedStatement preparedStatement;
+        Connection con = Conexion();
+
+        try {
+
+            String query = " INSERT INTO USUARIOS (USERNAME, PASSWORD, TIPOCUENTA)"
+                    + " VALUES (?, ?, ?)";
+
+            preparedStatement = con.prepareStatement(query);
+
+            preparedStatement.setString(1, usuario.getUsername());
+            preparedStatement.setString(2, usuario.getPassword());
+            preparedStatement.setInt(3, usuario.getPermisos());
+
+            preparedStatement.execute();
+
+            System.out.println("Operación existosa");
+
+
+            JOptionPane.showMessageDialog(null, "Usuario creado correctamente.");
+
+        } catch (Exception e) {
+            System.out.println("A ocurrido un ERROR");
+            JOptionPane.showMessageDialog(null, "A ocurrido un ERROR");
+            System.out.println(e);
+        }
+    }
+
+    public ArrayList<Usuario> LeerUsuarios() {
+
+        ArrayList<Usuario> usuarios = new ArrayList<>();
+
+        try {
+            Connection con = Conexion();
+
+
+            String query = "SELECT * FROM USUARIOS";
+
+            Statement statement = con.createStatement();
+            ResultSet resultSet = statement.executeQuery(query);
+
+
+            while (resultSet.next()) {
+                String username = resultSet.getString("USERNAME");
+                String password = resultSet.getString("PASSWORD");
+                int tipocuenta = resultSet.getInt("TIPOCUENTA");
+
+                Usuario usuario = new Usuario();
+                usuario.setUsername(username);
+                usuario.setPassword(password);
+                usuario.setPermisos(tipocuenta);
+
+                usuarios.add(usuario);
+            }
+
+            resultSet.close();
+            statement.close();
+
+        } catch (Exception e) {
+            System.err.println("A ocurrido un ERROR.");
+            System.out.println(e);
+        }
+
+        return usuarios;
+    }
+
+    public Usuario LeerUsuarioConcreto(String usernamePK) {
+        Usuario usuario = new Usuario();
+
+        try {
+            Connection con = Conexion();
+
+
+            String query = "SELECT * FROM USUARIOS WHERE USERNAME = '" + usernamePK + "'";
+
+            Statement statement = con.createStatement();
+            ResultSet resultSet = statement.executeQuery(query);
+
+
+            while (resultSet.next()) {
+                String username = resultSet.getString("USERNAME");
+                String password = resultSet.getString("PASSWORD");
+                int tipocuenta = resultSet.getInt("TIPOCUENTA");
+
+
+                usuario.setUsername(username);
+                usuario.setPassword(password);
+                usuario.setPermisos(tipocuenta);
+
+            }
+
+            resultSet.close();
+            statement.close();
+
+        } catch (Exception e) {
+            System.err.println("A ocurrido un ERROR.");
+            System.out.println(e);
+        }
+
+        return usuario;
+    }
+
+    public void EliminarUsuario(String usernamePK) {
+        Connection con = Conexion();
+        PreparedStatement preparedStatement;
+
+        try {
+
+            String query = "DELETE FROM USUARIOS WHERE USERNAME = '" + usernamePK + "'";
+
+            preparedStatement = con.prepareStatement(query);
+
+            preparedStatement.execute();
+            preparedStatement.close();
+
+            JOptionPane.showMessageDialog(null, "Usuario eliminado correctamente.");
+
+        } catch (SQLException e) {
+
+            System.out.println("A ocurrido un ERROR");
+            JOptionPane.showMessageDialog(null, "A ocurrido un ERROR");
+            System.out.println(e);
+        }
+
+    }
+
+    public void ModificarUsuario(Usuario usuario) {
+        Connection con = Conexion();
+        PreparedStatement preparedStatement;
+
+        try {
+            String query = "UPDATE USUARIOS" +
+                    " set USERNAME = '" + usuario.getUsername() + "'" +
+                    ",PASSWORD = '" + usuario.getPassword() + "'" +
+                    ",TIPOCUENTA = '" + usuario.getPermisos() + "'" +
+                    " where USERNAME = '" + usuario.getUsername() + "'";
+
+            preparedStatement = con.prepareStatement(query);
+
+            preparedStatement.executeUpdate();
+            preparedStatement.close();
+
+            JOptionPane.showMessageDialog(null, "Usuario modificado correctamente.");
+
+        } catch (Exception e) {
+            System.err.println("A ocurrido un ERROR.");
+            JOptionPane.showMessageDialog(null, "A ocurrido un ERROR");
+            e.getMessage();
+        }
+    }
+
+
+    //REGISTROS
+    public void InsertarRegistro(Registro registro) {
+        PreparedStatement preparedStatement;
+        Connection con = Conexion();
+
+        try {
+
+            String query = " INSERT INTO REGISTROS (HORA, ACCION, USUARIO)"
+                    + " VALUES (?, ?, ?)";
+
+            preparedStatement = con.prepareStatement(query);
+
+            preparedStatement.setString(1, registro.getHora());
+            preparedStatement.setString(2, registro.getAccion());
+            preparedStatement.setString(3, registro.getUsuario());
+
+            preparedStatement.execute();
+
+            System.out.println("Operación existosa");
+
+
+            JOptionPane.showMessageDialog(null, "Registro creado correctamente.");
+
+        } catch (Exception e) {
+            System.out.println("A ocurrido un ERROR");
+            JOptionPane.showMessageDialog(null, "A ocurrido un ERROR");
+            System.out.println(e);
+        }
+    }
+
+    public ArrayList<Registro> LeerRegistros() {
+
+        ArrayList<Registro> registros = new ArrayList<>();
+
+        try {
+            Connection con = Conexion();
+
+
+            String query = "SELECT * FROM REGISTROS";
+
+            Statement statement = con.createStatement();
+            ResultSet resultSet = statement.executeQuery(query);
+
+
+            while (resultSet.next()) {
+                String hora = resultSet.getString("HORA");
+                String accion = resultSet.getString("ACCION");
+                String usuario = resultSet.getString("USUARIO");
+
+                Registro registro = new Registro();
+                registro.setHora(hora);
+                registro.setAccion(accion);
+                registro.setUsuario(usuario);
+
+                registros.add(registro);
+            }
+
+            resultSet.close();
+            statement.close();
+
+        } catch (Exception e) {
+            System.err.println("A ocurrido un ERROR.");
+            System.out.println(e);
+        }
+
+        return registros;
+    }
+
+    public Registro LeerRegistroConcreto(String codigoPK) {
+        Registro registro = new Registro();
+
+        try {
+            Connection con = Conexion();
+
+
+            String query = "SELECT * FROM REGISTROS WHERE CODIGO = '" + codigoPK + "'";
+
+            Statement statement = con.createStatement();
+            ResultSet resultSet = statement.executeQuery(query);
+
+
+            while (resultSet.next()) {
+
+                String hora = resultSet.getString("HORA");
+                String accion = resultSet.getString("ACCION");
+                String usuario = resultSet.getString("USUARIO");
+
+                registro.setHora(hora);
+                registro.setAccion(accion);
+                registro.setUsuario(usuario);
+            }
+
+            resultSet.close();
+            statement.close();
+
+        } catch (Exception e) {
+            System.err.println("A ocurrido un ERROR.");
+            System.out.println(e);
+        }
+
+        return registro;
+    }
+
+    public void EliminarRegistro(String codigoPK) {
+        Connection con = Conexion();
+        PreparedStatement preparedStatement;
+
+        try {
+
+            String query = "DELETE FROM REGISTROS WHERE CODIGO = '" + codigoPK + "'";
+
+            preparedStatement = con.prepareStatement(query);
+
+            preparedStatement.execute();
+            preparedStatement.close();
+
+            JOptionPane.showMessageDialog(null, "Registro eliminado correctamente.");
+
+        } catch (SQLException e) {
+
+            System.out.println("A ocurrido un ERROR");
+            JOptionPane.showMessageDialog(null, "A ocurrido un ERROR");
+            System.out.println(e);
+        }
+
+    }
+
+    public void ModificarRegistro(Registro registro, int codigoPK) {
+        Connection con = Conexion();
+        PreparedStatement preparedStatement;
+
+        try {
+            String query = "UPDATE REGISTROS" +
+                    " set HORA = '" + registro.getHora() + "'" +
+                    ",ACCION = '" + registro.getAccion() + "'" +
+                    ",USUARIO = '" + registro.getUsuario() + "'" +
+                    " where CODIGO = '" + codigoPK + "'";
+
+            preparedStatement = con.prepareStatement(query);
+
+            preparedStatement.executeUpdate();
+            preparedStatement.close();
+
+            JOptionPane.showMessageDialog(null, "Registro modificado correctamente.");
+
+        } catch (Exception e) {
+            System.err.println("A ocurrido un ERROR.");
+            JOptionPane.showMessageDialog(null, "A ocurrido un ERROR");
+            e.getMessage();
+        }
+    }
+
+
+
+
 }
