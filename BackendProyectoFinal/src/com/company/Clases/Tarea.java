@@ -3,8 +3,7 @@ package com.company.Clases;
 public class Tarea {
     private String codigo;
     private String descripcion;
-    private String codigoMaquina;
-
+    private boolean maquina;
 
     public Tarea() {
     }
@@ -14,10 +13,10 @@ public class Tarea {
         this.descripcion = descripcion;
     }
 
-    public Tarea(String codigo, String descripcion, String codigoMaquina) {
+    public Tarea(String codigo, String descripcion, boolean maquina) {
         this.codigo = codigo;
         this.descripcion = descripcion;
-        this.codigoMaquina = codigoMaquina;
+        this.maquina = maquina;
     }
 
     public String getCodigo() {
@@ -36,12 +35,11 @@ public class Tarea {
         this.descripcion = descripcion;
     }
 
-    public String getCodigoMaquina() {
-        return codigoMaquina;
+    public boolean isMaquina() {
+        return maquina;
     }
 
-    public void setCodigoMaquina(String codigoMaquina) {
-        this.codigoMaquina = codigoMaquina;
+    public void setMaquina(boolean maquina) {
+        this.maquina = maquina;
     }
-
 }

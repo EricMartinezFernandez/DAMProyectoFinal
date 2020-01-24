@@ -19,7 +19,7 @@ public class TareaEdicion {
     private JButton VolverButton;
     private JTextField TextDescripcion;
     private JButton BorrarButton;
-    private JComboBox ComboCodMaquina;
+    private JCheckBox CheckMaquina;
     JFrame frame;
 
     public TareaEdicion(boolean conObjeto, Tarea tarea) {
@@ -38,44 +38,16 @@ public class TareaEdicion {
         if (conObjeto == false) {//Ésta condición no tendría datos previos y por lo tanto el usuario solo podría crear un objeto desde cero.
             EditarButton.setEnabled(false);
             BorrarButton.setEnabled(false);
-            ComboCodMaquina.addItem("Sin máquina");
-
-
-            ArrayList<Maquina> maquinas = new ArrayList<>();
-            maquinas = llamadasBD.LeerMaquinas();
-
-            for (int i = 0; i < maquinas.size(); i++) {
-                ComboCodMaquina.addItem(maquinas.get(i).getCodigo());
-            }
-
-            ComboCodMaquina.setSelectedIndex(0);
-
 
         } else {
             CrearButton.setEnabled(false);
             TextCodigo.setEnabled(false);
             TextCodigo.setText(tarea.getCodigo());
             TextDescripcion.setText(tarea.getDescripcion());
-            ComboCodMaquina.addItem("Sin máquina");
-
-            //Éste código se encarga de dejar seleccionado en el CoboBox el campo correcto.
-            if(tarea.getCodigoMaquina() != null){
-                ComboCodMaquina.addItem(tarea.getCodigoMaquina());
-                ComboCodMaquina.setSelectedIndex(1);
-            }else{
-                ComboCodMaquina.setSelectedIndex(0);
-            }
-
+            CheckMaquina.setSelected(tarea.isMaquina());
 
             ArrayList<Maquina> maquinas = new ArrayList<>();
             maquinas = llamadasBD.LeerMaquinas();
-
-            for (int i = 0; i < maquinas.size(); i++) {
-
-                if (!maquinas.get(i).getCodigo().equals(tarea.getCodigoMaquina())) {
-                    ComboCodMaquina.addItem(maquinas.get(i).getCodigo());
-                }
-            }
 
         }
 
@@ -100,17 +72,13 @@ public class TareaEdicion {
                     nuevaTarea.setCodigo(TextCodigo.getText());
                     nuevaTarea.setDescripcion(TextDescripcion.getText());
 
-                    //Éste if detecta si hay una máquina seleccionada o el espacio está vacío. De ésta manera el objeto deja la referencia en null y no copia el texto "".
-                    if (ComboCodMaquina.getSelectedIndex() != 0) {
-                        nuevaTarea.setCodigoMaquina(ComboCodMaquina.getSelectedItem().toString());
-                    }
+                    nuevaTarea.setMaquina(CheckMaquina.isSelected());
 
-                    llamadasBD.InsertarTarea(nuevaTarea, true);
+                    llamadasBD.InsertarTarea(nuevaTarea);
 
                     //Una vez insertado, vacio los campos para evitar confusiones.
                     TextCodigo.setText("");
                     TextDescripcion.setText("");
-                    ComboCodMaquina.setSelectedIndex(0);
                 }
             }
         });
@@ -120,13 +88,12 @@ public class TareaEdicion {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                llamadasBD.EliminarTarea(tarea.getCodigo(), true);
+                llamadasBD.EliminarTarea(tarea.getCodigo());
 
 
                 //Una vez eliminado, vacio los campos para evitar confusiones.
                 TextCodigo.setText("");
                 TextDescripcion.setText("");
-                ComboCodMaquina.setSelectedIndex(0);
 
                 TextCodigo.setEnabled(true);
 
@@ -144,16 +111,10 @@ public class TareaEdicion {
                 Tarea nuevaTarea = new Tarea();
                 nuevaTarea.setCodigo(TextCodigo.getText());
                 nuevaTarea.setDescripcion(TextDescripcion.getText());
+                nuevaTarea.setMaquina(CheckMaquina.isSelected());
 
-                //Éste if detecta si hay una máquina seleccionada o el espacio está vacío. De ésta manera el objeto deja la referencia en null y no copia el texto "".
-                if (ComboCodMaquina.getSelectedIndex() != 0) {
-                    nuevaTarea.setCodigoMaquina(ComboCodMaquina.getSelectedItem().toString());
-                    llamadasBD.ModificarTarea(nuevaTarea);
-                }else{
-                    //En el caso de que se anule la referencia creo de nuevo el objeto para evitar errores con la base de datos.
-                    llamadasBD.EliminarTarea(TextCodigo.getText(), false);
-                    llamadasBD.InsertarTarea(nuevaTarea, false);
-                }
+
+                llamadasBD.ModificarTarea(nuevaTarea);
 
             }
         });

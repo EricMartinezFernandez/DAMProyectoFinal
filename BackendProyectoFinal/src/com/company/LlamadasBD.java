@@ -114,10 +114,6 @@ public class LlamadasBD {
         }
 
 
-
-
-
-
         try {
             preparedStatement.close();
         } catch (SQLException e) {
@@ -166,8 +162,7 @@ public class LlamadasBD {
         String createTareas = "CREATE TABLE TAREAS(" +
                 "CODIGO VARCHAR(255) PRIMARY KEY NOT NULL," +
                 "DESCRIPCION VARCHAR(255)," +
-                "CODIGOMAQUINA VARCHAR(255)," +
-                "FOREIGN KEY (CODIGOMAQUINA) REFERENCES MAQUINAS(CODIGO) ON DELETE CASCADE);";
+                "MAQUINA BIT NOT NULL);";
 
         String createTrabajoTareas = "CREATE TABLE TRABAJOTAREAS(" +
                 "CODIGO INTEGER PRIMARY KEY NOT NULL AUTO_INCREMENT," +
@@ -175,6 +170,8 @@ public class LlamadasBD {
                 "FECHAREALIZACION INTEGER NOT NULL," +
                 "DNITRABAJADOR VARCHAR(9) NOT NULL," +
                 "CODIGOTAREA VARCHAR(255) NOT NULL," +
+                "CODIGOMAQUINA VARCHAR(255)," +
+                "FOREIGN KEY (CODIGOMAQUINA) REFERENCES MAQUINAS(CODIGO) ON DELETE CASCADE," +
                 "FOREIGN KEY (DNITRABAJADOR) REFERENCES TRABAJADORES(DNI) ON DELETE CASCADE," +
                 "FOREIGN KEY (CODIGOTAREA) REFERENCES TAREAS(CODIGO) ON DELETE CASCADE);";
 
@@ -390,7 +387,7 @@ public class LlamadasBD {
 
 
                 trabajadores.add(new Trabajador(dni, nombre, apellido1, apellido2, foto));
-        }
+            }
 
             resultSet.close();
             statement.close();
@@ -403,13 +400,13 @@ public class LlamadasBD {
         return trabajadores;
     }
 
-    public void EliminarTrabajador(String dniPK){
+    public void EliminarTrabajador(String dniPK) {
         Connection con = Conexion();
         PreparedStatement preparedStatement;
 
         try {
 
-            String query =  "DELETE FROM TRABAJADORES WHERE DNI = '" + dniPK + "'";
+            String query = "DELETE FROM TRABAJADORES WHERE DNI = '" + dniPK + "'";
 
             preparedStatement = con.prepareStatement(query);
 
@@ -428,19 +425,18 @@ public class LlamadasBD {
 
     }
 
-    public void ModificarTrabajador(Trabajador trabajador){
+    public void ModificarTrabajador(Trabajador trabajador) {
         Connection con = Conexion();
         PreparedStatement preparedStatement;
 
 
-
-        try{
+        try {
             String query = "UPDATE TRABAJADORES" +
-                    " set DNI = '"+ trabajador.getDni()+"'"+
-                    ",NOMBRE = '" +trabajador.getNombre()+"'"+
-                    ",APELLIDO1 = '"+ trabajador.getApellido1()+"'"+
-                    ",APELLIDO2 = '"+ trabajador.getApellido2()+"'"+
-                    ",FOTO = '"+ trabajador.getRutaFoto()+"'"+
+                    " set DNI = '" + trabajador.getDni() + "'" +
+                    ",NOMBRE = '" + trabajador.getNombre() + "'" +
+                    ",APELLIDO1 = '" + trabajador.getApellido1() + "'" +
+                    ",APELLIDO2 = '" + trabajador.getApellido2() + "'" +
+                    ",FOTO = '" + trabajador.getRutaFoto() + "'" +
                     " where DNI = '" + trabajador.getDni() + "'";
 
             preparedStatement = con.prepareStatement(query);
@@ -451,7 +447,7 @@ public class LlamadasBD {
             JOptionPane.showMessageDialog(null, "Trabajador modificado correctamente.");
 
 
-        }catch (Exception e) {
+        } catch (Exception e) {
             System.err.println("A ocurrido un ERROR.");
             JOptionPane.showMessageDialog(null, "A ocurrido un ERROR");
             e.getMessage();
@@ -587,13 +583,13 @@ public class LlamadasBD {
         return maquinas;
     }
 
-    public void EliminarMaquina(String codigoPK){
+    public void EliminarMaquina(String codigoPK) {
         Connection con = Conexion();
         PreparedStatement preparedStatement;
 
         try {
 
-            String query =  "DELETE FROM MAQUINAS WHERE CODIGO = '" + codigoPK + "'";
+            String query = "DELETE FROM MAQUINAS WHERE CODIGO = '" + codigoPK + "'";
 
             preparedStatement = con.prepareStatement(query);
 
@@ -612,14 +608,14 @@ public class LlamadasBD {
 
     }
 
-    public void ModificarMaquina(Maquina maquina){
+    public void ModificarMaquina(Maquina maquina) {
         Connection con = Conexion();
         PreparedStatement preparedStatement;
 
-        try{
+        try {
             String query = "UPDATE MAQUINAS" +
-                    " set CODIGO = '"+ maquina.getCodigo()+"'"+
-                    ",DESCRIPCION = '" +maquina.getDescripcion()+"'"+
+                    " set CODIGO = '" + maquina.getCodigo() + "'" +
+                    ",DESCRIPCION = '" + maquina.getDescripcion() + "'" +
                     " where CODIGO = '" + maquina.getCodigo() + "'";
 
             preparedStatement = con.prepareStatement(query);
@@ -629,13 +625,12 @@ public class LlamadasBD {
 
             JOptionPane.showMessageDialog(null, "Máquina modificada correctamente.");
 
-        }catch (Exception e) {
+        } catch (Exception e) {
             System.err.println("A ocurrido un ERROR.");
             JOptionPane.showMessageDialog(null, "A ocurrido un ERROR");
             System.out.println(e);
         }
     }
-
 
 
     //MANTENIMIENTOS
@@ -766,13 +761,13 @@ public class LlamadasBD {
         return mantenimientos;
     }
 
-    public void EliminarMantenimiento(String codigoPK){
+    public void EliminarMantenimiento(String codigoPK) {
         Connection con = Conexion();
         PreparedStatement preparedStatement;
 
         try {
 
-            String query =  "DELETE FROM MANTENIMIENTOS WHERE CODIGO = '" + codigoPK + "'";
+            String query = "DELETE FROM MANTENIMIENTOS WHERE CODIGO = '" + codigoPK + "'";
 
             preparedStatement = con.prepareStatement(query);
 
@@ -790,15 +785,15 @@ public class LlamadasBD {
 
     }
 
-    public void ModificarMantenimiento(Mantenimiento mantenimiento){
+    public void ModificarMantenimiento(Mantenimiento mantenimiento) {
         Connection con = Conexion();
         PreparedStatement preparedStatement;
 
-        try{
+        try {
             String query = "UPDATE MANTENIMIENTOS" +
-                    " set CODIGO = '"+ mantenimiento.getCodigo()+"'"+
-                    ",DESCRIPCION = '" +mantenimiento.getDescripcion()+"'"+
-                    ",CODIGOMAQUINA = '" +mantenimiento.getCodigoMaquina()+"'"+
+                    " set CODIGO = '" + mantenimiento.getCodigo() + "'" +
+                    ",DESCRIPCION = '" + mantenimiento.getDescripcion() + "'" +
+                    ",CODIGOMAQUINA = '" + mantenimiento.getCodigoMaquina() + "'" +
                     " where CODIGO = '" + mantenimiento.getCodigo() + "'";
 
             preparedStatement = con.prepareStatement(query);
@@ -808,7 +803,7 @@ public class LlamadasBD {
 
             JOptionPane.showMessageDialog(null, "Mantenimiento modificado correctamente.");
 
-        }catch (Exception e) {
+        } catch (Exception e) {
             System.err.println("A ocurrido un ERROR.");
             JOptionPane.showMessageDialog(null, "A ocurrido un ERROR");
             e.getMessage();
@@ -816,31 +811,33 @@ public class LlamadasBD {
     }
 
 
-
     //TAREAS
-    public void InsertarTarea(Tarea nuevaTarea, boolean aviso) {
+    public void InsertarTarea(Tarea nuevaTarea) {
         PreparedStatement preparedStatement;
         Connection con = Conexion();
 
         try {
 
-            String query = " INSERT INTO TAREAS (CODIGO, DESCRIPCION, CODIGOMAQUINA)"
+            String query = " INSERT INTO TAREAS (CODIGO, DESCRIPCION, MAQUINA)"
                     + " VALUES (?, ?, ?)";
 
             preparedStatement = con.prepareStatement(query);
 
             preparedStatement.setString(1, nuevaTarea.getCodigo());
             preparedStatement.setString(2, nuevaTarea.getDescripcion());
-            preparedStatement.setString(3, nuevaTarea.getCodigoMaquina());
+
+            if (nuevaTarea.isMaquina() == true) {
+                preparedStatement.setInt(3, 1);
+            } else {
+                preparedStatement.setInt(3, 0);
+            }
+
             preparedStatement.execute();
 
             System.out.println("Operación existosa");
 
-            if (aviso == true){
-                JOptionPane.showMessageDialog(null, "Tarea creada correctamente.");
-            }else{
-                JOptionPane.showMessageDialog(null, "Tarea modificada correctamente.");
-            }
+
+            JOptionPane.showMessageDialog(null, "Tarea creada correctamente.");
 
         } catch (Exception e) {
             System.out.println("A ocurrido un ERROR");
@@ -866,9 +863,16 @@ public class LlamadasBD {
             while (resultSet.next()) {
                 String codigo = resultSet.getString("CODIGO");
                 String descripcion = resultSet.getString("DESCRIPCION");
-                String codigoMaquina = resultSet.getString("CODIGOMAQUINA");
+                String maquina = resultSet.getString("MAQUINA");
 
-                Tarea tarea = new Tarea(codigo, descripcion, codigoMaquina);
+                Tarea tarea;
+
+                if (Integer.parseInt(maquina) == 1) {
+                    tarea = new Tarea(codigo, descripcion, true);
+                } else {
+                    tarea = new Tarea(codigo, descripcion, false);
+                }
+
                 tareas.add(tarea);
             }
 
@@ -900,9 +904,17 @@ public class LlamadasBD {
             while (resultSet.next()) {
                 String codigo = resultSet.getString("CODIGO");
                 String descripcion = resultSet.getString("DESCRIPCION");
-                String codigoMaquina = resultSet.getString("CODIGOMAQUINA");
+                String maquina = resultSet.getString("MAQUINA");
 
-                tarea = new Tarea(codigo, descripcion, codigoMaquina);
+                Boolean maquinaBool = false;
+
+                if (Integer.parseInt(maquina) == 1) {
+                    maquinaBool = true;
+                } else {
+                    maquinaBool = false;
+                }
+
+                tarea = new Tarea(codigo, descripcion, maquinaBool);
             }
 
             resultSet.close();
@@ -933,9 +945,17 @@ public class LlamadasBD {
             while (resultSet.next()) {
                 String codigo = resultSet.getString("CODIGO");
                 String descripcion = resultSet.getString("DESCRIPCION");
-                String codigoMaquina = resultSet.getString("CODIGOMAQUINA");
+                String maquina = resultSet.getString("MAQUINA");
 
-                tareas.add(new Tarea(codigo, descripcion, codigoMaquina));
+                Tarea tarea;
+
+                if (Integer.parseInt(maquina) == 1) {
+                    tarea = new Tarea(codigo, descripcion, true);
+                } else {
+                    tarea = new Tarea(codigo, descripcion, false);
+                }
+
+                tareas.add(tarea);
             }
 
             resultSet.close();
@@ -949,22 +969,20 @@ public class LlamadasBD {
         return tareas;
     }
 
-    public void EliminarTarea(String codigoPK, boolean aviso){
+    public void EliminarTarea(String codigoPK) {
         Connection con = Conexion();
         PreparedStatement preparedStatement;
 
         try {
 
-            String query =  "DELETE FROM TAREAS WHERE CODIGO LIKE '" + codigoPK + "%'";
+            String query = "DELETE FROM TAREAS WHERE CODIGO LIKE '" + codigoPK + "%'";
 
             preparedStatement = con.prepareStatement(query);
 
             preparedStatement.execute();
             preparedStatement.close();
 
-            if (aviso == true){
-                JOptionPane.showMessageDialog(null, "Tarea eliminada correctamente.");
-            }
+            JOptionPane.showMessageDialog(null, "Tarea eliminada correctamente.");
 
 
         } catch (SQLException e) {
@@ -976,15 +994,23 @@ public class LlamadasBD {
 
     }
 
-    public void ModificarTarea(Tarea tarea){
+    public void ModificarTarea(Tarea tarea) {
         Connection con = Conexion();
         PreparedStatement preparedStatement;
 
-        try{
+        int maquinaInt = 0;
+
+        if(tarea.isMaquina() == true){
+            maquinaInt = 1;
+        }else{
+            maquinaInt = 0;
+        }
+
+        try {
             String query = "UPDATE TAREAS" +
-                    " set CODIGO = '"+ tarea.getCodigo()+"'"+
-                    ",DESCRIPCION = '" +tarea.getDescripcion()+"'"+
-                    ",CODIGOMAQUINA = '" +tarea.getCodigoMaquina()+"'"+
+                    " set CODIGO = '" + tarea.getCodigo() + "'" +
+                    ",DESCRIPCION = '" + tarea.getDescripcion() + "'" +
+                    ",MAQUINA = " + maquinaInt +
                     " where CODIGO = '" + tarea.getCodigo() + "'";
 
             preparedStatement = con.prepareStatement(query);
@@ -994,14 +1020,12 @@ public class LlamadasBD {
 
             JOptionPane.showMessageDialog(null, "Tarea modificada correctamente.");
 
-        }catch (Exception e) {
+        } catch (Exception e) {
             System.err.println("A ocurrido un ERROR.");
             JOptionPane.showMessageDialog(null, "A ocurrido un ERROR");
             System.out.println(e);
         }
     }
-
-
 
 
     //TRABAJOTAREA
@@ -1102,13 +1126,13 @@ public class LlamadasBD {
         return trabajoTarea;
     }
 
-    public void EliminarTrabajoTarea(String codigoPK){
+    public void EliminarTrabajoTarea(String codigoPK) {
         Connection con = Conexion();
         PreparedStatement preparedStatement;
 
         try {
 
-            String query =  "DELETE FROM TRABAJOTAREAS WHERE CODIGO = '" + codigoPK + "'";
+            String query = "DELETE FROM TRABAJOTAREAS WHERE CODIGO = '" + codigoPK + "'";
 
             preparedStatement = con.prepareStatement(query);
 
@@ -1125,16 +1149,16 @@ public class LlamadasBD {
 
     }
 
-    public void ModificarTrabajoTarea(TrabajoTarea trabajoTarea){
+    public void ModificarTrabajoTarea(TrabajoTarea trabajoTarea) {
         Connection con = Conexion();
         PreparedStatement preparedStatement;
 
-        try{
+        try {
             String query = "UPDATE TRABAJOTAREAS" +
-                    " set DURACION = '"+ trabajoTarea.getDuracion()+"'"+
-                    ",FECHAREALIZACION = '" +trabajoTarea.getFechaRealizacion()+"'"+
-                    ",DNITRABAJADOR = '"+ trabajoTarea.getDniTrabajador()+"'"+
-                    ",CODIGOTAREA = '"+ trabajoTarea.getCodigoTarea()+"'"+
+                    " set DURACION = '" + trabajoTarea.getDuracion() + "'" +
+                    ",FECHAREALIZACION = '" + trabajoTarea.getFechaRealizacion() + "'" +
+                    ",DNITRABAJADOR = '" + trabajoTarea.getDniTrabajador() + "'" +
+                    ",CODIGOTAREA = '" + trabajoTarea.getCodigoTarea() + "'" +
                     " where CODIGO = '" + trabajoTarea.getCodigo() + "'";
 
             preparedStatement = con.prepareStatement(query);
@@ -1143,13 +1167,12 @@ public class LlamadasBD {
             preparedStatement.close();
 
 
-        }catch (Exception e) {
+        } catch (Exception e) {
             System.err.println("A ocurrido un ERROR.");
             JOptionPane.showMessageDialog(null, "A ocurrido un ERROR");
             e.getMessage();
         }
     }
-
 
 
     //TRABAJOMANTENIMIENTO
@@ -1250,13 +1273,13 @@ public class LlamadasBD {
         return trabajoMantenimiento;
     }
 
-    public void EliminarTrabajoMantenimiento(String codigoPK){
+    public void EliminarTrabajoMantenimiento(String codigoPK) {
         Connection con = Conexion();
         PreparedStatement preparedStatement;
 
         try {
 
-            String query =  "DELETE FROM TRABAJOMANTENIMIENTOS WHERE CODIGO = '" + codigoPK + "'";
+            String query = "DELETE FROM TRABAJOMANTENIMIENTOS WHERE CODIGO = '" + codigoPK + "'";
 
             preparedStatement = con.prepareStatement(query);
 
@@ -1273,16 +1296,16 @@ public class LlamadasBD {
 
     }
 
-    public void ModificarTrabajoMantenimiento(TrabajoMantenimiento trabajoMantenimiento){
+    public void ModificarTrabajoMantenimiento(TrabajoMantenimiento trabajoMantenimiento) {
         Connection con = Conexion();
         PreparedStatement preparedStatement;
 
-        try{
+        try {
             String query = "UPDATE TRABAJOMANTENIMIENTOS" +
-                    " set DURACION = '"+ trabajoMantenimiento.getDuracion()+"'"+
-                    ",FECHAREALIZACION = '" +trabajoMantenimiento.getFechaRealizacion()+"'"+
-                    ",DNITRABAJADOR = '"+ trabajoMantenimiento.getDniTrabajador()+"'"+
-                    ",CODIGOTAREA = '"+ trabajoMantenimiento.getCodigoMantenimiento()+"'"+
+                    " set DURACION = '" + trabajoMantenimiento.getDuracion() + "'" +
+                    ",FECHAREALIZACION = '" + trabajoMantenimiento.getFechaRealizacion() + "'" +
+                    ",DNITRABAJADOR = '" + trabajoMantenimiento.getDniTrabajador() + "'" +
+                    ",CODIGOTAREA = '" + trabajoMantenimiento.getCodigoMantenimiento() + "'" +
                     " where CODIGO = '" + trabajoMantenimiento.getCodigo() + "'";
 
             preparedStatement = con.prepareStatement(query);
@@ -1291,13 +1314,12 @@ public class LlamadasBD {
             preparedStatement.close();
 
 
-        }catch (Exception e) {
+        } catch (Exception e) {
             System.err.println("A ocurrido un ERROR.");
             JOptionPane.showMessageDialog(null, "A ocurrido un ERROR");
             e.getMessage();
         }
     }
-
 
 
 }

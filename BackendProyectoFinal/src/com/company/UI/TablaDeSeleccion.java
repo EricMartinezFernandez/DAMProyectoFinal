@@ -96,7 +96,7 @@ public class TablaDeSeleccion {
                 TextPK.setText("Código: ");
 
                 model = new DefaultTableModel() {
-                    String[] columnas = {"Codigo", "Descripción", "Código máquina"};
+                    String[] columnas = {"Codigo", "Descripción", "Tiene máquina"};
 
                     @Override
                     public int getColumnCount() {
@@ -192,9 +192,17 @@ public class TablaDeSeleccion {
                 //Tareas
                 ArrayList<Tarea> tareas = new ArrayList<>();
                 tareas = llamadasBD.LeerTareas();
+                String maquina = "";
 
                 for (int i = 0; i < tareas.size(); i++) {
-                    model.addRow(new Object[]{tareas.get(i).getCodigo(), tareas.get(i).getDescripcion(), tareas.get(i).getCodigoMaquina()});
+
+                    if(tareas.get(i).isMaquina() == true){
+                        maquina = "SI";
+                    }else{
+                        maquina = "NO";
+                    }
+
+                    model.addRow(new Object[]{tareas.get(i).getCodigo(), tareas.get(i).getDescripcion(), maquina});
                 }
                 break;
 
@@ -382,9 +390,19 @@ public class TablaDeSeleccion {
                             finalModel.removeRow(i);
                         }
 
+                        String maquina;
+
                         //Añado las nuevas líneas, ya filtradas.
                         for (int i = 0; i < tareas.size(); i++) {
-                            finalModel.addRow(new Object[]{tareas.get(i).getCodigo(), tareas.get(i).getDescripcion(), tareas.get(i).getCodigoMaquina()});
+
+
+                            if(tareas.get(i).isMaquina() == true){
+                                maquina = "SI";
+                            }else{
+                                maquina = "NO";
+                            }
+
+                            finalModel.addRow(new Object[]{tareas.get(i).getCodigo(), tareas.get(i).getDescripcion(), maquina});
                         }
                         break;
 
