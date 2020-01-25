@@ -14,9 +14,9 @@ public class Main {
 
         //llamadasBD.ReiniciarBasesDeDatos();
 
-        //MenuInicio menuInicio = new MenuInicio();
+        MenuInicio menuInicio = new MenuInicio();
 
-        InicioSesion inicioSesion = new InicioSesion();
+        //InicioSesion inicioSesion = new InicioSesion();
 
 
         //UTILIDADES

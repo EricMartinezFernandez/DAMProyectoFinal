@@ -6,6 +6,7 @@ public class TrabajoTarea {
     private int fechaRealizacion;
     private String dniTrabajador;
     private String codigoTarea;
+    private String codigoMaquina;
 
     public TrabajoTarea() {
     }
@@ -20,6 +21,15 @@ public class TrabajoTarea {
         this.fechaRealizacion = fechaRealizacion;
         this.dniTrabajador = dniTrabajador;
         this.codigoTarea = codigoTarea;
+    }
+
+    public TrabajoTarea(int codigo, int duracion, int fechaRealizacion, String dniTrabajador, String codigoTarea, String codigoMaquina) {
+        this.codigo = codigo;
+        this.duracion = duracion;
+        this.fechaRealizacion = fechaRealizacion;
+        this.dniTrabajador = dniTrabajador;
+        this.codigoTarea = codigoTarea;
+        this.codigoMaquina = codigoMaquina;
     }
 
     public int getDuracion() {
@@ -60,5 +70,13 @@ public class TrabajoTarea {
 
     public void setCodigo(int codigo) {
         this.codigo = codigo;
+    }
+
+    public String getCodigoMaquina() {
+        return codigoMaquina;
+    }
+
+    public void setCodigoMaquina(String codigoMaquina) {
+        this.codigoMaquina = codigoMaquina;
     }
 }

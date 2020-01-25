@@ -19,7 +19,7 @@ public class MenuInicio {
     public MenuInicio() {
         JFileChooser fc = new JFileChooser();
 
-
+//Ésto sirve para que la ruta del label esté actualizada en el momento de abrir la ventana.
         try {
             File file = new File("rutaImagenes.txt");
             BufferedReader reader = null;
@@ -68,10 +68,17 @@ public class MenuInicio {
         RutaButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+          /*
+                Básicamente para que las aplicaciones compartan las imágenes deben de buscar el directorio con un
+                FileChooser. Una vez localizado, copio la ruta y la guardo en un txt a la altura de éste proyecto.
+                 */
+
+                //Creo el Filechooser cuando pulsan el boton de establecer ruta.
                 fc.setAcceptAllFileFilterUsed(false);
                 fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
                 fc.showOpenDialog(null);
                 System.out.println(fc.getSelectedFile().getAbsolutePath());
+                //Obtengo la ruta y creo un Writer para escribirla en un txt.
                 String ruta = fc.getSelectedFile().getAbsolutePath();
                 BufferedWriter writer = null;
 
@@ -82,6 +89,8 @@ public class MenuInicio {
 
                     //El siguiente try actualiza el letrero con la ruta.
                     try {
+
+                        //Leo el archivo y escribo su información en un label.
                         File file = new File("rutaImagenes.txt");
                         BufferedReader reader = null;
                         reader = new BufferedReader(new FileReader(file));
@@ -91,8 +100,8 @@ public class MenuInicio {
                             TextRuta.setText(line);
                         }
 
+                        //Informar nunca está de más.
                         JOptionPane.showMessageDialog(null, "Ruta asignada correctamente.");
-
 
                     } catch (FileNotFoundException e1) {
                         e1.printStackTrace();
@@ -100,10 +109,10 @@ public class MenuInicio {
                         e2.printStackTrace();
                     }
 
-
                 } catch (IOException ex) {
                     ex.printStackTrace();
                 }
+
 
 
             }

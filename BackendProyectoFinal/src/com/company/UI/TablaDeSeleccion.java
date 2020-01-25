@@ -54,7 +54,7 @@ public class TablaDeSeleccion {
         switch (IDTabla) {
 
             case 0:
-                //Trabajadores (Requiere de un modelo personalizado para poder visualizar las imágenes de los empleados.)
+                //Trabajadores
 
                 ComboColumnas.addItem("DNI");
                 ComboColumnas.addItem("Nombre");
@@ -168,7 +168,10 @@ public class TablaDeSeleccion {
                 break;
         }
 
+        //Asigno el modelo a la tabla y establezco que solo se pueda seleccionar una línea a la vez.
+        table1.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         table1.setModel(model);
+
         //Éste switch rellena la tabla con la información.
         switch (IDTabla) {
 
