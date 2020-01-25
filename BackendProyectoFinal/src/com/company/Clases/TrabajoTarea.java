@@ -23,8 +23,7 @@ public class TrabajoTarea {
         this.codigoTarea = codigoTarea;
     }
 
-    public TrabajoTarea(int codigo, int duracion, int fechaRealizacion, String dniTrabajador, String codigoTarea, String codigoMaquina) {
-        this.codigo = codigo;
+    public TrabajoTarea (int duracion, int fechaRealizacion, String dniTrabajador, String codigoTarea, String codigoMaquina) {
         this.duracion = duracion;
         this.fechaRealizacion = fechaRealizacion;
         this.dniTrabajador = dniTrabajador;

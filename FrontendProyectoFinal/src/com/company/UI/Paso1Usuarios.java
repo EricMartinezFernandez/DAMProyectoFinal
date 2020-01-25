@@ -93,7 +93,8 @@ public class Paso1Usuarios {
                 if (!table1.getSelectionModel().isSelectionEmpty()) {
                     //Recojo la PK del la fila que a seleccionado el usuario, por ello se bloquea el campo en 0, que es la ubicación común de PK en la tabla.
                     trabajador = llamadasBD.LeerTrabajadorConcreto(String.valueOf(table1.getValueAt(table1.getSelectedRow(), 0)));
-                    //frame.dispose();
+                    Paso2Tareas paso2Tareas = new Paso2Tareas();
+                    frame.dispose();
                 } else {
                     JOptionPane.showMessageDialog(null, "No has seleccionado al usuario.");
                 }

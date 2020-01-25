@@ -1339,8 +1339,8 @@ public class LlamadasBD {
 
         try {
 
-            String query = " INSERT INTO TRABAJOTAREAS (DURACION, FECHAREALIZACION, DNITRABAJADOR, CODIGOTAREA)"
-                    + " VALUES (?, ?, ?, ?)";
+            String query = " INSERT INTO TRABAJOTAREAS (DURACION, FECHAREALIZACION, DNITRABAJADOR, CODIGOTAREA, CODIGOMAQUINA)"
+                    + " VALUES (?, ?, ?, ?, ?)";
 
             preparedStatement = con.prepareStatement(query);
 
@@ -1348,6 +1348,7 @@ public class LlamadasBD {
             preparedStatement.setInt(2, nuevoTrabajoTarea.getFechaRealizacion());
             preparedStatement.setString(3, nuevoTrabajoTarea.getDniTrabajador());
             preparedStatement.setString(4, nuevoTrabajoTarea.getCodigoTarea());
+            preparedStatement.setString(5, nuevoTrabajoTarea.getCodigoMaquina());
             preparedStatement.execute();
 
             System.out.println("Operación existosa");
@@ -1378,8 +1379,9 @@ public class LlamadasBD {
                 String fechaRealizacion = resultSet.getString("FECHAREALIZACION");
                 String dniTrabajador = resultSet.getString("DNITRABAJADOR");
                 String codigoTarea = resultSet.getString("CODIGOTAREA");
+                String codigoMaquina = resultSet.getString("CODIGOMAQUINA");
 
-                TrabajoTarea trabajoTarea = new TrabajoTarea(Integer.parseInt(duracion), Integer.parseInt(fechaRealizacion), dniTrabajador, codigoTarea);
+                TrabajoTarea trabajoTarea = new TrabajoTarea(Integer.parseInt(duracion), Integer.parseInt(fechaRealizacion), dniTrabajador, codigoTarea, codigoMaquina);
                 trabajoTareas.add(trabajoTarea);
 
             }
@@ -1414,8 +1416,9 @@ public class LlamadasBD {
                 String fechaRealizacion = resultSet.getString("FECHAREALIZACION");
                 String dniTrabajador = resultSet.getString("DNITRABAJADOR");
                 String codigoTarea = resultSet.getString("CODIGOTAREA");
+                String codigoMaquina = resultSet.getString("CODIGOMAQUINA");
 
-                trabajoTarea = new TrabajoTarea(Integer.parseInt(duracion), Integer.parseInt(fechaRealizacion), dniTrabajador, codigoTarea);
+                trabajoTarea = new TrabajoTarea(Integer.parseInt(duracion), Integer.parseInt(fechaRealizacion), dniTrabajador, codigoTarea, codigoMaquina);
 
             }
 
@@ -1463,6 +1466,7 @@ public class LlamadasBD {
                     ",FECHAREALIZACION = '" + trabajoTarea.getFechaRealizacion() + "'" +
                     ",DNITRABAJADOR = '" + trabajoTarea.getDniTrabajador() + "'" +
                     ",CODIGOTAREA = '" + trabajoTarea.getCodigoTarea() + "'" +
+                    ",CODIGOMAQUINA = '" + trabajoTarea.getCodigoMaquina() + "'" +
                     " where CODIGO = '" + trabajoTarea.getCodigo() + "'";
 
             preparedStatement = con.prepareStatement(query);
