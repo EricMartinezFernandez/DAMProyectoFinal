@@ -43,7 +43,7 @@ public class Paso3Mantenimienos {
         DefaultTableModel model1 = new DefaultTableModel();
         DefaultTableModel model2 = new DefaultTableModel();
 
-        //Creo el modelo de la tabla.
+        //Creo el modelo de las tablas.
         model1 = new DefaultTableModel() {
             String[] columnas = {"Codigo", "Descripción", "Codigo maquina"};
 
@@ -148,7 +148,6 @@ public class Paso3Mantenimienos {
         });
 
 
-
         EliminarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -189,10 +188,13 @@ public class Paso3Mantenimienos {
                     int fecha = Integer.parseInt(date);
                     trabajoMantenimiento.setFechaRealizacion(fecha);
 
+
+                    trabajoMantenimientos.add(trabajoMantenimiento);
+
                 }
 
-
-
+                Paso4Confirmar paso4Confirmar = new Paso4Confirmar(trabajador, trabajoMantenimientos, trabajoTareas);
+                frame.dispose();
             }
         });
     }

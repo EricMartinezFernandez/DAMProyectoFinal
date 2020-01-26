@@ -3,7 +3,7 @@
   <grid id="27dc6" binding="PanelConfirmar" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
     <margin top="0" left="0" bottom="0" right="0"/>
     <constraints>
-      <xy x="20" y="20" width="784" height="418"/>
+      <xy x="20" y="20" width="784" height="433"/>
     </constraints>
     <properties/>
     <border type="none"/>
@@ -37,7 +37,7 @@
                   <text value="Cancelar"/>
                 </properties>
               </component>
-              <component id="9844f" class="javax.swing.JButton" binding="SiguienteButton">
+              <component id="9844f" class="javax.swing.JButton" binding="FinalizarButton">
                 <constraints>
                   <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                 </constraints>
@@ -55,7 +55,7 @@
               </hspacer>
             </children>
           </grid>
-          <grid id="4f7f9" layout-manager="GridLayoutManager" row-count="12" column-count="5" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+          <grid id="4f7f9" layout-manager="GridLayoutManager" row-count="13" column-count="7" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
             <margin top="0" left="0" bottom="0" right="0"/>
             <constraints>
               <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
@@ -80,14 +80,14 @@
                       <text value="Tareas"/>
                     </properties>
                   </component>
-                  <scrollpane id="46684" binding="TableTareas">
+                  <scrollpane id="46684">
                     <constraints>
                       <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
                     </constraints>
                     <properties/>
                     <border type="none"/>
                     <children>
-                      <component id="f8433" class="javax.swing.JTable" binding="TablaMantenimientosDisponibles">
+                      <component id="f8433" class="javax.swing.JTable" binding="TableTareas">
                         <constraints/>
                         <properties/>
                       </component>
@@ -98,7 +98,7 @@
               <grid id="c7e90" layout-manager="GridLayoutManager" row-count="2" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
                 <margin top="0" left="0" bottom="0" right="0"/>
                 <constraints>
-                  <grid row="3" column="2" row-span="9" col-span="2" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                  <grid row="3" column="2" row-span="9" col-span="4" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties/>
                 <border type="none"/>
@@ -112,14 +112,14 @@
                       <text value="Mantenimientos"/>
                     </properties>
                   </component>
-                  <scrollpane id="49822" binding="TableMantenimientos">
+                  <scrollpane id="49822">
                     <constraints>
                       <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
                     </constraints>
                     <properties/>
                     <border type="none"/>
                     <children>
-                      <component id="3cb65" class="javax.swing.JTable" binding="TablaMantenimientosSeleccionados">
+                      <component id="3cb65" class="javax.swing.JTable" binding="TableMantenimientos">
                         <constraints/>
                         <properties/>
                       </component>
@@ -129,7 +129,7 @@
               </grid>
               <hspacer id="e60f4">
                 <constraints>
-                  <grid row="7" column="4" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                  <grid row="7" column="6" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                 </constraints>
               </hspacer>
               <hspacer id="ab9eb">
@@ -137,26 +137,40 @@
                   <grid row="8" column="0" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                 </constraints>
               </hspacer>
-              <component id="232d1" class="javax.swing.JTable" binding="TableTrabajador">
-                <constraints>
-                  <grid row="1" column="1" row-span="1" col-span="3" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false">
-                    <preferred-size width="150" height="50"/>
-                  </grid>
-                </constraints>
-                <properties/>
-              </component>
               <vspacer id="e103f">
                 <constraints>
-                  <grid row="2" column="2" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+                  <grid row="2" column="2" row-span="1" col-span="3" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
                 </constraints>
               </vspacer>
               <component id="a6d80" class="javax.swing.JLabel">
                 <constraints>
-                  <grid row="0" column="1" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+                  <grid row="0" column="1" row-span="1" col-span="4" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
                   <font size="16" style="1"/>
                   <text value="Trabajador"/>
+                </properties>
+              </component>
+              <scrollpane id="fc725">
+                <constraints>
+                  <grid row="1" column="1" row-span="1" col-span="4" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties/>
+                <border type="none"/>
+                <children>
+                  <component id="232d1" class="javax.swing.JTable" binding="TableTrabajador">
+                    <constraints/>
+                    <properties/>
+                  </component>
+                </children>
+              </scrollpane>
+              <component id="c8309" class="javax.swing.JLabel" binding="TextTiempoTotal">
+                <constraints>
+                  <grid row="12" column="1" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <font size="16" style="1"/>
+                  <text value="Tiempo total: "/>
                 </properties>
               </component>
             </children>

@@ -1490,7 +1490,7 @@ public class LlamadasBD {
 
         try {
 
-            String query = " INSERT INTO TRABAJOMANTENIMIENTO (DURACION, FECHAREALIZACION, DNITRABAJADOR, CODIGOTAREA)"
+            String query = " INSERT INTO TRABAJOMANTENIMIENTOS (DURACION, FECHAREALIZACION, DNITRABAJADOR, CODIGOMANTENIMIENTO)"
                     + " VALUES (?, ?, ?, ?)";
 
             preparedStatement = con.prepareStatement(query);

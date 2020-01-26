@@ -251,25 +251,54 @@ public class Paso2Tareas {
                     if (TablaTareas.getValueAt(TablaTareas.getSelectedRow(), 2).toString().equals("SI") && maquinasSeleccionadas.isEmpty()) {
                         JOptionPane.showMessageDialog(null, "No has seleccionado máquinas.");
                     } else {
+
                         ArrayList<TrabajoTarea> trabajoTareas = new ArrayList<>();
                         Tarea tareaSeleccionada;
                         tareaSeleccionada = llamadasBD.LeerTareaConcreta(TablaTareas.getValueAt(TablaTareas.getSelectedRow(), 0).toString());
 
 
-                        for (int i = 0; i < maquinasSeleccionadas.size(); i++) {
+                        //Si es una tarea sin máquina la genero de manera diferente.
+                        if(TablaTareas.getValueAt(TablaTareas.getSelectedRow(), 2).toString().equals("NO")){
 
                             TrabajoTarea trabajoTarea = new TrabajoTarea();
-                            trabajoTarea.setCodigoMaquina(maquinasSeleccionadas.get(i).getCodigo());
                             trabajoTarea.setCodigoTarea(tareaSeleccionada.getCodigo());
                             trabajoTarea.setDniTrabajador(trabajador.getDni());
-                            trabajoTarea.setDuracion(maquinasSeleccionadas.get(i).getDuracion());
+
+                            int horas = (Integer) SpinnerHoras.getValue();
+                            int minutos = (Integer) SpinnerMinutos.getValue();
+
+                            minutos = (horas * 60) + minutos;
+
+                            trabajoTarea.setDuracion(minutos);
+
+                            trabajoTarea.setCodigoMaquina("");
+
                             String date = new SimpleDateFormat("ddMMyyyy").format(new Date());
                             int fecha = Integer.parseInt(date);
                             trabajoTarea.setFechaRealizacion(fecha);
-
                             trabajoTareas.add(trabajoTarea);
 
+
+
+                        }else{
+
+                            for (int i = 0; i < maquinasSeleccionadas.size(); i++) {
+
+                                TrabajoTarea trabajoTarea = new TrabajoTarea();
+                                trabajoTarea.setCodigoMaquina(maquinasSeleccionadas.get(i).getCodigo());
+                                trabajoTarea.setCodigoTarea(tareaSeleccionada.getCodigo());
+                                trabajoTarea.setDniTrabajador(trabajador.getDni());
+                                trabajoTarea.setDuracion(maquinasSeleccionadas.get(i).getDuracion());
+                                String date = new SimpleDateFormat("ddMMyyyy").format(new Date());
+                                int fecha = Integer.parseInt(date);
+                                trabajoTarea.setFechaRealizacion(fecha);
+
+                                trabajoTareas.add(trabajoTarea);
+
+                            }
                         }
+
+
 
                         Paso3Mantenimienos paso3Mantenimienos = new Paso3Mantenimienos(trabajoTareas, trabajador);
                         frame.dispose();
@@ -290,8 +319,6 @@ public class Paso2Tareas {
         TablaMaquinasSeleccionadas.setEnabled(true);
         EliminarButton.setEnabled(true);
         AnadirButton.setEnabled(true);
-        SpinnerHoras.setEnabled(true);
-        SpinnerMinutos.setEnabled(true);
     }
 
     private void DesactivarMaquinas() {
@@ -299,8 +326,6 @@ public class Paso2Tareas {
         TablaMaquinasSeleccionadas.setEnabled(false);
         EliminarButton.setEnabled(false);
         AnadirButton.setEnabled(false);
-        SpinnerHoras.setEnabled(false);
-        SpinnerMinutos.setEnabled(false);
     }
 
     private void ActualzarTablaMaquinasSeleccionadas(ArrayList<Maquina> maquinas, DefaultTableModel model) {
