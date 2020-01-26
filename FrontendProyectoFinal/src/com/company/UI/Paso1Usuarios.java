@@ -15,7 +15,6 @@ import java.util.ArrayList;
 
 public class Paso1Usuarios {
     private JTable table1;
-    private JLabel TituloText;
     private JButton SiguienteButton;
     private JButton CancelarButton;
     private JPanel PanelUsuarios;
@@ -58,6 +57,9 @@ public class Paso1Usuarios {
         table1.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         table1.setModel(model);
 
+        //Desactivo al modificación de tablas
+        table1.setDefaultEditor(Object.class, null);
+
 
         //Relleno la tabla con datos.
 
@@ -85,6 +87,7 @@ public class Paso1Usuarios {
             model.addRow(new Object[]{trabajadores.get(i).getNombre(), trabajadores.get(i).getApellido1(), trabajadores.get(i).getApellido2(), icon});
         }
 
+        ArrayList<Trabajador> finalTrabajadores = trabajadores;
         SiguienteButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -92,11 +95,12 @@ public class Paso1Usuarios {
 
                 if (!table1.getSelectionModel().isSelectionEmpty()) {
                     //Recojo la PK del la fila que a seleccionado el usuario, por ello se bloquea el campo en 0, que es la ubicación común de PK en la tabla.
-                    trabajador = llamadasBD.LeerTrabajadorConcreto(String.valueOf(table1.getValueAt(table1.getSelectedRow(), 0)));
-                    Paso2Tareas paso2Tareas = new Paso2Tareas();
+                    String DNI = finalTrabajadores.get(table1.getSelectedRow()).getDni();
+                    trabajador = llamadasBD.LeerTrabajadorConcreto(DNI);
+                    Paso2Tareas paso2Tareas = new Paso2Tareas(trabajador);
                     frame.dispose();
                 } else {
-                    JOptionPane.showMessageDialog(null, "No has seleccionado al usuario.");
+                    JOptionPane.showMessageDialog(null, "No has seleccionado al trabajador.");
                 }
 
             }

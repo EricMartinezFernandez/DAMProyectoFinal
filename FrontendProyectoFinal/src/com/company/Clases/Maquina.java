@@ -3,6 +3,7 @@ package com.company.Clases;
 public class Maquina {
     private String codigo;
     private String descripcion;
+    private int duracion;//Es solo local, no se usa en la BD.
 
     public Maquina() {
     }
@@ -26,5 +27,13 @@ public class Maquina {
 
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
+    }
+
+    public int getDuracion() {
+        return duracion;
+    }
+
+    public void setDuracion(int duracion) {
+        this.duracion = duracion;
     }
 }

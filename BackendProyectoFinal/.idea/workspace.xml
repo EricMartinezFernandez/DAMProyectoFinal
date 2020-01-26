@@ -104,6 +104,8 @@
       <workItem from="1579889551940" duration="692000" />
       <workItem from="1579896118273" duration="6262000" />
       <workItem from="1579945553653" duration="5849000" />
+      <workItem from="1579969567462" duration="2673000" />
+      <workItem from="1580032069031" duration="1222000" />
     </task>
     <servers />
   </component>
@@ -182,7 +184,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/com/company/UI/TablaDeSeleccion.java</url>
-          <line>481</line>
+          <line>464</line>
           <option name="timeStamp" value="9" />
         </line-breakpoint>
       </breakpoints>

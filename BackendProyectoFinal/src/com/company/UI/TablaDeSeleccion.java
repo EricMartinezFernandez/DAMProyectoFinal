@@ -77,23 +77,6 @@ public class TablaDeSeleccion {
                     }
                 };
 
-                /*model = new DefaultTableModel() {
-                    String[] columnas = {"DNI", "Nombre", "Apellido 1", "Apellido 2", "Foto"};
-
-                    @Override
-                    public int getColumnCount() {
-                        return columnas.length;
-                    }
-
-                    @Override
-                    public String getColumnName(int index) {
-                        return columnas[index];
-                    }
-
-                };
-
-                 */
-
                 break;
 
             case 1:

@@ -5,6 +5,7 @@ public class Mantenimiento {
     private String codigo;
     private String descripcion;
     private String codigoMaquina;
+    private int duracion;
 
 
     public Mantenimiento() {
@@ -20,6 +21,7 @@ public class Mantenimiento {
         this.descripcion = descripcion;
         this.codigoMaquina = codigoMaquina;
     }
+
 
     public String getCodigo() {
         return codigo;
@@ -43,5 +45,13 @@ public class Mantenimiento {
 
     public void setCodigoMaquina(String codigoMaquina) {
         this.codigoMaquina = codigoMaquina;
+    }
+
+    public int getDuracion() {
+        return duracion;
+    }
+
+    public void setDuracion(int duracion) {
+        this.duracion = duracion;
     }
 }
