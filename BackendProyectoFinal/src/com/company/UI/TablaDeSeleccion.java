@@ -151,8 +151,9 @@ public class TablaDeSeleccion {
                 break;
         }
 
-        //Asigno el modelo a la tabla y establezco que solo se pueda seleccionar una línea a la vez.
+        //Asigno el modelo a la tabla, establezco que solo se pueda seleccionar una línea a la vez y desactivo la modificación de celdas.
         table1.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        table1.setDefaultEditor(Object.class, null);
         table1.setModel(model);
 
         //Éste switch rellena la tabla con la información.
