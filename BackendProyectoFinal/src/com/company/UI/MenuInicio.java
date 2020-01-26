@@ -1,5 +1,7 @@
 package com.company.UI;
 
+import com.company.UI.MenusInformes.MenuPrincipalInformes;
+
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
@@ -59,8 +61,8 @@ public class MenuInicio {
         InformesButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
-
+                MenuPrincipalInformes menuPrincipalInformes = new MenuPrincipalInformes();
+                frame.dispose();
             }
         });
 
@@ -112,7 +114,6 @@ public class MenuInicio {
                 } catch (IOException ex) {
                     ex.printStackTrace();
                 }
-
 
 
             }

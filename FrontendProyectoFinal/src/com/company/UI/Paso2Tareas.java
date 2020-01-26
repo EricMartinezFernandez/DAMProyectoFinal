@@ -50,6 +50,13 @@ public class Paso2Tareas {
         frame.pack();
         frame.setVisible(true);
 
+        //Creo los modelos de los Spinner para que sean más fáciles de usar y evitar errores por parte del usuario.
+        SpinnerModel modelMinutos = new SpinnerNumberModel(0, 0, 60, 5);
+        SpinnerModel modelHoras = new SpinnerNumberModel(0, 0, 24, 1);
+
+        SpinnerMinutos.setModel(modelMinutos);
+        SpinnerHoras.setModel(modelHoras);
+
         //Defino los modelos de las tres tablas.
 
         //TABLA TAREAS

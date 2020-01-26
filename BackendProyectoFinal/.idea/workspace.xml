@@ -30,9 +30,9 @@
     <property name="UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.WIDTH" value="257" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../Librerias/mysql-connector-java-5.1.48.jar!/" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../Librerias/commons-math3-3.6.1.jar!/" />
     <property name="project.structure.last.edited" value="Libraries" />
-    <property name="project.structure.proportion" value="0.15" />
+    <property name="project.structure.proportion" value="0.15722656" />
     <property name="project.structure.side.proportion" value="0.2" />
   </component>
   <component name="RunManager" selected="Application.Main">
@@ -106,7 +106,7 @@
       <workItem from="1579945553653" duration="5849000" />
       <workItem from="1579969567462" duration="2673000" />
       <workItem from="1580032069031" duration="1505000" />
-      <workItem from="1580057514153" duration="107000" />
+      <workItem from="1580057514153" duration="2598000" />
     </task>
     <servers />
   </component>
@@ -114,34 +114,34 @@
     <option name="version" value="1" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="765" y="240" key="#com.intellij.ide.util.MemberChooser" timestamp="1579901148454">
+    <state x="765" y="240" key="#com.intellij.ide.util.MemberChooser" timestamp="1580059431847">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="765" y="240" key="#com.intellij.ide.util.MemberChooser/0.0.1920.1040@0.0.1920.1040" timestamp="1579901148454" />
+    <state x="765" y="240" key="#com.intellij.ide.util.MemberChooser/0.0.1920.1040@0.0.1920.1040" timestamp="1580059431847" />
     <state x="0" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1579888090861">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="0" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1579888090861" />
-    <state x="739" y="265" key="FileChooserDialogImpl" timestamp="1579085929825">
+    <state x="739" y="265" key="FileChooserDialogImpl" timestamp="1580060111539">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="739" y="265" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1579085929825" />
-    <state width="1877" height="227" key="GridCell.Tab.0.bottom" timestamp="1580041415316">
+    <state x="739" y="265" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1580060111539" />
+    <state width="1877" height="418" key="GridCell.Tab.0.bottom" timestamp="1580060123072">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="227" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1580041415316" />
-    <state width="1877" height="227" key="GridCell.Tab.0.center" timestamp="1580041415316">
+    <state width="1877" height="418" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1580060123072" />
+    <state width="1877" height="418" key="GridCell.Tab.0.center" timestamp="1580060123072">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="227" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1580041415316" />
-    <state width="1877" height="227" key="GridCell.Tab.0.left" timestamp="1580041415316">
+    <state width="1877" height="418" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1580060123072" />
+    <state width="1877" height="418" key="GridCell.Tab.0.left" timestamp="1580060123072">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="227" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1580041415316" />
-    <state width="1877" height="227" key="GridCell.Tab.0.right" timestamp="1580041415316">
+    <state width="1877" height="418" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1580060123072" />
+    <state width="1877" height="418" key="GridCell.Tab.0.right" timestamp="1580060123072">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="227" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1580041415316" />
+    <state width="1877" height="418" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1580060123072" />
     <state width="1877" height="287" key="GridCell.Tab.1.bottom" timestamp="1579902386757">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -158,14 +158,14 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="1877" height="287" key="GridCell.Tab.1.right/0.0.1920.1040@0.0.1920.1040" timestamp="1579902386757" />
-    <state x="440" y="98" key="SettingsEditor" timestamp="1579006782728">
+    <state x="440" y="98" key="SettingsEditor" timestamp="1580060114557">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="440" y="98" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1579006782728" />
-    <state x="732" y="415" key="com.intellij.uiDesigner.propertyInspector.editors.string.StringEditorDialog" timestamp="1579262710550">
+    <state x="440" y="98" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1580060114557" />
+    <state x="732" y="415" key="com.intellij.uiDesigner.propertyInspector.editors.string.StringEditorDialog" timestamp="1580058127000">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="732" y="415" key="com.intellij.uiDesigner.propertyInspector.editors.string.StringEditorDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1579262710550" />
+    <state x="732" y="415" key="com.intellij.uiDesigner.propertyInspector.editors.string.StringEditorDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1580058127000" />
     <state x="342" y="147" key="new project wizard" timestamp="1578915440285">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
