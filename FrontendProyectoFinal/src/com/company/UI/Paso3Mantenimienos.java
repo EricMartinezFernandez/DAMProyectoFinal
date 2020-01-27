@@ -193,7 +193,7 @@ public class Paso3Mantenimienos {
                     trabajoMantenimiento.setCodigoMantenimiento(mantenimientosSeleccionados.get(i).getCodigo());
                     trabajoMantenimiento.setDuracion(mantenimientosSeleccionados.get(i).getDuracion());
                     trabajoMantenimiento.setDniTrabajador(trabajador.getDni());
-                    String date = new SimpleDateFormat("ddMMyyyy").format(new Date());
+                    String date = new SimpleDateFormat("yyyyMMdd").format(new Date());
                     int fecha = Integer.parseInt(date);
                     trabajoMantenimiento.setFechaRealizacion(fecha);
 

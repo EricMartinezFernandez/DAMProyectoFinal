@@ -280,7 +280,7 @@ public class Paso2Tareas {
 
                             trabajoTarea.setCodigoMaquina("");
 
-                            String date = new SimpleDateFormat("ddMMyyyy").format(new Date());
+                            String date = new SimpleDateFormat("yyyyMMdd").format(new Date());
                             int fecha = Integer.parseInt(date);
                             trabajoTarea.setFechaRealizacion(fecha);
                             trabajoTareas.add(trabajoTarea);
@@ -296,7 +296,7 @@ public class Paso2Tareas {
                                 trabajoTarea.setCodigoTarea(tareaSeleccionada.getCodigo());
                                 trabajoTarea.setDniTrabajador(trabajador.getDni());
                                 trabajoTarea.setDuracion(maquinasSeleccionadas.get(i).getDuracion());
-                                String date = new SimpleDateFormat("ddMMyyyy").format(new Date());
+                                String date = new SimpleDateFormat("yyyyMMdd").format(new Date());
                                 int fecha = Integer.parseInt(date);
                                 trabajoTarea.setFechaRealizacion(fecha);
 
