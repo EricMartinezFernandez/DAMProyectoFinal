@@ -150,9 +150,7 @@ public class MenuPrincipalInformes {
             int copiaAnio = desdeAnioSpinner;
 
 
-
             diasTotales = diasTotalesCopia;
-
 
 
             //Creo la primera línea que será rellenada en el for siguiente.
@@ -217,7 +215,8 @@ public class MenuPrincipalInformes {
             row2.createCell(0).setCellValue("TAREAS (Minutos)");
             row2.getCell(0).setCellStyle(style);//Establezco el estilo
 
-            diasTotales = diasTotalesCopia +2;
+            //Ésto es para el desfase.
+            diasTotales = diasTotalesCopia + 3;
 
             //DOS FORs ENLAZADOS PARA RELLENAR UNA LÍNEA POR TAREA
             for (int j = 0; j < tareas.size(); j++) {
@@ -250,13 +249,6 @@ public class MenuPrincipalInformes {
                             String fechaConcatenada = "" + String.format("%02d", copiaAnio) + String.format("%02d", copiaMes) + String.format("%02d", dia);
                             int fechaConcatenadaInt = Integer.parseInt(fechaConcatenada);
 
-                            boolean testeo1 = false;
-                            boolean testeo2 = false;
-                            boolean testeo3 = false;
-
-                            testeo1 = (trabajoTareas.get(l).getDniTrabajador().equals(trabajadores.get(i).getDni()));
-                            testeo2 = (trabajoTareas.get(l).getCodigoTarea().equals(tareas.get(j).getCodigo()));
-                            testeo3 = (trabajoTareas.get(l).getFechaRealizacion() == fechaConcatenadaInt);
 
                             //Traducción: Si el trabajador es el mismo que el de la página actual, a realizado el mismo trabajo y es en el mismo día, guardo el tiempo.
                             if (trabajoTareas.get(l).getDniTrabajador().equals(trabajadores.get(i).getDni()) && trabajoTareas.get(l).getCodigoTarea().equals(tareas.get(j).getCodigo()) && trabajoTareas.get(l).getFechaRealizacion() == fechaConcatenadaInt) {
@@ -291,9 +283,187 @@ public class MenuPrincipalInformes {
                         row3.createCell(k).setCellValue(minutosTotales);
                         copiaDia++;
 
-                        //Le sumo 1 al total de días para poner el nombre del mes sin descompensar.
-                        diasTotales++;
-                        j++;
+
+                        //Establezco el día en 1 para resetear el siguiente mes.
+                        copiaDia = 1;
+
+                        if (copiaMes == 12) {
+                            copiaAnio++;
+                            copiaMes = 1;
+                        } else {
+                            copiaMes++;
+                        }
+
+
+                    }
+
+
+                }
+
+
+            }
+
+
+            Row row4 = sheet.createRow(2 + tareas.size());
+            row4.createCell(0).setCellValue("MAQUINAS (Minutos)");
+            row4.getCell(0).setCellStyle(style);//Establezco el estilo
+
+
+            //DOS FORs ENLAZADOS PARA RELLENAR UNA LÍNEA POR MAQUINA
+            for (int j = 0; j < maquinas.size(); j++) {
+
+                Row row5 = sheet.createRow(j + 3 + tareas.size());
+                row5.createCell(0).setCellValue(maquinas.get(j).getCodigo());
+                row5.getCell(0).setCellStyle(style);//Establezco el estilo
+
+                //Vuelvo a reiniciarlos para partir de cero.
+                copiaDia = desdeDiaSpinner;
+                copiaMes = desdeMesSpinner;
+                copiaAnio = desdeAnioSpinner;
+
+
+                for (int k = 1; k < diasTotales; k++) {//Contador con días totales.
+
+                    YearMonth yearMonthObject = YearMonth.of(copiaAnio, copiaMes);
+                    int daysInMonth = yearMonthObject.lengthOfMonth();
+
+                    int diasRestantes = daysInMonth - copiaDia;
+
+
+                    if (diasRestantes > 0) {//Si es un día normal del mes.
+
+                        //Compruebo cuantas horas a realizado la tarea el trabajador..
+
+                        for (int l = 0; l < trabajoTareas.size(); l++) {
+
+
+                            int dia = daysInMonth - diasRestantes;
+                            String fechaConcatenada = "" + String.format("%02d", copiaAnio) + String.format("%02d", copiaMes) + String.format("%02d", dia);
+                            int fechaConcatenadaInt = Integer.parseInt(fechaConcatenada);
+
+                            //Traducción: Si el trabajador es el mismo que el de la página actual, a realizado el mismo trabajo y es en el mismo día, guardo el tiempo.
+                            if (trabajoTareas.get(l).getDniTrabajador().equals(trabajadores.get(i).getDni()) && trabajoTareas.get(l).getCodigoMaquina().equals(maquinas.get(j).getCodigo()) && trabajoTareas.get(l).getFechaRealizacion() == fechaConcatenadaInt) {
+                                row5.createCell(k).setCellValue(trabajoTareas.get(l).getDuracion());
+                                break;
+                            } else {
+                                row5.createCell(k).setCellValue(0);
+                            }
+
+
+                        }
+
+                        copiaDia++;
+
+                    } else {//Una vez se acabe el mes.
+                        int minutosTotales = 0;
+
+                        for (int l = 0; l < trabajoTareas.size(); l++) {
+
+
+                            int dia = daysInMonth - diasRestantes;
+                            String fechaConcatenada = "" + String.format("%02d", copiaAnio) + String.format("%02d", copiaMes) + String.format("%02d", dia);
+                            int fechaConcatenadaInt = Integer.parseInt(fechaConcatenada);
+
+                            //Traducción: Si el trabajador es el mismo que el de la página actual, a realizado el mismo trabajo y es en el mismo día, guardo el tiempo.
+                            if (trabajoTareas.get(l).getDniTrabajador().equals(trabajadores.get(i).getDni()) && trabajoTareas.get(l).getCodigoMaquina().equals(maquinas.get(j).getCodigo()) && trabajoTareas.get(l).getFechaRealizacion() == fechaConcatenadaInt) {
+                                row5.createCell(k).setCellValue(trabajoTareas.get(l).getDuracion());
+                                break;
+                            } else {
+                                row5.createCell(k).setCellValue(0);
+                            }
+                        }
+
+                        copiaDia++;
+
+                        //Establezco el día en 1 para resetear el siguiente mes.
+                        copiaDia = 1;
+
+                        if (copiaMes == 12) {
+                            copiaAnio++;
+                            copiaMes = 1;
+                        } else {
+                            copiaMes++;
+                        }
+
+
+                    }
+
+
+                }
+
+
+            }
+
+            Row row6 = sheet.createRow(3 + tareas.size() + maquinas.size());
+            row6.createCell(0).setCellValue("MANTENIMIENTO (Minutos)");
+            row6.getCell(0).setCellStyle(style);//Establezco el estilo
+
+            //DOS FORs ENLAZADOS PARA RELLENAR UNA LÍNEA POR MANTENIMIENTO
+            for (int j = 0; j < mantenimientos.size(); j++) {
+
+                Row row7 = sheet.createRow(j + 4 + tareas.size() + maquinas.size());
+                row7.createCell(0).setCellValue(maquinas.get(j).getCodigo());
+                row7.getCell(0).setCellStyle(style);//Establezco el estilo
+
+                //Vuelvo a reiniciarlos para partir de cero.
+                copiaDia = desdeDiaSpinner;
+                copiaMes = desdeMesSpinner;
+                copiaAnio = desdeAnioSpinner;
+
+
+                for (int k = 1; k < diasTotales; k++) {//Contador con días totales.
+
+                    YearMonth yearMonthObject = YearMonth.of(copiaAnio, copiaMes);
+                    int daysInMonth = yearMonthObject.lengthOfMonth();
+
+                    int diasRestantes = daysInMonth - copiaDia;
+
+
+                    if (diasRestantes > 0) {//Si es un día normal del mes.
+
+                        //Compruebo cuantas horas a realizado la tarea el trabajador..
+
+                        for (int l = 0; l < trabajoMantenimientos.size(); l++) {
+
+
+                            int dia = daysInMonth - diasRestantes;
+                            String fechaConcatenada = "" + String.format("%02d", copiaAnio) + String.format("%02d", copiaMes) + String.format("%02d", dia);
+                            int fechaConcatenadaInt = Integer.parseInt(fechaConcatenada);
+
+                            //Traducción: Si el trabajador es el mismo que el de la página actual, a realizado el mismo trabajo y es en el mismo día, guardo el tiempo.
+                            if (trabajoMantenimientos.get(l).getDniTrabajador().equals(trabajadores.get(i).getDni()) && trabajoMantenimientos.get(l).getCodigoMantenimiento().equals(mantenimientos.get(j).getCodigo()) && trabajoMantenimientos.get(l).getFechaRealizacion() == fechaConcatenadaInt) {
+                                row7.createCell(k).setCellValue(trabajoMantenimientos.get(l).getDuracion());
+                                break;
+                            } else {
+                                row7.createCell(k).setCellValue(0);
+                            }
+
+
+                        }
+
+                        copiaDia++;
+
+                    } else {//Una vez se acabe el mes.
+                        int minutosTotales = 0;
+
+                        for (int l = 0; l < trabajoMantenimientos.size(); l++) {
+
+
+                            int dia = daysInMonth - diasRestantes;
+                            String fechaConcatenada = "" + String.format("%02d", copiaAnio) + String.format("%02d", copiaMes) + String.format("%02d", dia);
+                            int fechaConcatenadaInt = Integer.parseInt(fechaConcatenada);
+
+
+                            //Traducción: Si el trabajador es el mismo que el de la página actual, a realizado el mismo trabajo y es en el mismo día, guardo el tiempo.
+                            if (trabajoMantenimientos.get(l).getDniTrabajador().equals(trabajadores.get(i).getDni()) && trabajoMantenimientos.get(l).getCodigoMantenimiento().equals(mantenimientos.get(j).getCodigo()) && trabajoMantenimientos.get(l).getFechaRealizacion() == fechaConcatenadaInt) {
+                                row7.createCell(k).setCellValue(trabajoMantenimientos.get(l).getDuracion());
+                                break;
+                            } else {
+                                row7.createCell(k).setCellValue(0);
+                            }
+                        }
+
+                        copiaDia++;
 
                         //Establezco el día en 1 para resetear el siguiente mes.
                         copiaDia = 1;
