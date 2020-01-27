@@ -44,13 +44,13 @@ public class MenuPrincipalInformes {
 
 
         //Creo los modelos de los spinner y los asigno a cada objeto.
-        SpinnerModel DesdemodelAnio = new SpinnerNumberModel(2019, 1980, 2100, 1);
+        SpinnerModel DesdemodelAnio = new SpinnerNumberModel(2020, 1980, 2100, 1);
         SpinnerModel DesdemodelMes = new SpinnerNumberModel(01, 01, 12, 1);
-        SpinnerModel DesdemodelDia = new SpinnerNumberModel(01, 01, 31, 1);
+        SpinnerModel DesdemodelDia = new SpinnerNumberModel(27, 01, 31, 1);
 
-        SpinnerModel HastamodelAnio = new SpinnerNumberModel(2019, 1980, 2100, 1);
+        SpinnerModel HastamodelAnio = new SpinnerNumberModel(2020, 1980, 2100, 1);
         SpinnerModel HastamodelMes = new SpinnerNumberModel(01, 01, 12, 1);
-        SpinnerModel HastamodelDia = new SpinnerNumberModel(01, 01, 31, 1);
+        SpinnerModel HastamodelDia = new SpinnerNumberModel(28, 01, 31, 1);
 
         DesdeDiaSpinner.setModel(DesdemodelDia);
         DesdeMesSpinner.setModel(DesdemodelMes);
@@ -88,6 +88,7 @@ public class MenuPrincipalInformes {
 
                     CrearExcelDiario(desde, hasta, desdeAnioSpinner, Integer.parseInt(desdeMesSpinner), Integer.parseInt(desdeDiaSpinner));
 
+                    System.out.println("Sigo ejecutando");
                 }
 
             }
@@ -128,8 +129,6 @@ public class MenuPrincipalInformes {
         tareas = llamadasBD.LeerTareas();
         mantenimientos = llamadasBD.LeerMantenimientos();
 
-        //https://www.youtube.com/watch?v=oG18JTIKtLo
-
 
         //Creamos el book, que es una especie de tabla que luego se convertirá en archivo.
         Workbook book = new HSSFWorkbook();
@@ -150,11 +149,11 @@ public class MenuPrincipalInformes {
             int copiaMes = desdeMesSpinner;
             int copiaAnio = desdeAnioSpinner;
 
-            if(test == 2){
-                System.out.println("aa");
-                diasTotales = diasTotalesCopia;
-            }
-            test ++;
+
+
+            diasTotales = diasTotalesCopia;
+
+
 
             //Creo la primera línea que será rellenada en el for siguiente.
             Row row = sheet.createRow(0);
@@ -218,7 +217,7 @@ public class MenuPrincipalInformes {
             row2.createCell(0).setCellValue("TAREAS (Minutos)");
             row2.getCell(0).setCellStyle(style);//Establezco el estilo
 
-
+            diasTotales = diasTotalesCopia +2;
 
             //DOS FORs ENLAZADOS PARA RELLENAR UNA LÍNEA POR TAREA
             for (int j = 0; j < tareas.size(); j++) {
@@ -238,11 +237,14 @@ public class MenuPrincipalInformes {
 
                     int diasRestantes = daysInMonth - copiaDia;
 
+
                     if (diasRestantes > 0) {//Si es un día normal del mes.
 
                         //Compruebo cuantas horas a realizado la tarea el trabajador..
+                        int minutosTotales = 0;
 
                         for (int l = 0; l < trabajoTareas.size(); l++) {
+
 
                             int dia = daysInMonth - diasRestantes;
                             String fechaConcatenada = "" + String.format("%02d", copiaAnio) + String.format("%02d", copiaMes) + String.format("%02d", dia);
@@ -257,32 +259,36 @@ public class MenuPrincipalInformes {
                             testeo3 = (trabajoTareas.get(l).getFechaRealizacion() == fechaConcatenadaInt);
 
                             //Traducción: Si el trabajador es el mismo que el de la página actual, a realizado el mismo trabajo y es en el mismo día, guardo el tiempo.
-                            if(trabajoTareas.get(l).getDniTrabajador().equals(trabajadores.get(i).getDni()) && trabajoTareas.get(l).getCodigoTarea().equals(tareas.get(j).getCodigo()) && trabajoTareas.get(l).getFechaRealizacion() == fechaConcatenadaInt){
-                                row3.createCell(k).setCellValue(trabajoTareas.get(l).getDuracion());
-                                break;
-                            }else{
+                            if (trabajoTareas.get(l).getDniTrabajador().equals(trabajadores.get(i).getDni()) && trabajoTareas.get(l).getCodigoTarea().equals(tareas.get(j).getCodigo()) && trabajoTareas.get(l).getFechaRealizacion() == fechaConcatenadaInt) {
+                                minutosTotales = minutosTotales + trabajoTareas.get(l).getDuracion();
+                            } else {
                                 row3.createCell(k).setCellValue("X");
-
                             }
-                            
+
                         }
 
+                        row3.createCell(k).setCellValue(minutosTotales);
                         copiaDia++;
 
                     } else {//Una vez se acabe el mes.
+                        int minutosTotales = 0;
 
                         for (int l = 0; l < trabajoTareas.size(); l++) {
+
 
                             int dia = daysInMonth - diasRestantes;
                             String fechaConcatenada = "" + String.format("%02d", copiaAnio) + String.format("%02d", copiaMes) + String.format("%02d", dia);
                             int fehcaConcatenadaInt = Integer.parseInt(fechaConcatenada);
 
                             //Traducción: Si el trabajador es el mismo que el de la página actual, a realizado el mismo trabajo y es en el mismo día, guardo el tiempo.
-                            if(trabajoTareas.get(l).getDniTrabajador().equals(trabajadores.get(i).getDni()) && trabajoTareas.get(l).getCodigoTarea().equals(tareas.get(j).getCodigo()) && trabajoTareas.get(l).getFechaRealizacion() == fehcaConcatenadaInt){
-                                row3.createCell(k + 1).setCellValue(trabajoTareas.get(l).getDuracion());
+                            if (trabajoTareas.get(l).getDniTrabajador().equals(trabajadores.get(i).getDni()) && trabajoTareas.get(l).getCodigoTarea().equals(tareas.get(j).getCodigo()) && trabajoTareas.get(l).getFechaRealizacion() == fehcaConcatenadaInt) {
+                                minutosTotales = minutosTotales + trabajoTareas.get(l).getDuracion();
+                            } else {
+                                row3.createCell(k).setCellValue("X");
                             }
                         }
 
+                        row3.createCell(k).setCellValue(minutosTotales);
                         copiaDia++;
 
                         //Le sumo 1 al total de días para poner el nombre del mes sin descompensar.
