@@ -1,9 +1,6 @@
 package com.company.UI;
 
-import com.company.Clases.Mantenimiento;
-import com.company.Clases.Maquina;
-import com.company.Clases.Tarea;
-import com.company.Clases.Trabajador;
+import com.company.Clases.*;
 import com.company.LlamadasBD;
 import com.company.UI.MenusEdicion.MantenimientoEdicion;
 import com.company.UI.MenusEdicion.MaquinaEdicion;
@@ -36,7 +33,7 @@ public class TablaDeSeleccion {
     JFrame frame;
 
 
-    public TablaDeSeleccion(int IDTabla) {
+    public TablaDeSeleccion(int IDTabla, Usuario usuarioActivo) {
 
         //Instancio la clase de las llamadas a BD.
         LlamadasBD llamadasBD = new LlamadasBD();
@@ -234,7 +231,7 @@ public class TablaDeSeleccion {
         VolverButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                MenuSeleccionDeTabla menuSeleccionDeTabla = new MenuSeleccionDeTabla();
+                MenuSeleccionDeTabla menuSeleccionDeTabla = new MenuSeleccionDeTabla(usuarioActivo);
                 frame.dispose();
             }
         });
@@ -253,7 +250,7 @@ public class TablaDeSeleccion {
 
                         //Recojo la PK del la fila que a seleccionado el usuario, por ello se bloquea el campo en 0, que es la ubicación común de PK en la tabla.
                         trabajador = llamadasBD.LeerTrabajadorConcreto(String.valueOf(table1.getValueAt(table1.getSelectedRow(), 0)));
-                        TrabajadorEdicion trabajadorEdicion = new TrabajadorEdicion(true, trabajador);
+                        TrabajadorEdicion trabajadorEdicion = new TrabajadorEdicion(true, trabajador, usuarioActivo);
                         frame.dispose();
 
                         break;
@@ -264,7 +261,7 @@ public class TablaDeSeleccion {
 
                         tarea = llamadasBD.LeerTareaConcreta(String.valueOf(table1.getValueAt(table1.getSelectedRow(), 0)));
 
-                        TareaEdicion tareaEdicion = new TareaEdicion(true, tarea);
+                        TareaEdicion tareaEdicion = new TareaEdicion(true, tarea, usuarioActivo);
                         frame.dispose();
 
                         break;
@@ -274,7 +271,7 @@ public class TablaDeSeleccion {
                         Maquina maquina;
 
                         maquina = llamadasBD.LeerMaquinaConcreta(String.valueOf(table1.getValueAt(table1.getSelectedRow(), 0)));
-                        MaquinaEdicion maquinaEdicion = new MaquinaEdicion(true, maquina);
+                        MaquinaEdicion maquinaEdicion = new MaquinaEdicion(true, maquina, usuarioActivo);
                         frame.dispose();
 
                         break;
@@ -284,7 +281,7 @@ public class TablaDeSeleccion {
                         Mantenimiento mantenimiento;
 
                         mantenimiento = llamadasBD.LeerMantenimientoConcreto(String.valueOf(table1.getValueAt(table1.getSelectedRow(), 0)));
-                        MantenimientoEdicion mantenimientoEdicion = new MantenimientoEdicion(true, mantenimiento);
+                        MantenimientoEdicion mantenimientoEdicion = new MantenimientoEdicion(true, mantenimiento, usuarioActivo);
                         frame.dispose();
                         break;
 
@@ -303,28 +300,28 @@ public class TablaDeSeleccion {
                     case 0:
                         //Trabajadores
                         Trabajador trabajador = new Trabajador();
-                        TrabajadorEdicion trabajadorEdicion = new TrabajadorEdicion(false, trabajador);
+                        TrabajadorEdicion trabajadorEdicion = new TrabajadorEdicion(false, trabajador, usuarioActivo);
                         frame.dispose();
                         break;
 
                     case 1:
                         //Tareas
                         Tarea tarea = new Tarea();
-                        TareaEdicion tareaEdicion = new TareaEdicion(false, tarea);
+                        TareaEdicion tareaEdicion = new TareaEdicion(false, tarea, usuarioActivo);
                         frame.dispose();
                         break;
 
                     case 2:
                         //Máquinas
                         Maquina maquina = new Maquina();
-                        MaquinaEdicion maquinaEdicion = new MaquinaEdicion(false, maquina);
+                        MaquinaEdicion maquinaEdicion = new MaquinaEdicion(false, maquina, usuarioActivo);
                         frame.dispose();
                         break;
 
                     case 3:
                         //Mantenimientos
                         Mantenimiento mantenimiento = new Mantenimiento();
-                        MantenimientoEdicion mantenimientoEdicion = new MantenimientoEdicion(false, mantenimiento);
+                        MantenimientoEdicion mantenimientoEdicion = new MantenimientoEdicion(false, mantenimiento, usuarioActivo);
                         frame.dispose();
                         break;
                 }

@@ -1811,7 +1811,6 @@ public class LlamadasBD {
             System.out.println("Operación existosa");
 
 
-            JOptionPane.showMessageDialog(null, "Registro creado correctamente.");
 
         } catch (Exception e) {
             System.out.println("A ocurrido un ERROR");
@@ -1906,7 +1905,6 @@ public class LlamadasBD {
             preparedStatement.execute();
             preparedStatement.close();
 
-            JOptionPane.showMessageDialog(null, "Registro eliminado correctamente.");
 
         } catch (SQLException e) {
 
@@ -1933,7 +1931,6 @@ public class LlamadasBD {
             preparedStatement.executeUpdate();
             preparedStatement.close();
 
-            JOptionPane.showMessageDialog(null, "Registro modificado correctamente.");
 
         } catch (Exception e) {
             System.err.println("A ocurrido un ERROR.");

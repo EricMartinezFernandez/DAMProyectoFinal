@@ -1,6 +1,8 @@
 package com.company.UI.MenusEdicion;
 
+import com.company.Clases.Registro;
 import com.company.Clases.Trabajador;
+import com.company.Clases.Usuario;
 import com.company.LlamadasBD;
 import com.company.UI.TablaDeSeleccion;
 import com.sun.media.sound.ModelOscillatorStream;
@@ -13,6 +15,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.*;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class TrabajadorEdicion {
     private JTextField TextDNI;
@@ -31,7 +35,7 @@ public class TrabajadorEdicion {
     JFrame frame;
     final String[] rutaFinal = {""};
 
-    public TrabajadorEdicion(Boolean conObjeto, Trabajador trabajador) {
+    public TrabajadorEdicion(Boolean conObjeto, Trabajador trabajador, Usuario usuarioActivo) {
         LlamadasBD llamadasBD = new LlamadasBD();
         JFileChooser fc = new JFileChooser();
         frame = new JFrame("Edición de trabajador");
@@ -65,7 +69,7 @@ public class TrabajadorEdicion {
         VolverButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                TablaDeSeleccion tablaDeSeleccion = new TablaDeSeleccion(0);
+                TablaDeSeleccion tablaDeSeleccion = new TablaDeSeleccion(0, usuarioActivo);
                 frame.dispose();
             }
         });
@@ -155,6 +159,12 @@ public class TrabajadorEdicion {
 
                         llamadasBD.InsertarTrabajador(nuevoTrabajador);
 
+                        //Ahora realizo el registro para dejar constancia de los movimientos realizados.
+                        String date = new SimpleDateFormat("yyyy-MM-dd HH:mm").format(new Date());
+                        Registro registro = new Registro(date, ("Creado un nuevo trabajador con el código: " + TextDNI.getText()), usuarioActivo.getUsername());
+                        llamadasBD.InsertarRegistro(registro);
+
+
 
                         TextDNI.setText("");
                         TextNombre.setText("");
@@ -176,6 +186,11 @@ public class TrabajadorEdicion {
             @Override
             public void actionPerformed(ActionEvent e) {
                 llamadasBD.EliminarTrabajador(trabajador.getDni());
+
+                //Ahora realizo el registro para dejar constancia de los movimientos realizados.
+                String date = new SimpleDateFormat("yyyy-MM-dd HH:mm").format(new Date());
+                Registro registro = new Registro(date, ("Borrado un trabajador con el código: " + trabajador.getDni()), usuarioActivo.getUsername());
+                llamadasBD.InsertarRegistro(registro);
 
                 //Tras borrar los datos de la BD, ahora toca borrar la imágen de la memoria.
                 File file = new File(trabajador.getRutaFoto());
@@ -218,6 +233,11 @@ public class TrabajadorEdicion {
                     nuevoTrabajador.setRutaFoto(rutaFinal[0].replace("\\", "/"));
                 }
                 llamadasBD.ModificarTrabajador(nuevoTrabajador);
+
+                //Ahora realizo el registro para dejar constancia de los movimientos realizados.
+                String date = new SimpleDateFormat("yyyy-MM-dd HH:mm").format(new Date());
+                Registro registro = new Registro(date, ("Modificado un trabajador con el código: " + trabajador.getDni()), usuarioActivo.getUsername());
+                llamadasBD.InsertarRegistro(registro);
             }
         });
     }

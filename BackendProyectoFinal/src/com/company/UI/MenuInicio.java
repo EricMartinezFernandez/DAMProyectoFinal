@@ -53,8 +53,8 @@ public class MenuInicio {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                MenuSeleccionDeTabla menuSeleccionDeTabla = new MenuSeleccionDeTabla();
-                frame.dispose();
+                //MenuSeleccionDeTabla menuSeleccionDeTabla = new MenuSeleccionDeTabla();
+               // frame.dispose();
             }
         });
 

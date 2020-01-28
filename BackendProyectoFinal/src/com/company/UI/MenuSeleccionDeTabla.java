@@ -1,5 +1,7 @@
 package com.company.UI;
 
+import com.company.Clases.Usuario;
+
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -13,7 +15,7 @@ public class MenuSeleccionDeTabla {
     private JPanel PanelMenuSeleccionDeTabla;
     JFrame frame;
 
-    public MenuSeleccionDeTabla() {
+    public MenuSeleccionDeTabla(Usuario usuarioActivo) {
         frame = new JFrame("Seleccion de datos");
         frame.setSize(1280, 720);
         frame.setContentPane(PanelMenuSeleccionDeTabla);
@@ -37,7 +39,7 @@ public class MenuSeleccionDeTabla {
         TrabajadoresButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                TablaDeSeleccion tablaDeSeleccion = new TablaDeSeleccion(0);
+                TablaDeSeleccion tablaDeSeleccion = new TablaDeSeleccion(0, usuarioActivo);
                 frame.dispose();
             }
         });
@@ -46,7 +48,7 @@ public class MenuSeleccionDeTabla {
         TareasButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                TablaDeSeleccion tablaDeSeleccion = new TablaDeSeleccion(1);
+                TablaDeSeleccion tablaDeSeleccion = new TablaDeSeleccion(1, usuarioActivo);
                 frame.dispose();
             }
         });
@@ -55,7 +57,7 @@ public class MenuSeleccionDeTabla {
         MaquinasButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                TablaDeSeleccion tablaDeSeleccion = new TablaDeSeleccion(2);
+                TablaDeSeleccion tablaDeSeleccion = new TablaDeSeleccion(2, usuarioActivo);
                 frame.dispose();
             }
         });
@@ -64,7 +66,7 @@ public class MenuSeleccionDeTabla {
         MantenimientosButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                TablaDeSeleccion tablaDeSeleccion = new TablaDeSeleccion(3);
+                TablaDeSeleccion tablaDeSeleccion = new TablaDeSeleccion(3, usuarioActivo);
                 frame.dispose();
             }
         });

@@ -1,12 +1,16 @@
 package com.company.UI.MenusEdicion;
 
 import com.company.Clases.Maquina;
+import com.company.Clases.Registro;
+import com.company.Clases.Usuario;
 import com.company.LlamadasBD;
 import com.company.UI.TablaDeSeleccion;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class MaquinaEdicion {
     private JTextField TextCodigo;
@@ -19,7 +23,7 @@ public class MaquinaEdicion {
     private JPanel PanelMaquinaEdicion;
     JFrame frame;
 
-    public MaquinaEdicion(boolean conObjeto, Maquina maquina) {
+    public MaquinaEdicion(boolean conObjeto, Maquina maquina, Usuario usuarioActivo) {
 
         LlamadasBD llamadasBD = new LlamadasBD();
         frame = new JFrame("Edición de máquina");
@@ -46,7 +50,7 @@ public class MaquinaEdicion {
         VolverButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                TablaDeSeleccion tablaDeSeleccion = new TablaDeSeleccion(2);
+                TablaDeSeleccion tablaDeSeleccion = new TablaDeSeleccion(2, usuarioActivo);
                 frame.dispose();
             }
         });
@@ -63,6 +67,14 @@ public class MaquinaEdicion {
                     nuevaMaquina.setCodigo(TextCodigo.getText());
                     nuevaMaquina.setDescripcion(TextDescripcion.getText());
                     llamadasBD.InsertarMaquina(nuevaMaquina);
+
+                    //Ahora realizo el registro para dejar constancia de los movimientos realizados.
+                    String date = new SimpleDateFormat("yyyy-MM-dd HH:mm").format(new Date());
+                    Registro registro = new Registro(date, ("Creada una nueva máquina con el código: " + TextCodigo.getText()), usuarioActivo.getUsername());
+                    llamadasBD.InsertarRegistro(registro);
+
+
+
                     //Una vez insertado, vacio los campos para evitar confusiones.
                     TextCodigo.setText("");
                     TextDescripcion.setText("");
@@ -77,6 +89,11 @@ public class MaquinaEdicion {
             @Override
             public void actionPerformed(ActionEvent e) {
                 llamadasBD.EliminarMaquina(TextCodigo.getText());
+
+                //Ahora realizo el registro para dejar constancia de los movimientos realizados.
+                String date = new SimpleDateFormat("yyyy-MM-dd HH:mm").format(new Date());
+                Registro registro = new Registro(date, ("Borrada una máquina con el código: " + TextCodigo.getText()), usuarioActivo.getUsername());
+                llamadasBD.InsertarRegistro(registro);
 
                 //Una vez eliminado, vacio los campos para evitar confusiones.
                 TextCodigo.setText("");
@@ -98,6 +115,11 @@ public class MaquinaEdicion {
                 Maquina nuevaMaquina = new Maquina();
                 nuevaMaquina.setCodigo(TextCodigo.getText());
                 nuevaMaquina.setDescripcion(TextDescripcion.getText());
+
+                //Ahora realizo el registro para dejar constancia de los movimientos realizados.
+                String date = new SimpleDateFormat("yyyy-MM-dd HH:mm").format(new Date());
+                Registro registro = new Registro(date, ("Editada una máquina con el código: " + TextCodigo.getText()), usuarioActivo.getUsername());
+                llamadasBD.InsertarRegistro(registro);
 
                 llamadasBD.ModificarMaquina(nuevaMaquina);
             }

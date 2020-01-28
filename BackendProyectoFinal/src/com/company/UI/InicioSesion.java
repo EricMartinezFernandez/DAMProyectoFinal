@@ -71,10 +71,13 @@ public class InicioSesion {
                     //Si coinciden el usuario y la contraseña procedo al acceso de la siguiente ventan.
                     if (usuarios.get(i).getUsername().equals(TextNombre.getText()) && usuarios.get(i).getPassword().equals(TextContraseña.getText())) {
 
+                        Usuario usuarioActivo = new Usuario();
+                        usuarioActivo.setUsername(usuarios.get(i).getUsername());
+
                         switch (usuarios.get(i).getPermisos()) {
 
                             case 1://DATOS
-                                MenuSeleccionDeTabla menuSeleccionDeTabla = new MenuSeleccionDeTabla();
+                                MenuSeleccionDeTabla menuSeleccionDeTabla = new MenuSeleccionDeTabla(usuarioActivo);
                                 frame.dispose();
                                 break;
 

@@ -1,14 +1,18 @@
 package com.company.UI.MenusEdicion;
 
 import com.company.Clases.Maquina;
+import com.company.Clases.Registro;
 import com.company.Clases.Tarea;
+import com.company.Clases.Usuario;
 import com.company.LlamadasBD;
 import com.company.UI.TablaDeSeleccion;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class TareaEdicion {
     private JPanel PanelTareaEdicion;
@@ -22,7 +26,7 @@ public class TareaEdicion {
     private JCheckBox CheckMaquina;
     JFrame frame;
 
-    public TareaEdicion(boolean conObjeto, Tarea tarea) {
+    public TareaEdicion(boolean conObjeto, Tarea tarea, Usuario usuarioActivo) {
         LlamadasBD llamadasBD = new LlamadasBD();
         frame = new JFrame("Edición de tarea");
         frame.setSize(1280, 720);
@@ -55,7 +59,7 @@ public class TareaEdicion {
         VolverButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                TablaDeSeleccion tablaDeSeleccion = new TablaDeSeleccion(1);
+                TablaDeSeleccion tablaDeSeleccion = new TablaDeSeleccion(1, usuarioActivo);
                 frame.dispose();
             }
         });
@@ -76,6 +80,11 @@ public class TareaEdicion {
 
                     llamadasBD.InsertarTarea(nuevaTarea);
 
+                    //Ahora realizo el registro para dejar constancia de los movimientos realizados.
+                    String date = new SimpleDateFormat("yyyy-MM-dd HH:mm").format(new Date());
+                    Registro registro = new Registro(date, ("Creada una nueva tarea con el código: " + TextCodigo.getText()), usuarioActivo.getUsername());
+                    llamadasBD.InsertarRegistro(registro);
+
                     //Una vez insertado, vacio los campos para evitar confusiones.
                     TextCodigo.setText("");
                     TextDescripcion.setText("");
@@ -89,6 +98,11 @@ public class TareaEdicion {
             public void actionPerformed(ActionEvent e) {
 
                 llamadasBD.EliminarTarea(tarea.getCodigo());
+
+                //Ahora realizo el registro para dejar constancia de los movimientos realizados.
+                String date = new SimpleDateFormat("yyyy-MM-dd HH:mm").format(new Date());
+                Registro registro = new Registro(date, ("Borrada una tarea con el código: " + tarea.getCodigo()), usuarioActivo.getUsername());
+                llamadasBD.InsertarRegistro(registro);
 
 
                 //Una vez eliminado, vacio los campos para evitar confusiones.
@@ -115,6 +129,11 @@ public class TareaEdicion {
 
 
                 llamadasBD.ModificarTarea(nuevaTarea);
+
+                //Ahora realizo el registro para dejar constancia de los movimientos realizados.
+                String date = new SimpleDateFormat("yyyy-MM-dd HH:mm").format(new Date());
+                Registro registro = new Registro(date, ("Editada una tarea con el código: " + TextCodigo.getText()), usuarioActivo.getUsername());
+                llamadasBD.InsertarRegistro(registro);
 
             }
         });

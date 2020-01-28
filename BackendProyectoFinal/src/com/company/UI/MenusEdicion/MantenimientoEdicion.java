@@ -1,8 +1,6 @@
 package com.company.UI.MenusEdicion;
 
-import com.company.Clases.Mantenimiento;
-import com.company.Clases.Maquina;
-import com.company.Clases.Tarea;
+import com.company.Clases.*;
 import com.company.LlamadasBD;
 import com.company.UI.TablaDeSeleccion;
 
@@ -10,7 +8,9 @@ import javax.security.auth.login.CredentialException;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class MantenimientoEdicion {
     private JTextField TextCodigo;
@@ -24,7 +24,7 @@ public class MantenimientoEdicion {
     private JPanel PanelMantenimientoEdicion;
     JFrame frame;
 
-    public MantenimientoEdicion(Boolean conObjeto, Mantenimiento mantenimiento) {
+    public MantenimientoEdicion(Boolean conObjeto, Mantenimiento mantenimiento, Usuario usuarioActivo) {
         LlamadasBD llamadasBD = new LlamadasBD();
         frame = new JFrame("Edición de mantenimiento");
         frame.setSize(1280, 720);
@@ -81,7 +81,7 @@ public class MantenimientoEdicion {
         VolverButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                TablaDeSeleccion tablaDeSeleccion = new TablaDeSeleccion(3);
+                TablaDeSeleccion tablaDeSeleccion = new TablaDeSeleccion(3, usuarioActivo);
                 frame.dispose();
             }
         });
@@ -93,7 +93,7 @@ public class MantenimientoEdicion {
 
                 if (TextCodigo.getText().equals("") || TextCodigo.getText().equals(null)) {
                     JOptionPane.showMessageDialog(null, "Faltan campos obligatorios. (*)");
-                }else{
+                } else {
                     Mantenimiento nuevoMantenimiento = new Mantenimiento();
                     nuevoMantenimiento.setCodigo(TextCodigo.getText());
                     nuevoMantenimiento.setDescripcion(TextDescripcion.getText());
@@ -101,6 +101,11 @@ public class MantenimientoEdicion {
 
 
                     llamadasBD.InsertarMantenimiento(nuevoMantenimiento);
+
+                    //Ahora realizo el registro para dejar constancia de los movimientos realizados.
+                    String date = new SimpleDateFormat("yyyy-MM-dd HH:mm").format(new Date());
+                    Registro registro = new Registro(date, ("Creado un nuevo mantenimiento con el código: " + TextCodigo.getText()), usuarioActivo.getUsername());
+                    llamadasBD.InsertarRegistro(registro);
 
                     //Una vez insertado, vacio los campos para evitar confusiones.
                     TextCodigo.setText("");
@@ -111,12 +116,16 @@ public class MantenimientoEdicion {
         });
 
 
-
         BorrarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
 
                 llamadasBD.EliminarMantenimiento(mantenimiento.getCodigo());
+
+                //Ahora realizo el registro para dejar constancia de los movimientos realizados.
+                String date = new SimpleDateFormat("yyyy-MM-dd HH:mm").format(new Date());
+                Registro registro = new Registro(date, ("Borrado mantenimiento con el código: " + mantenimiento.getCodigo()), usuarioActivo.getUsername());
+                llamadasBD.InsertarRegistro(registro);
 
                 //Una vez eliminado, vacio los campos para evitar confusiones.
                 TextCodigo.setText("");
@@ -141,12 +150,15 @@ public class MantenimientoEdicion {
                 nuevoMantenimiento.setDescripcion(TextDescripcion.getText());
                 nuevoMantenimiento.setCodigoMaquina(ComboCodMaquina.getSelectedItem().toString());
 
+                //Ahora realizo el registro para dejar constancia de los movimientos realizados.
+                String date = new SimpleDateFormat("yyyy-MM-dd HH:mm").format(new Date());
+                Registro registro = new Registro(date, ("Editado mantenimiento con el código: " + TextCodigo.getText()), usuarioActivo.getUsername());
+                llamadasBD.InsertarRegistro(registro);
+
                 llamadasBD.ModificarMantenimiento(nuevoMantenimiento);
 
             }
         });
-
-
 
 
     }
