@@ -14,6 +14,7 @@ public class LlamadasBD {
         BorrarBasesDeDatos(con);
         CrearBasesDeDatos(con);
 
+        JOptionPane.showMessageDialog(null, "Base de datos reiniciada correctamente.");
     }
 
     private static Connection Conexion() {
@@ -318,6 +319,9 @@ public class LlamadasBD {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
+        Usuario usuario = new Usuario("admin", "admin", 3);
+        InsertarUsuario(usuario, false);
 
     }
 
@@ -1631,7 +1635,7 @@ public class LlamadasBD {
 
 
     //USUARIOS
-    public void InsertarUsuario(Usuario usuario) {
+    public void InsertarUsuario(Usuario usuario, boolean aviso) {
         PreparedStatement preparedStatement;
         Connection con = Conexion();
 
@@ -1651,7 +1655,9 @@ public class LlamadasBD {
             System.out.println("Operación existosa");
 
 
-            JOptionPane.showMessageDialog(null, "Usuario creado correctamente.");
+            if(aviso == true){
+                JOptionPane.showMessageDialog(null, "Usuario creado correctamente.");
+            }
 
         } catch (Exception e) {
             System.out.println("A ocurrido un ERROR");

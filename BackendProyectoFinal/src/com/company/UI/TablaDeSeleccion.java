@@ -245,9 +245,6 @@ public class TablaDeSeleccion {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-
-                String columna = String.valueOf(table1.getValueAt(table1.getSelectedRow(), table1.getSelectedColumn()));
-
                 switch (IDTabla) {
 
                     case 0:

@@ -1,27 +1,27 @@
-package com.company.UI;
+package com.company.UI.Admin;
 
-import com.company.UI.MenusInformes.MenuPrincipalInformes;
+import com.company.LlamadasBD;
+import com.company.UI.InicioSesion;
 
 import javax.swing.*;
-import javax.swing.filechooser.FileNameExtensionFilter;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
 
-public class MenuInicio {
-
-    private JPanel panelMenuInicio;
-    private JButton DatosButton;
+public class PrincipalAdmin {
     private JButton InformesButton;
+    private JButton DatosButton;
     private JButton RutaButton;
     private JLabel TextRuta;
-    private static JFrame frame;
+    private JPanel PanelMenuAdmin;
+    private JButton VolverButton;
+    JFrame frame;
 
-    public MenuInicio() {
-        JFileChooser fc = new JFileChooser();
+    public PrincipalAdmin() {
 
-//Ésto sirve para que la ruta del label esté actualizada en el momento de abrir la ventana.
+
+
+        //Ésto sirve para que la ruta del label esté actualizada en el momento de abrir la ventana.
         try {
             File file = new File("rutaImagenes.txt");
             BufferedReader reader = null;
@@ -39,9 +39,11 @@ public class MenuInicio {
         }
 
 
-        frame = new JFrame("Menu principal");
+        JFileChooser fc = new JFileChooser();
+        LlamadasBD llamadasBD = new LlamadasBD();
+        frame = new JFrame("Menu admin");
         frame.setSize(1280, 720);
-        frame.setContentPane(panelMenuInicio);
+        frame.setContentPane(PanelMenuAdmin);
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         //frame.setResizable(false);
         frame.setLocationRelativeTo(null);
@@ -49,28 +51,13 @@ public class MenuInicio {
         frame.setVisible(true);
 
 
-        DatosButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-                MenuSeleccionDeTabla menuSeleccionDeTabla = new MenuSeleccionDeTabla();
-                frame.dispose();
-            }
-        });
-
-        InformesButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                MenuPrincipalInformes menuPrincipalInformes = new MenuPrincipalInformes();
-                frame.dispose();
-            }
-        });
 
 
         RutaButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                  /*
+
+                /*
                 Básicamente para que las aplicaciones compartan las imágenes deben de buscar el directorio con un
                 FileChooser. Una vez localizado, copio la ruta y la guardo en un txt a la altura de éste proyecto.
                  */
@@ -115,10 +102,42 @@ public class MenuInicio {
                     ex.printStackTrace();
                 }
 
+            }
+        });
 
+
+        InformesButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int confirmed = JOptionPane.showConfirmDialog(null,
+                        "Se borrará cualquier dato almacenado en la BD y volverá a iniciarse. \n¿Continuar?", "Exit Program Message Box",
+                        JOptionPane.YES_NO_OPTION);
+
+                if (confirmed == JOptionPane.YES_OPTION) {
+                    System.out.println("BORRADAS");
+                    llamadasBD.ReiniciarBasesDeDatos();
+                }else{
+                    System.out.println("A cancelado");
+                }
+            }
+        });
+
+
+        DatosButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                TablaCuentas tablaCuentas = new TablaCuentas();
+                frame.dispose();
+            }
+        });
+
+
+        VolverButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                InicioSesion inicioSesion = new InicioSesion();
+                frame.dispose();
             }
         });
     }
-
-
 }

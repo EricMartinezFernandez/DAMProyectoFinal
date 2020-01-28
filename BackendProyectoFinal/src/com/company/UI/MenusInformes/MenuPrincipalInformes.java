@@ -4,6 +4,7 @@ import javax.swing.*;
 
 import com.company.Clases.*;
 import com.company.LlamadasBD;
+import com.company.UI.InicioSesion;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.*;
 
@@ -30,6 +31,8 @@ public class MenuPrincipalInformes {
     private JSpinner HastaAnioSpinner;
     private JSpinner HastaMesSpinner;
     private JSpinner HastaDiaSpinner;
+    private JSpinner AnioMensualSpinner;
+    private JSpinner MesMensualSpinner;
     JFrame frame;
 
     public MenuPrincipalInformes() {
@@ -90,6 +93,34 @@ public class MenuPrincipalInformes {
 
                     System.out.println("Sigo ejecutando");
                 }
+
+            }
+        });
+
+        ButtonMensual.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                String MesSpinnerString = String.format("%02d", (int) MesMensualSpinner.getValue());
+                int mesSpinner = Integer.parseInt(MesSpinnerString);
+                int anioSpinner = (Integer) DesdeAnioSpinner.getValue();
+
+
+                //CrearExcelMensual(mesSpinner, anioSpinner);
+
+                System.out.println("Sigo ejecutando");
+
+
+            }
+        });
+
+
+        SalirButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                InicioSesion inicioSesion = new InicioSesion();
+                frame.dispose();
 
             }
         });
@@ -499,4 +530,8 @@ public class MenuPrincipalInformes {
             e.printStackTrace();
         }
     }
+
+
+    
+
 }

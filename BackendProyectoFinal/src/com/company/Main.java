@@ -1,10 +1,6 @@
 package com.company;
 
-import com.company.Clases.Trabajador;
-import com.company.UI.MenuInicio;
-import com.company.UI.MenusEdicion.InicioSesion;
-
-import java.util.ArrayList;
+import com.company.UI.InicioSesion;
 
 public class Main {
 
@@ -14,9 +10,9 @@ public class Main {
 
         //llamadasBD.ReiniciarBasesDeDatos();
 
-        MenuInicio menuInicio = new MenuInicio();
+        //MenuInicio menuInicio = new MenuInicio();
 
-        //InicioSesion inicioSesion = new InicioSesion();
+        InicioSesion inicioSesion = new InicioSesion();
 
 
         //UTILIDADES

@@ -28,7 +28,7 @@ public class MenuSeleccionDeTabla {
         VolverButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                MenuInicio menuInicio = new MenuInicio();
+                InicioSesion inicioSesion = new InicioSesion();
                 frame.dispose();
             }
         });
