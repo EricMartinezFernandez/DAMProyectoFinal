@@ -71,23 +71,40 @@ public class TareaEdicion {
 
                 if (TextCodigo.getText().equals("") || TextCodigo.getText().equals(null)) {
                     JOptionPane.showMessageDialog(null, "Faltan campos obligatorios. (*)");
-                }else{
-                    Tarea nuevaTarea = new Tarea();
-                    nuevaTarea.setCodigo(TextCodigo.getText());
-                    nuevaTarea.setDescripcion(TextDescripcion.getText());
+                } else {
 
-                    nuevaTarea.setMaquina(CheckMaquina.isSelected());
+                    boolean duplicado = false;
+                    ArrayList<Tarea> tareas = new ArrayList<>();
+                    tareas = llamadasBD.LeerTareas();
 
-                    llamadasBD.InsertarTarea(nuevaTarea);
+                    for (int i = 0; i < tareas.size(); i++) {
+                        if (tareas.get(i).getCodigo().toLowerCase().equals(TextCodigo.getText().toLowerCase())) {
+                            duplicado = true;
+                        }
+                    }
 
-                    //Ahora realizo el registro para dejar constancia de los movimientos realizados.
-                    String date = new SimpleDateFormat("yyyy-MM-dd HH:mm").format(new Date());
-                    Registro registro = new Registro(date, ("Creada una nueva tarea con el código: " + TextCodigo.getText()), usuarioActivo.getUsername());
-                    llamadasBD.InsertarRegistro(registro);
+                    if (duplicado == false) {
+                        Tarea nuevaTarea = new Tarea();
+                        nuevaTarea.setCodigo(TextCodigo.getText());
+                        nuevaTarea.setDescripcion(TextDescripcion.getText());
 
-                    //Una vez insertado, vacio los campos para evitar confusiones.
-                    TextCodigo.setText("");
-                    TextDescripcion.setText("");
+                        nuevaTarea.setMaquina(CheckMaquina.isSelected());
+
+                        llamadasBD.InsertarTarea(nuevaTarea);
+
+                        //Ahora realizo el registro para dejar constancia de los movimientos realizados.
+                        String date = new SimpleDateFormat("yyyy-MM-dd HH:mm").format(new Date());
+                        Registro registro = new Registro(date, ("Creada una nueva tarea con el código: " + TextCodigo.getText()), usuarioActivo.getUsername());
+                        llamadasBD.InsertarRegistro(registro);
+
+                        //Una vez insertado, vacio los campos para evitar confusiones.
+                        TextCodigo.setText("");
+                        TextDescripcion.setText("");
+                    } else {
+                        JOptionPane.showMessageDialog(null, "El código ya está en uso.");
+                    }
+
+
                 }
             }
         });

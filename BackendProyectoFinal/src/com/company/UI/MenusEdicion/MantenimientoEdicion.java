@@ -94,23 +94,41 @@ public class MantenimientoEdicion {
                 if (TextCodigo.getText().equals("") || TextCodigo.getText().equals(null)) {
                     JOptionPane.showMessageDialog(null, "Faltan campos obligatorios. (*)");
                 } else {
-                    Mantenimiento nuevoMantenimiento = new Mantenimiento();
-                    nuevoMantenimiento.setCodigo(TextCodigo.getText());
-                    nuevoMantenimiento.setDescripcion(TextDescripcion.getText());
-                    nuevoMantenimiento.setCodigoMaquina(ComboCodMaquina.getSelectedItem().toString());
+
+                    boolean duplicado = false;
+                    ArrayList<Mantenimiento> mantenimientos = new ArrayList<>();
+                    mantenimientos = llamadasBD.LeerMantenimientos();
+
+                    for (int i = 0; i < mantenimientos.size(); i++) {
+                        if (mantenimientos.get(i).getCodigo().toLowerCase().equals(TextCodigo.getText().toLowerCase())) {
+                            duplicado = true;
+                        }
+                    }
+
+                    if (duplicado == false) {
+                        Mantenimiento nuevoMantenimiento = new Mantenimiento();
+                        nuevoMantenimiento.setCodigo(TextCodigo.getText());
+                        nuevoMantenimiento.setDescripcion(TextDescripcion.getText());
+                        nuevoMantenimiento.setCodigoMaquina(ComboCodMaquina.getSelectedItem().toString());
 
 
-                    llamadasBD.InsertarMantenimiento(nuevoMantenimiento);
+                        llamadasBD.InsertarMantenimiento(nuevoMantenimiento);
 
-                    //Ahora realizo el registro para dejar constancia de los movimientos realizados.
-                    String date = new SimpleDateFormat("yyyy-MM-dd HH:mm").format(new Date());
-                    Registro registro = new Registro(date, ("Creado un nuevo mantenimiento con el código: " + TextCodigo.getText()), usuarioActivo.getUsername());
-                    llamadasBD.InsertarRegistro(registro);
+                        //Ahora realizo el registro para dejar constancia de los movimientos realizados.
+                        String date = new SimpleDateFormat("yyyy-MM-dd HH:mm").format(new Date());
+                        Registro registro = new Registro(date, ("Creado un nuevo mantenimiento con el código: " + TextCodigo.getText()), usuarioActivo.getUsername());
+                        llamadasBD.InsertarRegistro(registro);
 
-                    //Una vez insertado, vacio los campos para evitar confusiones.
-                    TextCodigo.setText("");
-                    TextDescripcion.setText("");
-                    ComboCodMaquina.setSelectedIndex(0);
+                        //Una vez insertado, vacio los campos para evitar confusiones.
+                        TextCodigo.setText("");
+                        TextDescripcion.setText("");
+                        ComboCodMaquina.setSelectedIndex(0);
+                    } else {
+                        JOptionPane.showMessageDialog(null, "El código ya está en uso.");
+
+                    }
+
+
                 }
             }
         });

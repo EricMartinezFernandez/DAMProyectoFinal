@@ -1,12 +1,14 @@
 package com.company.UI.Admin;
 
 import com.company.Clases.Maquina;
+import com.company.Clases.Trabajador;
 import com.company.Clases.Usuario;
 import com.company.LlamadasBD;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 public class UsuarioEdicion {
     private JTextField TextUsuario;
@@ -48,7 +50,7 @@ public class UsuarioEdicion {
             TextPassword2.setText(usuario.getPassword());
 
             //Dejo seleccionado el tipo de cuenta correcto dentro del combobox
-            switch (usuario.getPermisos()){
+            switch (usuario.getPermisos()) {
                 case 1:
                     ComboTipoCuenta.setSelectedIndex(0);
                     break;
@@ -70,27 +72,45 @@ public class UsuarioEdicion {
             public void actionPerformed(ActionEvent e) {
 
                 //Tomo medidas de seguridad para evitar problemas.
-                if(TextPassword.getText().equals(TextPassword2.getText())){
+                if (TextPassword.getText().equals(TextPassword2.getText())) {
 
-                    if (TextUsuario.getText().equals("") || TextUsuario.getText().equals(null)){
+                    if (TextUsuario.getText().equals("") || TextUsuario.getText().equals(null)) {
                         JOptionPane.showMessageDialog(null, "Faltan campos obligatorios. (*)");
-                    }else{
-                        Usuario nuevoUsuario = new Usuario();
+                    } else {
 
-                        //Lo paso a minúsculas para hacer más fácil el inicio de sesión.
-                        nuevoUsuario.setUsername(TextUsuario.getText().toLowerCase());
-                        nuevoUsuario.setPassword(TextPassword.getText());
 
-                        int permiso = ComboTipoCuenta.getSelectedIndex();
-                        nuevoUsuario.setPermisos(permiso + 1);
-                        llamadasBD.InsertarUsuario(nuevoUsuario, true);
+                        boolean duplicado = false;
+                        ArrayList<Usuario> usuarios = new ArrayList<>();
+                        usuarios = llamadasBD.LeerUsuarios();
 
-                        TextUsuario.setText("");
-                        TextPassword.setText("");
-                        TextPassword2.setText("");
-                        ComboTipoCuenta.setSelectedIndex(0);
+                        for (int i = 0; i < usuarios.size(); i++) {
+                            if (usuarios.get(i).getUsername().toLowerCase().equals(TextUsuario.getText().toLowerCase())) {
+                                duplicado = true;
+                            }
+                        }
+
+                        if (duplicado == false) {
+                            Usuario nuevoUsuario = new Usuario();
+
+                            //Lo paso a minúsculas para hacer más fácil el inicio de sesión.
+                            nuevoUsuario.setUsername(TextUsuario.getText().toLowerCase());
+                            nuevoUsuario.setPassword(TextPassword.getText());
+
+                            int permiso = ComboTipoCuenta.getSelectedIndex();
+                            nuevoUsuario.setPermisos(permiso + 1);
+                            llamadasBD.InsertarUsuario(nuevoUsuario, true);
+
+                            TextUsuario.setText("");
+                            TextPassword.setText("");
+                            TextPassword2.setText("");
+                            ComboTipoCuenta.setSelectedIndex(0);
+                        } else {
+                            JOptionPane.showMessageDialog(null, "Nombre de usuario en uso.");
+
+                        }
+
                     }
-                }else{
+                } else {
                     JOptionPane.showMessageDialog(null, "Las contraseñas no coinciden.");
                 }
 
@@ -129,7 +149,7 @@ public class UsuarioEdicion {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                if(TextPassword.getText().equals(TextPassword2.getText())){
+                if (TextPassword.getText().equals(TextPassword2.getText())) {
 
                     Usuario nuevoUsuario = new Usuario();
                     nuevoUsuario.setUsername(TextUsuario.getText());
@@ -138,7 +158,7 @@ public class UsuarioEdicion {
                     nuevoUsuario.setPermisos(permiso + 1);
                     llamadasBD.ModificarUsuario(nuevoUsuario);
 
-                }else{
+                } else {
                     JOptionPane.showMessageDialog(null, "Las contraseñas no coinciden.");
                 }
 

@@ -1,6 +1,7 @@
 package com.company.UI.MenusEdicion;
 
 import com.company.Clases.Registro;
+import com.company.Clases.Tarea;
 import com.company.Clases.Trabajador;
 import com.company.Clases.Usuario;
 import com.company.LlamadasBD;
@@ -16,6 +17,7 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 public class TrabajadorEdicion {
@@ -148,34 +150,49 @@ public class TrabajadorEdicion {
                     JOptionPane.showMessageDialog(null, "Faltan campos obligatorios. (*)");
                 } else {
 
-                    //Verifico que el DNI tenga el número de carácteres correcto.
-                    if (TextDNI.getText().length() == 9) {
-                        Trabajador nuevoTrabajador = new Trabajador();
-                        nuevoTrabajador.setDni(TextDNI.getText());
-                        nuevoTrabajador.setNombre(TextNombre.getText());
-                        nuevoTrabajador.setApellido1(TextApellido1.getText());
-                        nuevoTrabajador.setApellido2(TextApellido2.getText());
-                        nuevoTrabajador.setRutaFoto(rutaFinal[0]);
 
-                        llamadasBD.InsertarTrabajador(nuevoTrabajador);
+                    boolean duplicado = false;
+                    ArrayList<Trabajador> trabajadores = new ArrayList<>();
+                    trabajadores = llamadasBD.LeerTrabajadores();
 
-                        //Ahora realizo el registro para dejar constancia de los movimientos realizados.
-                        String date = new SimpleDateFormat("yyyy-MM-dd HH:mm").format(new Date());
-                        Registro registro = new Registro(date, ("Creado un nuevo trabajador con el código: " + TextDNI.getText()), usuarioActivo.getUsername());
-                        llamadasBD.InsertarRegistro(registro);
-
-
-
-                        TextDNI.setText("");
-                        TextNombre.setText("");
-                        TextApellido1.setText("");
-                        TextApellido2.setText("");
-                        ImageIcon imageIcon = new ImageIcon(new ImageIcon("").getImage().getScaledInstance(150, 200, Image.SCALE_DEFAULT));
-                        MostarImagen.setIcon(imageIcon);
-                    } else {
-                        JOptionPane.showMessageDialog(null, "DNI Incorrecto.");
-
+                    for (int i = 0; i < trabajadores.size(); i++) {
+                        if (trabajadores.get(i).getDni().toLowerCase().equals(TextDNI.getText().toLowerCase())) {
+                            duplicado = true;
+                        }
                     }
+
+                    if(duplicado == false){
+                        //Verifico que el DNI tenga el número de carácteres correcto.
+                        if (TextDNI.getText().length() == 9) {
+                            Trabajador nuevoTrabajador = new Trabajador();
+                            nuevoTrabajador.setDni(TextDNI.getText());
+                            nuevoTrabajador.setNombre(TextNombre.getText());
+                            nuevoTrabajador.setApellido1(TextApellido1.getText());
+                            nuevoTrabajador.setApellido2(TextApellido2.getText());
+                            nuevoTrabajador.setRutaFoto(rutaFinal[0]);
+
+                            llamadasBD.InsertarTrabajador(nuevoTrabajador);
+
+                            //Ahora realizo el registro para dejar constancia de los movimientos realizados.
+                            String date = new SimpleDateFormat("yyyy-MM-dd HH:mm").format(new Date());
+                            Registro registro = new Registro(date, ("Creado un nuevo trabajador con el código: " + TextDNI.getText()), usuarioActivo.getUsername());
+                            llamadasBD.InsertarRegistro(registro);
+
+
+
+                            TextDNI.setText("");
+                            TextNombre.setText("");
+                            TextApellido1.setText("");
+                            TextApellido2.setText("");
+                            ImageIcon imageIcon = new ImageIcon(new ImageIcon("").getImage().getScaledInstance(150, 200, Image.SCALE_DEFAULT));
+                            MostarImagen.setIcon(imageIcon);
+                        } else {
+                            JOptionPane.showMessageDialog(null, "DNI Incorrecto.");
+                        }
+                    }else{
+                        JOptionPane.showMessageDialog(null, "El DNI ya está en uso.");
+                    }
+
                 }
 
             }
