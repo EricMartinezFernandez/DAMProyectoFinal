@@ -21,7 +21,7 @@ public class TablaCuentas {
     private JPanel PanelTablaCuentas;
     JFrame frame;
 
-    public TablaCuentas() {
+    public TablaCuentas(Usuario usuarioActivo) {
         DefaultTableModel model;
         JFileChooser fc = new JFileChooser();
         LlamadasBD llamadasBD = new LlamadasBD();
@@ -78,7 +78,7 @@ public class TablaCuentas {
         VolverButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                PrincipalAdmin principalAdmin = new PrincipalAdmin();
+                PrincipalAdmin principalAdmin = new PrincipalAdmin(usuarioActivo);
                 frame.dispose();
             }
         });
@@ -88,7 +88,7 @@ public class TablaCuentas {
             @Override
             public void actionPerformed(ActionEvent e) {
                 Usuario usuario = new Usuario();
-                UsuarioEdicion usuarioEdicion = new UsuarioEdicion(false, usuario);
+                UsuarioEdicion usuarioEdicion = new UsuarioEdicion(false, usuario, usuarioActivo);
                 frame.dispose();
             }
         });
@@ -98,7 +98,7 @@ public class TablaCuentas {
             public void actionPerformed(ActionEvent e) {
                 Usuario usuario = new Usuario();
                 usuario = llamadasBD.LeerUsuarioConcreto(String.valueOf(table1.getValueAt(table1.getSelectedRow(), 0)));
-                UsuarioEdicion usuarioEdicion = new UsuarioEdicion(true, usuario);
+                UsuarioEdicion usuarioEdicion = new UsuarioEdicion(true, usuario, usuarioActivo);
                 frame.dispose();
             }
         });

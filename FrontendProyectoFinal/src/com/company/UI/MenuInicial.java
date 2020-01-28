@@ -1,18 +1,23 @@
 package com.company.UI;
 
+import com.company.Clases.Usuario;
+import com.company.LlamadasBD;
 import javafx.stage.FileChooser;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
+import java.util.ArrayList;
 
 public class MenuInicial {
     private JButton IniciarButton;
     private JButton RutaButton;
     private JLabel TextRuta;
     private JPanel PanelInicio;
+    private JButton AdminButton;
     JFrame frame;
+    LlamadasBD llamadasBD = new LlamadasBD();
 
 
     public MenuInicial() {
@@ -107,5 +112,16 @@ public class MenuInicial {
 
             }
         });
+
+
+        AdminButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                InicioDeSesion inicioDeSesion = new InicioDeSesion();
+                frame.dispose();
+            }
+        });
     }
+
+
 }

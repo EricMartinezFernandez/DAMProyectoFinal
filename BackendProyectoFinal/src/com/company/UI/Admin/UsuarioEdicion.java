@@ -21,7 +21,7 @@ public class UsuarioEdicion {
     private JComboBox ComboTipoCuenta;
     JFrame frame;
 
-    public UsuarioEdicion(Boolean conObjeto, Usuario usuario) {
+    public UsuarioEdicion(Boolean conObjeto, Usuario usuario, Usuario usuarioActivo) {
         LlamadasBD llamadasBD = new LlamadasBD();
         frame = new JFrame("Menu gestion usuario");
         frame.setSize(1280, 720);
@@ -101,7 +101,7 @@ public class UsuarioEdicion {
         VolverButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                TablaCuentas tablaCuentas = new TablaCuentas();
+                TablaCuentas tablaCuentas = new TablaCuentas(usuarioActivo);
                 frame.dispose();
             }
         });

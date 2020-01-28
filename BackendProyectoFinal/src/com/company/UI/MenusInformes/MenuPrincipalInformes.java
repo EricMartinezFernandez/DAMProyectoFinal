@@ -35,7 +35,7 @@ public class MenuPrincipalInformes {
     private JSpinner MesMensualSpinner;
     JFrame frame;
 
-    public MenuPrincipalInformes() {
+    public MenuPrincipalInformes(Usuario usuarioActivo) {
         frame = new JFrame("Menu informes");
         frame.setSize(1280, 720);
         frame.setContentPane(PanelInformes);

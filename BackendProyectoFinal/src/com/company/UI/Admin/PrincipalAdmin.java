@@ -1,7 +1,10 @@
 package com.company.UI.Admin;
 
+import com.company.Clases.Usuario;
 import com.company.LlamadasBD;
 import com.company.UI.InicioSesion;
+import com.company.UI.MenuSeleccionDeTabla;
+import com.company.UI.MenusInformes.MenuPrincipalInformes;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -9,16 +12,18 @@ import java.awt.event.ActionListener;
 import java.io.*;
 
 public class PrincipalAdmin {
-    private JButton InformesButton;
-    private JButton DatosButton;
+    private JButton ReiniciarButton;
+    private JButton CuentasButton;
     private JButton RutaButton;
     private JLabel TextRuta;
     private JPanel PanelMenuAdmin;
     private JButton VolverButton;
+    private JButton RegistrosButton;
+    private JButton DatosButton;
+    private JButton InformesButton;
     JFrame frame;
 
-    public PrincipalAdmin() {
-
+    public PrincipalAdmin(Usuario usuarioActivo) {
 
 
         //Ésto sirve para que la ruta del label esté actualizada en el momento de abrir la ventana.
@@ -49,8 +54,6 @@ public class PrincipalAdmin {
         frame.setLocationRelativeTo(null);
         frame.pack();
         frame.setVisible(true);
-
-
 
 
         RutaButton.addActionListener(new ActionListener() {
@@ -106,7 +109,7 @@ public class PrincipalAdmin {
         });
 
 
-        InformesButton.addActionListener(new ActionListener() {
+        ReiniciarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 int confirmed = JOptionPane.showConfirmDialog(null,
@@ -116,17 +119,17 @@ public class PrincipalAdmin {
                 if (confirmed == JOptionPane.YES_OPTION) {
                     System.out.println("BORRADAS");
                     llamadasBD.ReiniciarBasesDeDatos();
-                }else{
+                } else {
                     System.out.println("A cancelado");
                 }
             }
         });
 
 
-        DatosButton.addActionListener(new ActionListener() {
+        CuentasButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                TablaCuentas tablaCuentas = new TablaCuentas();
+                TablaCuentas tablaCuentas = new TablaCuentas(usuarioActivo);
                 frame.dispose();
             }
         });
@@ -136,6 +139,31 @@ public class PrincipalAdmin {
             @Override
             public void actionPerformed(ActionEvent e) {
                 InicioSesion inicioSesion = new InicioSesion();
+                frame.dispose();
+            }
+        });
+
+        RegistrosButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                TablaRegistros tablaRegistros = new TablaRegistros(usuarioActivo);
+                frame.dispose();
+            }
+        });
+
+
+        DatosButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                MenuSeleccionDeTabla menuSeleccionDeTabla = new MenuSeleccionDeTabla(usuarioActivo);
+                frame.dispose();
+            }
+        });
+
+        InformesButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                MenuPrincipalInformes menuPrincipalInformes = new MenuPrincipalInformes(usuarioActivo);
                 frame.dispose();
             }
         });
