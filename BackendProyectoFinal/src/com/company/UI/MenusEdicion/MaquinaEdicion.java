@@ -16,7 +16,7 @@ import java.util.Date;
 
 public class MaquinaEdicion {
     private JTextField TextCodigo;
-    private JTextField TextDescripcion;
+    private JTextArea TextDescripcion;
     private JLabel TituloText;
     private JButton CrearButton;
     private JButton EditarButton;

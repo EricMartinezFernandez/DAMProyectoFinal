@@ -14,7 +14,7 @@ import java.util.Date;
 
 public class MantenimientoEdicion {
     private JTextField TextCodigo;
-    private JTextField TextDescripcion;
+    private JTextArea TextDescripcion;
     private JComboBox ComboCodMaquina;
     private JLabel TituloText;
     private JButton CrearButton;
@@ -22,6 +22,7 @@ public class MantenimientoEdicion {
     private JButton BorrarButton;
     private JButton VolverButton;
     private JPanel PanelMantenimientoEdicion;
+    private JTextArea textAreaDescripcion;
     JFrame frame;
 
     public MantenimientoEdicion(Boolean conObjeto, Mantenimiento mantenimiento, Usuario usuarioActivo) {

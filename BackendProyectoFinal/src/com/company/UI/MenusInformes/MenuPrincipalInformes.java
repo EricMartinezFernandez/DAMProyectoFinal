@@ -31,7 +31,6 @@ public class MenuPrincipalInformes {
     private JSpinner HastaAnioSpinner;
     private JSpinner HastaMesSpinner;
     private JSpinner HastaDiaSpinner;
-    private JSpinner AnioMensualSpinner;
     private JSpinner MesMensualSpinner;
     JFrame frame;
 
@@ -49,11 +48,11 @@ public class MenuPrincipalInformes {
         //Creo los modelos de los spinner y los asigno a cada objeto.
         SpinnerModel DesdemodelAnio = new SpinnerNumberModel(2020, 1980, 2100, 1);
         SpinnerModel DesdemodelMes = new SpinnerNumberModel(01, 01, 12, 1);
-        SpinnerModel DesdemodelDia = new SpinnerNumberModel(27, 01, 31, 1);
+        SpinnerModel DesdemodelDia = new SpinnerNumberModel(01, 01, 31, 1);
 
         SpinnerModel HastamodelAnio = new SpinnerNumberModel(2020, 1980, 2100, 1);
         SpinnerModel HastamodelMes = new SpinnerNumberModel(01, 01, 12, 1);
-        SpinnerModel HastamodelDia = new SpinnerNumberModel(28, 01, 31, 1);
+        SpinnerModel HastamodelDia = new SpinnerNumberModel(01, 01, 31, 1);
 
         DesdeDiaSpinner.setModel(DesdemodelDia);
         DesdeMesSpinner.setModel(DesdemodelMes);
@@ -93,23 +92,6 @@ public class MenuPrincipalInformes {
 
                     System.out.println("Sigo ejecutando");
                 }
-
-            }
-        });
-
-        ButtonMensual.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-                String MesSpinnerString = String.format("%02d", (int) MesMensualSpinner.getValue());
-                int mesSpinner = Integer.parseInt(MesSpinnerString);
-                int anioSpinner = (Integer) DesdeAnioSpinner.getValue();
-
-
-                //CrearExcelMensual(mesSpinner, anioSpinner);
-
-                System.out.println("Sigo ejecutando");
-
 
             }
         });

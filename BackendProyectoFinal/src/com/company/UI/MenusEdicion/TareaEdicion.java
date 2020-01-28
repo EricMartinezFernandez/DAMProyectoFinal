@@ -21,7 +21,7 @@ public class TareaEdicion {
     private JButton CrearButton;
     private JButton EditarButton;
     private JButton VolverButton;
-    private JTextField TextDescripcion;
+    private JTextArea TextDescripcion;
     private JButton BorrarButton;
     private JCheckBox CheckMaquina;
     JFrame frame;
