@@ -414,8 +414,10 @@ public class MenuPrincipalInformes {
             //DOS FORs ENLAZADOS PARA RELLENAR UNA LÍNEA POR MANTENIMIENTO
             for (int j = 0; j < mantenimientos.size(); j++) {
 
+
+
                 Row row7 = sheet.createRow(j + 4 + tareas.size() + maquinas.size());
-                row7.createCell(0).setCellValue(maquinas.get(j).getCodigo());
+                row7.createCell(0).setCellValue(mantenimientos.get(j).getCodigo());
                 row7.getCell(0).setCellStyle(style);//Establezco el estilo
 
                 //Vuelvo a reiniciarlos para partir de cero.
@@ -502,7 +504,7 @@ public class MenuPrincipalInformes {
 
 
         try {
-            FileOutputStream fileout = new FileOutputStream("Excel.xls");
+            FileOutputStream fileout = new FileOutputStream("Informe.xls");
             book.write(fileout);
             fileout.close();
 
