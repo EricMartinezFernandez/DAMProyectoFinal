@@ -22,24 +22,6 @@ public class MenuInicial {
     public MenuInicial() {
 
 
-        //Ésto sirve para que la ruta del label esté actualizada en el momento de abrir la ventana.
-        try {
-            File file = new File("rutaImagenes.txt");
-            BufferedReader reader = null;
-            reader = new BufferedReader(new FileReader(file));
-            String line;
-
-            while ((line = reader.readLine()) != null) {
-                TextRuta.setText(line);
-            }
-
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-
         JFileChooser fc = new JFileChooser();
         frame = new JFrame("Menu principal");
         frame.setSize(1280, 720);
